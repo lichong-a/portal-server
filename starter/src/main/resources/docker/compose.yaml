@@ -1,0 +1,58 @@
+name: portal-server
+services:
+  redis:
+    container_name: redis
+    image: redis:7
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+    volumes:
+      - ./volumes/redis/data:/data
+      - ./volumes/redis/logs:/logs
+      - ./volumes/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    #配置文件启动
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+
+  postgres:
+    container_name: postgres
+    image: postgres:15
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    volumes:
+      - ./volumes/db/data:/var/lib/postgresql/data:Z
+    env_file: .env
+    environment:
+      - POSTGRES_PORT=${PG_PORT}
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASS}
+      - POSTGRES_DB=${PG_DB}
+    ports:
+      - ${PG_PORT}:${PG_PORT}
+
+  nacos:
+    image: nacos/nacos-server:v2.3.2
+    container_name: nacos-standalone-mysql
+    environment:
+      - MYSQL_SERVICE_USER=${PG_USER}
+      - MYSQL_SERVICE_PASSWORD=${PG_PASS}
+      - MYSQL_SERVICE_HOST=${PG_HOST}
+      - MYSQL_SERVICE_PORT=${PG_PORT}
+    env_file:
+      - ./volumes/nacos/nacos-standlone-postgres.env
+    volumes:
+      - ./volumes/nacos/standalone-logs/:/home/nacos/logs
+    ports:
+      - ${NACOS_PORT}:${NACOS_PORT}
+      - 9848:9848
+    restart: always
+    depends_on:
+      - postgres

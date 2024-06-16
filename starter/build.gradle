@@ -1,0 +1,45 @@
+plugins {
+    id 'org.hibernate.orm' version "${hibernatePluginVersion}"
+    id 'org.graalvm.buildtools.native' version "${graalvmNativePluginVersion}"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+springBoot {
+    buildInfo {
+        properties {
+            artifact = 'portal-server'
+            name = 'portal-server'
+        }
+    }
+}
+
+bootJar {
+    archiveBaseName = 'portal-server'
+    manifest {
+        attributes 'Implementation-Title': 'portal-server Application',
+                'Implementation-Vendor': 'portal-server Team'
+    }
+}
+
+dependencies {
+    implementation project(':common:core')
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
