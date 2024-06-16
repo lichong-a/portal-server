@@ -1,13 +1,15 @@
-package com.eoi.portal.server;
+package com.eoi.portal.server.starter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.eoi.portal.server.*"})
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.eoi.portal.server.*"})
+@ServletComponentScan(basePackages = {"com.eoi.portal.server.*"})
 public class PortalServerApplication {
 
     public static void main(String[] args) {

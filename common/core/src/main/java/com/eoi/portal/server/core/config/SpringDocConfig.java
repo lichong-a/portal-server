@@ -1,4 +1,4 @@
-package com.eoi.common.config;
+package com.eoi.portal.server.core.config;
 
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

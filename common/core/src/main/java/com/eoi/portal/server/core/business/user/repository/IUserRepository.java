@@ -6,8 +6,7 @@
 package com.eoi.portal.server.core.business.user.repository;
 
 import com.eoi.portal.server.core.base.repository.IBaseRepository;
-import com.eoi.portal.server.core.business.user.domain.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.eoi.portal.server.core.business.user.domain.dto.User;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,6 +15,6 @@ import org.springframework.stereotype.Repository;
  * @since 0.0.1
  */
 @Repository
-public interface UserRepository extends IBaseRepository<User, Long> {
+public interface IUserRepository extends IBaseRepository<User, Long> {
     User findByEmail(String email);
 }

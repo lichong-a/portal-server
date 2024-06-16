@@ -1,1 +1,2 @@
 rootProject.name = 'portal-server'
+include 'common:core', 'starter'

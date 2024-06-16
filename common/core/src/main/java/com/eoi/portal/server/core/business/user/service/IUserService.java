@@ -5,23 +5,25 @@
 
 package com.eoi.portal.server.core.business.user.service;
 
-import com.eoi.portal.server.core.business.user.domain.User;
-import com.eoi.portal.server.core.business.user.repository.IUserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.eoi.portal.server.core.base.service.IBaseService;
+import com.eoi.portal.server.core.business.user.domain.dto.User;
+import com.eoi.portal.server.core.business.user.domain.vo.UserVo;
+import org.springframework.data.domain.Page;
 
 /**
  * @author 李冲
  * @see <a href="https://lichong.work">李冲博客</a>
  * @since 0.0.1
  */
-@Service
-public class IUserService {
+public interface IUserService extends IBaseService<User, Long> {
 
-    @Autowired
-    private IUserRepository userRepository;
+    /**
+     * find by page.
+     *
+     * @param userVo query
+     * @return page
+     */
+    Page<User> findPage(UserVo userVo);
 
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
+    User findByEmail(String email);
 }

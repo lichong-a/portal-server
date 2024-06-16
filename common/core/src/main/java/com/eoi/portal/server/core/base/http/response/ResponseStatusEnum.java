@@ -15,7 +15,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum ResponseStatus {
+public enum ResponseStatusEnum {
     SUCCESS("200", "success"),
     FAIL("500", "failed"),
 

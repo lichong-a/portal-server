@@ -1,6 +1,6 @@
 plugins {
-    id 'org.hibernate.orm' version '6.5.2.Final'
-    id 'org.graalvm.buildtools.native' version '0.10.2'
+    id 'org.hibernate.orm' version "${hibernatePluginVersion}"
+    id 'org.graalvm.buildtools.native' version "${graalvmNativePluginVersion}"
 }
 
 java {
@@ -10,17 +10,18 @@ java {
 
 dependencies {
     api 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    api 'org.flywaydb:flyway-core'
+    api "org.redisson:redisson:${redissonVersion}"
+    api "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springDocVersion}"
     api 'org.springframework.boot:spring-boot-starter-actuator'
     api 'org.springframework.boot:spring-boot-starter-data-jpa'
-    api 'org.springframework.boot:spring-boot-starter-data-ldap'
     api 'org.springframework.boot:spring-boot-starter-data-redis'
     api 'org.springframework.boot:spring-boot-starter-oauth2-client'
     api 'org.springframework.boot:spring-boot-starter-security'
+    api 'org.springframework.boot:spring-boot-starter-validation'
     api 'org.springframework.boot:spring-boot-starter-web'
-    api 'org.flywaydb:flyway-core'
     api 'org.springframework.cloud:spring-cloud-starter-openfeign'
     api 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
-    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'

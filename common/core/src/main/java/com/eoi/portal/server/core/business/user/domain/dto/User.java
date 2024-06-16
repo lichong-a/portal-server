@@ -3,7 +3,7 @@
  *
  */
 
-package com.eoi.portal.server.core.business.user.domain;
+package com.eoi.portal.server.core.business.user.domain.dto;
 
 import com.eoi.portal.server.core.base.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
