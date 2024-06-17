@@ -6,6 +6,8 @@
 package com.eoi.portal.server.core.base.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +26,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class BaseEntity {
     @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     public LocalDateTime createdAt;
     @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     public LocalDateTime updatedAt;
 }

@@ -3,15 +3,17 @@
  *
  */
 
-package com.eoi.portal.server.core.business.user.domain.dto;
+package com.eoi.portal.server.core.security.current.domain.dto;
 
 import com.eoi.portal.server.core.base.entity.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +22,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Set;
 
 /**
  * @author 李冲
@@ -34,24 +39,27 @@ import lombok.ToString;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @ToString
-@Table(name="users")
-public class User extends BaseEntity {
+@Table(name="tb_basic_authority")
+public class BasicAuthority extends BaseEntity implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private Long id;
-    @Column(length = 100)
-    private String nickName;
-    @Column(length = 100)
-    private String realName;
-    @Column(nullable = false, unique = true, length = 100)
-    private String username;
-    @Column(unique = true, length = 100)
-    private String email;
-    @Column(unique = true, length = 100)
-    private String phone;
-    @JsonIgnore
+
     @Column(nullable = false, length = 100)
-    private String password;
+    private String authorityName;
+
+    @Column(nullable = false, name = "authority_key", length = 100)
+    private String authority;
+
+    @Column(length = 500)
+    private String description;
+
+    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "authorities")
+    Set<User> users;
+
+    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "authorities")
+    Set<Role> roles;
+
 }

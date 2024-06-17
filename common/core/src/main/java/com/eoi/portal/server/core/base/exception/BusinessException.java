@@ -3,7 +3,7 @@
  *
  */
 
-package com.eoi.portal.server.core.base;
+package com.eoi.portal.server.core.base.exception;
 
 /**
  * @author 李冲

@@ -3,13 +3,13 @@
  *
  */
 
-package com.eoi.portal.server.core.business.user.service.impl;
+package com.eoi.portal.server.core.security.current.service.impl;
 
 import com.eoi.portal.server.core.base.service.impl.BaseServiceImpl;
-import com.eoi.portal.server.core.business.user.domain.dto.User;
-import com.eoi.portal.server.core.business.user.domain.vo.UserVo;
-import com.eoi.portal.server.core.business.user.repository.IUserRepository;
-import com.eoi.portal.server.core.business.user.service.IUserService;
+import com.eoi.portal.server.core.security.current.domain.dto.User;
+import com.eoi.portal.server.core.security.current.domain.vo.UserVo;
+import com.eoi.portal.server.core.security.current.repository.IUserRepository;
+import com.eoi.portal.server.core.security.current.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;

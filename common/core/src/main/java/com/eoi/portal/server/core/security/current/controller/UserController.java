@@ -3,12 +3,12 @@
  *
  */
 
-package com.eoi.portal.server.core.business.user.controller;
+package com.eoi.portal.server.core.security.current.controller;
 
 import com.eoi.portal.server.core.base.http.response.ResponseResult;
-import com.eoi.portal.server.core.business.user.domain.dto.User;
-import com.eoi.portal.server.core.business.user.domain.vo.UserVo;
-import com.eoi.portal.server.core.business.user.service.IUserService;
+import com.eoi.portal.server.core.security.current.domain.dto.User;
+import com.eoi.portal.server.core.security.current.domain.vo.UserVo;
+import com.eoi.portal.server.core.security.current.service.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

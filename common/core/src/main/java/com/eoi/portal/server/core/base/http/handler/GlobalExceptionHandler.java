@@ -5,7 +5,7 @@
 
 package com.eoi.portal.server.core.base.http.handler;
 
-import com.eoi.portal.server.core.base.BusinessException;
+import com.eoi.portal.server.core.base.exception.BusinessException;
 import com.eoi.portal.server.core.base.http.response.ResponseResult;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;

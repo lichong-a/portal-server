@@ -3,7 +3,7 @@
  *
  */
 
-package com.eoi.portal.server.core.business.user.domain.vo;
+package com.eoi.portal.server.core.security.current.domain.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;

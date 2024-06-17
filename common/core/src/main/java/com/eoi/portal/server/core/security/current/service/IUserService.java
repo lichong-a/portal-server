@@ -3,11 +3,11 @@
  *
  */
 
-package com.eoi.portal.server.core.business.user.service;
+package com.eoi.portal.server.core.security.current.service;
 
 import com.eoi.portal.server.core.base.service.IBaseService;
-import com.eoi.portal.server.core.business.user.domain.dto.User;
-import com.eoi.portal.server.core.business.user.domain.vo.UserVo;
+import com.eoi.portal.server.core.security.current.domain.dto.User;
+import com.eoi.portal.server.core.security.current.domain.vo.UserVo;
 import org.springframework.data.domain.Page;
 
 /**

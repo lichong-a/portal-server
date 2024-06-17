@@ -3,10 +3,10 @@
  *
  */
 
-package com.eoi.portal.server.core.business.user.repository;
+package com.eoi.portal.server.core.security.current.repository;
 
 import com.eoi.portal.server.core.base.repository.IBaseRepository;
-import com.eoi.portal.server.core.business.user.domain.dto.User;
+import com.eoi.portal.server.core.security.current.domain.dto.User;
 import org.springframework.stereotype.Repository;
 
 /**
