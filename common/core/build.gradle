@@ -10,6 +10,9 @@ java {
 
 dependencies {
     api 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    api "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
+    api "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
+    api "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
     api 'org.flywaydb:flyway-core'
     api "org.redisson:redisson:${redissonVersion}"
     api "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springDocVersion}"

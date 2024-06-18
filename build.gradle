@@ -5,6 +5,7 @@ buildscript {
         set('springCloudAlibabaVersion', '2023.0.1.0')
         set('redissonVersion', '3.31.0')
         set('springDocVersion', '2.5.0')
+        set('jjwtVersion', '0.12.5')
 
         set('hibernatePluginVersion', '6.5.2.Final')
         set('graalvmNativePluginVersion', '0.10.2')
@@ -27,7 +28,7 @@ allprojects {
         mavenLocal()
         mavenCentral()
     }
-    group 'com.eoi'
+    group 'org.funcode'
     version '0.0.1-SNAPSHOT'
     compileJava.options.encoding = 'UTF-8'
     compileTestJava.options.encoding = 'UTF-8'
