@@ -1,2 +1,4 @@
 rootProject.name = 'portal-server'
-include 'common:core', 'starter'
+include 'common:core', 'starter', 'module:system'
+findProject(':common:core')?.name = 'core'
+findProject(':module:system')?.name = 'system'
