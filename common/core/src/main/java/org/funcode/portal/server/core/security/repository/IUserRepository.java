@@ -3,10 +3,10 @@
  *
  */
 
-package org.funcode.portal.server.core.security.current.repository;
+package org.funcode.portal.server.core.security.repository;
 
 import org.funcode.portal.server.core.base.repository.IBaseRepository;
-import org.funcode.portal.server.core.security.current.domain.dto.User;
+import org.funcode.portal.server.core.security.domain.dto.User;
 import org.springframework.stereotype.Repository;
 
 /**

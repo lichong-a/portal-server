@@ -3,7 +3,7 @@
  *
  */
 
-package org.funcode.portal.server.core.security.current.domain.vo.request;
+package org.funcode.portal.server.core.security.domain.vo.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;

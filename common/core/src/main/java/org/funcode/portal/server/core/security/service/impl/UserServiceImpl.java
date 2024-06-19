@@ -3,13 +3,13 @@
  *
  */
 
-package org.funcode.portal.server.core.security.current.service.impl;
+package org.funcode.portal.server.core.security.service.impl;
 
 import org.funcode.portal.server.core.base.service.impl.BaseServiceImpl;
-import org.funcode.portal.server.core.security.current.domain.dto.User;
-import org.funcode.portal.server.core.security.current.domain.vo.UserVo;
-import org.funcode.portal.server.core.security.current.repository.IUserRepository;
-import org.funcode.portal.server.core.security.current.service.IUserService;
+import org.funcode.portal.server.core.security.domain.dto.User;
+import org.funcode.portal.server.core.security.domain.vo.UserVo;
+import org.funcode.portal.server.core.security.repository.IUserRepository;
+import org.funcode.portal.server.core.security.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;

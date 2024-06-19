@@ -3,11 +3,11 @@
  *
  */
 
-package org.funcode.portal.server.core.security.current.service;
+package org.funcode.portal.server.core.security.service;
 
 import org.funcode.portal.server.core.base.service.IBaseService;
-import org.funcode.portal.server.core.security.current.domain.dto.User;
-import org.funcode.portal.server.core.security.current.domain.vo.UserVo;
+import org.funcode.portal.server.core.security.domain.dto.User;
+import org.funcode.portal.server.core.security.domain.vo.UserVo;
 import org.springframework.data.domain.Page;
 
 /**

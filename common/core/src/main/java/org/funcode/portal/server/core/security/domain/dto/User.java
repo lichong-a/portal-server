@@ -3,9 +3,8 @@
  *
  */
 
-package org.funcode.portal.server.core.security.current.domain.dto;
+package org.funcode.portal.server.core.security.domain.dto;
 
-import org.funcode.portal.server.core.base.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -27,9 +26,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.funcode.portal.server.core.base.entity.BaseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -104,5 +108,17 @@ public class User extends BaseEntity implements UserDetails {
             inverseJoinColumns = {
                     @JoinColumn(name = "basic_authority_id")
             })
-    private List<BasicAuthority> authorities;
+    private Set<BasicAuthority> basicAuthorities;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> result = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(roles)) {
+            result.addAll(roles);
+        }
+        if (!CollectionUtils.isEmpty(basicAuthorities)) {
+            result.addAll(basicAuthorities);
+        }
+        return result;
+    }
 }

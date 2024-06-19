@@ -3,7 +3,7 @@
  *
  */
 
-package org.funcode.portal.server.core.security.current.service;
+package org.funcode.portal.server.core.security.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 

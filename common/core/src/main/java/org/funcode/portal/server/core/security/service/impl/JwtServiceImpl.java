@@ -3,13 +3,13 @@
  *
  */
 
-package org.funcode.portal.server.core.security.current.service.impl;
+package org.funcode.portal.server.core.security.service.impl;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.funcode.portal.server.core.security.current.service.IJwtService;
+import org.funcode.portal.server.core.security.service.IJwtService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;

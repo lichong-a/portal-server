@@ -3,7 +3,7 @@
  *
  */
 
-package org.funcode.portal.server.core.security.current.filter;
+package org.funcode.portal.server.core.security.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -11,9 +11,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.funcode.portal.server.core.security.current.service.IJwtService;
-import org.funcode.portal.server.core.security.current.service.IUserService;
-import org.funcode.portal.server.core.security.current.service.impl.UserDetailsServiceImpl;
+import org.funcode.portal.server.core.security.service.IJwtService;
+import org.funcode.portal.server.core.security.service.IUserService;
+import org.funcode.portal.server.core.security.service.impl.UserDetailsServiceImpl;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;

@@ -3,16 +3,16 @@
  *
  */
 
-package org.funcode.portal.server.core.security.current.controller;
+package org.funcode.portal.server.core.security.controller;
 
-import org.funcode.portal.server.core.base.http.response.ResponseResult;
-import org.funcode.portal.server.core.security.current.domain.dto.User;
-import org.funcode.portal.server.core.security.current.domain.vo.UserVo;
-import org.funcode.portal.server.core.security.current.service.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.funcode.portal.server.core.base.http.response.ResponseResult;
+import org.funcode.portal.server.core.security.domain.dto.User;
+import org.funcode.portal.server.core.security.domain.vo.UserVo;
+import org.funcode.portal.server.core.security.service.IUserService;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,10 +29,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "人员")
 @RestController
 @RequestMapping("/api/v1/user")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    IUserService userService;
+    private final IUserService userService;
 
     @Operation(summary = "根据邮箱获取人员")
     @GetMapping("getUserByEmail")

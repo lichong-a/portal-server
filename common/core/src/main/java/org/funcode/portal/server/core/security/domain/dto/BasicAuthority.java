@@ -3,9 +3,8 @@
  *
  */
 
-package org.funcode.portal.server.core.security.current.domain.dto;
+package org.funcode.portal.server.core.security.domain.dto;
 
-import org.funcode.portal.server.core.base.entity.BaseEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,6 +21,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.funcode.portal.server.core.base.entity.BaseEntity;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Set;
@@ -39,7 +39,7 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @ToString
-@Table(name="tb_basic_authority")
+@Table(name = "tb_basic_authority")
 public class BasicAuthority extends BaseEntity implements GrantedAuthority {
 
     @Id
@@ -50,16 +50,24 @@ public class BasicAuthority extends BaseEntity implements GrantedAuthority {
     @Column(nullable = false, length = 100)
     private String authorityName;
 
-    @Column(nullable = false, name = "authority_key", length = 100)
-    private String authority;
+    @Column(nullable = false, length = 100)
+    private String authorityKey;
 
     @Column(length = 500)
     private String description;
 
-    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "authorities")
-    Set<User> users;
+    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "basicAuthorities")
+    private Set<User> users;
 
-    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "authorities")
-    Set<Role> roles;
+    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "basicAuthorities")
+    private Set<Role> roles;
 
+    public void setAuthorityKey(String authorityKey) {
+        this.authorityKey = authorityKey.toUpperCase();
+    }
+
+    @Override
+    public String getAuthority() {
+        return this.authorityKey;
+    }
 }

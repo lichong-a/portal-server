@@ -3,11 +3,11 @@
  *
  */
 
-package org.funcode.portal.server.core.security.current.service;
+package org.funcode.portal.server.core.security.service;
 
 import org.funcode.portal.server.core.base.http.response.ResponseResult;
-import org.funcode.portal.server.core.security.current.domain.vo.request.SignInRequest;
-import org.funcode.portal.server.core.security.current.domain.vo.request.SignUpRequest;
+import org.funcode.portal.server.core.security.domain.vo.request.SignInRequest;
+import org.funcode.portal.server.core.security.domain.vo.request.SignUpRequest;
 
 /**
  * @author 李冲

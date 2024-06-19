@@ -3,12 +3,12 @@
  *
  */
 
-package org.funcode.portal.server.core.security.current.service.impl;
+package org.funcode.portal.server.core.security.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.funcode.portal.server.core.security.current.domain.dto.User;
-import org.funcode.portal.server.core.security.current.service.IUserService;
+import org.funcode.portal.server.core.security.domain.dto.User;
+import org.funcode.portal.server.core.security.service.IUserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -3,15 +3,15 @@
  *
  */
 
-package org.funcode.portal.server.core.security.current.controller;
+package org.funcode.portal.server.core.security.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.core.base.http.response.ResponseResult;
-import org.funcode.portal.server.core.security.current.domain.vo.request.SignInRequest;
-import org.funcode.portal.server.core.security.current.domain.vo.request.SignUpRequest;
-import org.funcode.portal.server.core.security.current.service.IAuthenticationService;
+import org.funcode.portal.server.core.security.domain.vo.request.SignInRequest;
+import org.funcode.portal.server.core.security.domain.vo.request.SignUpRequest;
+import org.funcode.portal.server.core.security.service.IAuthenticationService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

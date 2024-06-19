@@ -3,7 +3,7 @@
  *
  */
 
-package org.funcode.portal.server.core.security.current.domain.dto;
+package org.funcode.portal.server.core.security.domain.dto;
 
 import org.funcode.portal.server.core.base.entity.BaseEntity;
 import jakarta.persistence.CascadeType;
@@ -24,6 +24,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Set;
 
@@ -41,7 +42,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 @Table(name="tb_role")
-public class Role extends BaseEntity {
+public class Role extends BaseEntity implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,8 +67,21 @@ public class Role extends BaseEntity {
             inverseJoinColumns = {
                     @JoinColumn(name = "basic_authority_id")
             })
-    private Set<BasicAuthority> authorities;
+    private Set<BasicAuthority> basicAuthorities;
 
     @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "roles")
-    Set<User> users;
+    private Set<User> users;
+
+    public void setRoleKey(String roleKey) {
+        if (roleKey.toUpperCase().startsWith("ROLE_")) {
+            this.roleKey = roleKey.toUpperCase();
+        } else {
+            this.roleKey = "ROLE_" + roleKey.toUpperCase();
+        }
+    }
+
+    @Override
+    public String getAuthority() {
+        return this.roleKey;
+    }
 }
