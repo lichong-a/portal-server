@@ -7,6 +7,7 @@ package org.funcode.portal.server.common.core.security.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
 import org.funcode.portal.server.common.core.base.http.response.ResponseStatusEnum;
@@ -19,6 +20,7 @@ import org.funcode.portal.server.common.core.security.service.IJwtService;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Service;
  * @see <a href="https://lichong.work">李冲博客</a>
  * @since 0.0.1
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements IAuthenticationService {
@@ -87,20 +90,23 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         if (StringUtils.isBlank(request.getPassword())) {
             return ResponseResult.fail("密码不能为空", ResponseStatusEnum.HTTP_STATUS_400);
         }
-        User user = null;
+        String username = null;
         if (StringUtils.isNotBlank(request.getUsername())) {
-            user = userRepository.findByUsername(request.getUsername());
+            username = request.getUsername();
         } else if (StringUtils.isNotBlank(request.getEmail())) {
-            user = userRepository.findByEmail(request.getEmail());
+            username = request.getEmail();
         } else if (StringUtils.isNotBlank(request.getPhone())) {
-            user = userRepository.findByPhone(request.getPhone());
+            username = request.getPhone();
         }
-        if (user == null) {
+        if (username == null) {
             return ResponseResult.fail("用户名或密码不正确", ResponseStatusEnum.HTTP_STATUS_401);
         }
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), request.getPassword()));
-        var jwt = jwtService.generateToken(user);
+        // 实现登录逻辑，authenticate()会去调用 loadUserByUsername方法,返回 UserDetails
+        Authentication authenticate = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(username, request.getPassword()));
+        // 获取返回的用户
+        User currentUser = (User) authenticate.getPrincipal();
+        var jwt = jwtService.generateToken(currentUser);
         return ResponseResult.success(jwt);
     }
 }

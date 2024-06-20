@@ -14,6 +14,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.funcode.portal.server.common.core.base.validator.annotation.IsPhone;
+import org.funcode.portal.server.common.core.base.validator.annotation.IsUsernameValid;
 
 import java.time.LocalDate;
 
@@ -36,6 +38,7 @@ public class SignUpRequest {
     @Size(max = 100, message = "{security.current.domain.vo.request.SignUpRequest.realName.Size}")
     private String realName;
     @Size(max = 100, message = "{security.current.domain.vo.request.SignUpRequest.username.Size}")
+    @IsUsernameValid(message = "{security.current.domain.vo.request.SignUpRequest.username.IsUsernameValid}")
     private String username;
     @Size(max = 100, message = "{security.current.domain.vo.request.SignUpRequest.gender.Size}")
     private String gender;
@@ -43,6 +46,7 @@ public class SignUpRequest {
     @Email(message = "{security.current.domain.vo.request.SignUpRequest.email.Email}")
     private String email;
     @Size(max = 100, message = "{security.current.domain.vo.request.SignUpRequest.phone.Size}")
+    @IsPhone(message = "{security.current.domain.vo.request.SignUpRequest.phone.IsPhone}")
     private String phone;
     @Size(max = 100, message = "{security.current.domain.vo.request.SignUpRequest.password.Size}")
     private String password;
