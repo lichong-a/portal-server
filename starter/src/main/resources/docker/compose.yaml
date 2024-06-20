@@ -4,17 +4,16 @@ services:
     container_name: redis
     image: redis:7
     healthcheck:
-      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      test: [ "CMD" , "redis-cli" , "--raw" , "incr" , "ping" ]
       interval: 10s
       timeout: 3s
       retries: 5
     restart: unless-stopped
     volumes:
-      - ./volumes/redis/data:/data
-      - ./volumes/redis/logs:/logs
-      - ./volumes/redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./volumes/redis/data:/data:Z
+      - ./volumes/redis/logs:/logs:Z
     #配置文件启动
-    command: redis-server /usr/local/etc/redis/redis.conf
+    command: redis-server --logfile /logs/redis.log --requirepass ${REDIS_PASS} --bind 0.0.0.0
     ports:
       - ${REDIS_PORT}:${REDIS_PORT}
 
@@ -29,7 +28,6 @@ services:
     restart: unless-stopped
     volumes:
       - ./volumes/db/data:/var/lib/postgresql/data:Z
-    env_file: .env
     environment:
       - POSTGRES_PORT=${PG_PORT}
       - POSTGRES_USER=${PG_USER}

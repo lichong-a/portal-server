@@ -31,7 +31,7 @@ import java.util.Properties;
 @EntityScan("org.funcode.portal.server")
 @EnableTransactionManagement
 @RequiredArgsConstructor
-public class RelationalDBConfiguration {
+public class RelationalDBConfig {
 
     private final DataSource dataSource;
     private final Environment env;
