@@ -18,6 +18,7 @@ import lombok.Getter;
 public enum ResponseStatusEnum {
     SUCCESS("200", "success"),
     FAIL("500", "failed"),
+    LOGIN_USERNAME_PASSWORD_INVALID("401", "用户名或密码不正确"),
 
     HTTP_STATUS_200("200", "ok"),
     HTTP_STATUS_400("400", "request error"),

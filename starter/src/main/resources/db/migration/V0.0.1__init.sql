@@ -11,6 +11,7 @@ CREATE TABLE tb_user
     password                VARCHAR(100) NOT NULL,
     avatar                  VARCHAR(100) NULL,
     birthday                TIMESTAMP    NULL,
+    wechat_id               VARCHAR(100) NULL,
     account_non_expired     BOOLEAN      NOT NULL DEFAULT TRUE,
     account_non_locked      BOOLEAN      NOT NULL DEFAULT TRUE,
     credentials_non_expired BOOLEAN      NOT NULL DEFAULT TRUE,
@@ -29,6 +30,7 @@ comment on column tb_user.phone is '手机号';
 comment on column tb_user.password is '密码';
 comment on column tb_user.avatar is '头像';
 comment on column tb_user.birthday is '生日';
+comment on column tb_user.wechat_id is '微信ID';
 comment on column tb_user.account_non_expired is '账号是否未过期';
 comment on column tb_user.account_non_locked is '账号是否未锁定';
 comment on column tb_user.credentials_non_expired is '凭据是否未过期';

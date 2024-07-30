@@ -2,13 +2,17 @@ server:
   port: 8080
   servlet:
     context-path: /
-portal:
-  token:
-    signing:
+application:
+  security:
+    # 管理员用户名
+    admin-username: ${ADMIN_USERNAME}
+    # 管理员密码
+    admin-password: ${ADMIN_PASSWORD}
+    token:
       # 签名密钥
-      key: portalserver8fas8hage9SHVfsd847GD8475fd8880ejf
-    # token过期时间，单位：分钟
-    expiration: 30
+      signing-key: portalserver8fas8hage9SHVfsd847GD8475fd8880ejf
+      # token过期时间，单位：分钟
+      expiration: 30
 spring:
   application:
     name: portal-server
@@ -50,12 +54,23 @@ spring:
       # 连接测试query
       connection-test-query: SELECT 1
   flyway:
-    enabled: true
+    # 是否启用
+    enabled: ${FLYWAY_ENABLE}
     encoding: UTF-8
     # 可以支持多个location, 用','隔开
     locations: classpath:db/migration
     # migrate是否校验
     validate-on-migrate: true
+    # false 会删除指定 schema 下的所有 table, 生产务必禁掉。
+    clean-disabled: true
+    # 如果数据库不是空表，需要设置成 true，否则启动报错
+    baseline-on-migrate: true
+    # 版本控制日志表，默认flyway_schema_history,不同系统建议修改
+    table: ${FLYWAY_TABLE}
+    # 占位符替换是否开启
+    placeholder-replacement: ${FLYWAY_SQL_PLACEHOLDER_REPLACEMENT}
+    placeholder-prefix: ${FLYWAY_SQL_PLACEHOLDER_PREFIX}
+    placeholder-suffix: ${FLYWAY_SQL_PLACEHOLDER_SUFFIX}
   data:
     redis:
       host: ${REDIS_HOST}

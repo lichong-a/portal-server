@@ -9,8 +9,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
+import org.funcode.portal.server.common.core.config.ApplicationConfig;
 import org.funcode.portal.server.common.core.security.service.IJwtService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +27,9 @@ import java.util.function.Function;
  * @since 0.0.1
  */
 @Service
+@RequiredArgsConstructor
 public class JwtServiceImpl implements IJwtService {
-    @Value("${portal.token.signing.key}")
-    private String jwtSigningKey;
-    @Value("${portal.token.expiration:30}")
-    private Long jwtExpiredTime;
+    private final ApplicationConfig applicationConfig;
 
     @Override
     public String extractUserName(String token) {
@@ -73,7 +72,7 @@ public class JwtServiceImpl implements IJwtService {
                 .claims(extraClaims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * jwtExpiredTime))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * applicationConfig.getSecurity().token().expiration()))
                 .signWith(getSigningKey())
                 .compact();
     }
@@ -115,7 +114,7 @@ public class JwtServiceImpl implements IJwtService {
      * @return 签名密钥
      */
     private SecretKey getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(jwtSigningKey);
+        byte[] keyBytes = Decoders.BASE64.decode(applicationConfig.getSecurity().token().signingKey());
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }

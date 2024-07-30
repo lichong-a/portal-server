@@ -77,6 +77,8 @@ public class User extends BaseEntity implements UserDetails {
     @Column
     @Temporal(TemporalType.DATE)
     private LocalDate birthday;
+    @Column(length = 100)
+    private String wechatId;
     @Column(nullable = false)
     @Builder.Default
     private boolean accountNonExpired = true;

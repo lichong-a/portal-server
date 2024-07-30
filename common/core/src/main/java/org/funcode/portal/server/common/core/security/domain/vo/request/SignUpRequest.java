@@ -7,13 +7,7 @@ package org.funcode.portal.server.common.core.security.domain.vo.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.funcode.portal.server.common.core.base.validator.annotation.IsPhone;
 import org.funcode.portal.server.common.core.base.validator.annotation.IsUsernameValid;
 

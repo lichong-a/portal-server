@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.regex.Matcher;
@@ -20,8 +22,12 @@ import java.util.regex.Pattern;
  * @see <a href="https://lichong.work">李冲博客</a>
  * @since 0.0.1
  */
+@Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ValidatorUtil {
+
+    @Value("${application.security.admin-username:admin}")
+    private static String adminUsername;
 
     private static final Pattern username_pattern = Pattern.compile("^[a-z][a-z0-9]$");
     private static final Pattern mobile_pattern = Pattern.compile("1\\d{10}");
@@ -48,7 +54,7 @@ public class ValidatorUtil {
      * @return
      */
     public static boolean isUsernameValid(String username) {
-        if (StringUtils.isBlank(username) || username.length() < 3 || username.length() > 99) {
+        if (StringUtils.isBlank(username) || username.length() < 3 || username.length() > 99 || adminUsername.equals(username)) {
             return false;
         }
         Matcher m = username_pattern.matcher(username);

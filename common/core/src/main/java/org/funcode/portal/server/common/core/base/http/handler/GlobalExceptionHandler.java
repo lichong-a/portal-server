@@ -5,12 +5,14 @@
 
 package org.funcode.portal.server.common.core.base.http.handler;
 
-import org.funcode.portal.server.common.core.base.exception.BusinessException;
-import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
+import org.funcode.portal.server.common.core.base.exception.BusinessException;
+import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
+import org.funcode.portal.server.common.core.base.http.response.ResponseStatusEnum;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -53,6 +55,19 @@ public class GlobalExceptionHandler {
             exceptionDataBuilder.error("invalid parameter");
         }
         return ResponseResult.fail(exceptionDataBuilder.build(), "invalid parameter");
+    }
+
+    /**
+     * handle badCredentialsException.
+     *
+     * @param badCredentialsException exception
+     * @return ResponseResult
+     */
+    @ResponseBody
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseResult<BadCredentialsException> processBusinessException(BadCredentialsException badCredentialsException) {
+        log.error(badCredentialsException.getLocalizedMessage(), badCredentialsException);
+        return ResponseResult.fail(badCredentialsException.getLocalizedMessage(), ResponseStatusEnum.LOGIN_USERNAME_PASSWORD_INVALID);
     }
 
     /**
