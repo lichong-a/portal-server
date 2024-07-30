@@ -7,13 +7,7 @@ package org.funcode.portal.server.common.core.security.domain.vo.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * @author 李冲
@@ -29,13 +23,13 @@ import lombok.ToString;
 @ToString
 public class SignInRequest {
 
-    @Size(max = 100, message = "{security.current.domain.vo.request.SignInRequest.username.Size}")
+    @Size(max = 100, message = "{core.security.current.domain.vo.request.SignInRequest.username.Size}")
     private String username;
-    @Size(max = 100, message = "{security.current.domain.vo.request.SignInRequest.email.Size}")
+    @Size(max = 100, message = "{core.security.current.domain.vo.request.SignInRequest.email.Size}")
     private String email;
-    @Size(max = 100, message = "{security.current.domain.vo.request.SignInRequest.phone.Size}")
+    @Size(max = 100, message = "{core.security.current.domain.vo.request.SignInRequest.phone.Size}")
     private String phone;
-    @Size(max = 100, message = "{security.current.domain.vo.request.SignInRequest.password.Size}")
-    @NotBlank(message = "{security.current.domain.vo.request.SignInRequest.password.NotBlank}")
+    @Size(max = 100, message = "{core.security.current.domain.vo.request.SignInRequest.password.Size}")
+    @NotBlank(message = "{core.security.current.domain.vo.request.SignInRequest.password.NotBlank}")
     private String password;
 }

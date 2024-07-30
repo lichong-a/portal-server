@@ -11,15 +11,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
 import org.funcode.portal.server.common.core.security.domain.dto.User;
-import org.funcode.portal.server.module.system.user.domain.vo.UserVo;
+import org.funcode.portal.server.module.system.user.domain.vo.UserQueryVo;
 import org.funcode.portal.server.module.system.user.service.IUserService;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 李冲
@@ -36,13 +32,29 @@ public class UserController {
 
     @Operation(summary = "根据邮箱获取人员")
     @GetMapping("getUserByEmail")
+    @PreAuthorize(value = "hasAuthority('system:user:getUserByEmail')")
     public ResponseResult<User> getUserByEmail(@RequestParam String email) {
         return ResponseResult.success(userService.findByEmail(email));
     }
 
-    @Operation(summary = "根据不同条件获取人员列表")
+    @Operation(summary = "根据用户名获取人员")
+    @GetMapping("getUserByUsername")
+    @PreAuthorize(value = "hasAuthority('system:user:getUserByUsername')")
+    public ResponseResult<User> getUserByUsername(@RequestParam String username) {
+        return ResponseResult.success(userService.findByUsername(username));
+    }
+
+    @Operation(summary = "根据微信ID获取人员")
+    @GetMapping("getUserByWechatId")
+    @PreAuthorize(value = "hasAuthority('system:user:getUserByWechatId')")
+    public ResponseResult<User> getUserByWechatId(@RequestParam String wechatId) {
+        return ResponseResult.success(userService.findByWechatId(wechatId));
+    }
+
+    @Operation(summary = "根据不同条件模糊分页查询人员列表")
     @PostMapping("getUserPageList")
-    public ResponseResult<Page<User>> getUserPageList(@Valid @RequestBody UserVo userVo) {
-        return ResponseResult.success(userService.findPage(userVo));
+    @PreAuthorize(value = "hasAuthority('system:user:getUserPageList')")
+    public ResponseResult<Page<User>> getUserPageList(@Valid @RequestBody UserQueryVo userQueryVo) {
+        return ResponseResult.success(userService.findPage(userQueryVo));
     }
 }

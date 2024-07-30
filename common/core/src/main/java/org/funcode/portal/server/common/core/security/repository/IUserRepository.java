@@ -19,4 +19,5 @@ public interface IUserRepository extends IBaseRepository<User, Long> {
     User findByEmail(String email);
     User findByUsername(String username);
     User findByPhone(String phone);
+    User findByWechatId(String wechatId);
 }

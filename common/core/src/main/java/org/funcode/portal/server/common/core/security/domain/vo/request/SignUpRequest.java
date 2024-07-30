@@ -27,24 +27,24 @@ import java.time.LocalDate;
 @ToString
 public class SignUpRequest {
 
-    @Size(max = 100, message = "{security.current.domain.vo.request.SignUpRequest.nickName.Size}")
+    @Size(max = 100, message = "{core.security.current.domain.vo.request.SignUpRequest.nickName.Size}")
     private String nickName;
-    @Size(max = 100, message = "{security.current.domain.vo.request.SignUpRequest.realName.Size}")
+    @Size(max = 100, message = "{core.security.current.domain.vo.request.SignUpRequest.realName.Size}")
     private String realName;
-    @Size(max = 100, message = "{security.current.domain.vo.request.SignUpRequest.username.Size}")
-    @IsUsernameValid(message = "{security.current.domain.vo.request.SignUpRequest.username.IsUsernameValid}")
+    @Size(max = 100, message = "{core.security.current.domain.vo.request.SignUpRequest.username.Size}")
+    @IsUsernameValid(message = "{core.security.current.domain.vo.request.SignUpRequest.username.IsUsernameValid}")
     private String username;
-    @Size(max = 100, message = "{security.current.domain.vo.request.SignUpRequest.gender.Size}")
+    @Size(max = 100, message = "{core.security.current.domain.vo.request.SignUpRequest.gender.Size}")
     private String gender;
-    @Size(max = 100, message = "{security.current.domain.vo.request.SignUpRequest.email.Size}")
-    @Email(message = "{security.current.domain.vo.request.SignUpRequest.email.Email}")
+    @Size(max = 100, message = "{core.security.current.domain.vo.request.SignUpRequest.email.Size}")
+    @Email(message = "{core.security.current.domain.vo.request.SignUpRequest.email.Email}")
     private String email;
-    @Size(max = 100, message = "{security.current.domain.vo.request.SignUpRequest.phone.Size}")
-    @IsPhone(message = "{security.current.domain.vo.request.SignUpRequest.phone.IsPhone}")
+    @Size(max = 100, message = "{core.security.current.domain.vo.request.SignUpRequest.phone.Size}")
+    @IsPhone(message = "{core.security.current.domain.vo.request.SignUpRequest.phone.IsPhone}")
     private String phone;
-    @Size(max = 100, message = "{security.current.domain.vo.request.SignUpRequest.password.Size}")
+    @Size(max = 100, message = "{core.security.current.domain.vo.request.SignUpRequest.password.Size}")
     private String password;
-    @Size(max = 100, message = "{security.current.domain.vo.request.SignUpRequest.avatar.Size}")
+    @Size(max = 100, message = "{core.security.current.domain.vo.request.SignUpRequest.avatar.Size}")
     private String avatar;
     private LocalDate birthday;
 }

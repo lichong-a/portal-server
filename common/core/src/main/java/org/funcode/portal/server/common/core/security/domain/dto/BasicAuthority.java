@@ -5,22 +5,8 @@
 
 package org.funcode.portal.server.common.core.security.domain.dto;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 import org.funcode.portal.server.common.core.base.entity.BaseEntity;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -69,5 +55,12 @@ public class BasicAuthority extends BaseEntity implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return this.authorityKey;
+    }
+
+    public static final class ColumnName {
+        public static final String ID = "id";
+        public static final String AUTHORITY_NAME = "authority_name";
+        public static final String AUTHORITY_KEY = "authority_key";
+        public static final String DESCRIPTION = "description";
     }
 }

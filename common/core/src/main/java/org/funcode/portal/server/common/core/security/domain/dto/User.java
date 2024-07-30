@@ -6,26 +6,8 @@
 package org.funcode.portal.server.common.core.security.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 import org.funcode.portal.server.common.core.base.entity.BaseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -77,7 +59,7 @@ public class User extends BaseEntity implements UserDetails {
     @Column
     @Temporal(TemporalType.DATE)
     private LocalDate birthday;
-    @Column(length = 100)
+    @Column(unique = true, length = 100)
     private String wechatId;
     @Column(nullable = false)
     @Builder.Default
@@ -122,5 +104,23 @@ public class User extends BaseEntity implements UserDetails {
             result.addAll(basicAuthorities);
         }
         return result;
+    }
+
+    public static final class ColumnName {
+        public static final String ID = "id";
+        public static final String NICK_NAME = "nick_name";
+        public static final String REAL_NAME = "real_name";
+        public static final String USERNAME = "username";
+        public static final String GENDER = "gender";
+        public static final String EMAIL = "email";
+        public static final String PHONE = "phone";
+        public static final String PASSWORD = "password";
+        public static final String AVATAR = "avatar";
+        public static final String BIRTHDAY = "birthday";
+        public static final String WECHAT_ID = "wechat_id";
+        public static final String ACCOUNT_NON_EXPIRED = "account_non_expired";
+        public static final String ACCOUNT_NON_LOCKED = "account_non_locked";
+        public static final String CREDENTIALS_NON_EXPIRED = "credentials_non_expired";
+        public static final String ENABLED = "enabled";
     }
 }

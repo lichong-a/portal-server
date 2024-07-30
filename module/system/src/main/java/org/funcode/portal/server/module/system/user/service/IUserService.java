@@ -7,7 +7,7 @@ package org.funcode.portal.server.module.system.user.service;
 
 import org.funcode.portal.server.common.core.base.service.IBaseService;
 import org.funcode.portal.server.common.core.security.domain.dto.User;
-import org.funcode.portal.server.module.system.user.domain.vo.UserVo;
+import org.funcode.portal.server.module.system.user.domain.vo.UserQueryVo;
 import org.springframework.data.domain.Page;
 
 /**
@@ -17,9 +17,11 @@ import org.springframework.data.domain.Page;
  */
 public interface IUserService extends IBaseService<User, Long> {
 
-    Page<User> findPage(UserVo userVo);
+    Page<User> findPage(UserQueryVo userQueryVo);
 
     User findByEmail(String email);
 
     User findByUsername(String username);
+
+    User findByWechatId(String wechatId);
 }

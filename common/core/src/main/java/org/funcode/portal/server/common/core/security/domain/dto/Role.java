@@ -5,25 +5,9 @@
 
 package org.funcode.portal.server.common.core.security.domain.dto;
 
+import jakarta.persistence.*;
+import lombok.*;
 import org.funcode.portal.server.common.core.base.entity.BaseEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Set;
@@ -83,5 +67,12 @@ public class Role extends BaseEntity implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return this.roleKey;
+    }
+
+    public static final class ColumnName {
+        public static final String ID = "id";
+        public static final String ROLE_NAME = "role_name";
+        public static final String ROLE_KEY = "role_key";
+        public static final String DESCRIPTION = "description";
     }
 }

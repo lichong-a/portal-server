@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @see <a href="https://lichong.work">李冲博客</a>
  * @since 0.0.1
  */
-@Tag(name = "权限")
+@Tag(name = "鉴权")
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
