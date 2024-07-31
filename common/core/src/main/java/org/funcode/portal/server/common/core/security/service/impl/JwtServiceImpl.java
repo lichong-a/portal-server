@@ -47,6 +47,11 @@ public class JwtServiceImpl implements IJwtService {
         return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
+    @Override
+    public boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
     /**
      * 提取claims
      *
@@ -61,11 +66,11 @@ public class JwtServiceImpl implements IJwtService {
     }
 
     /**
-     * 生成token
+     * 生成 access-token
      *
      * @param extraClaims 额外claims
      * @param userDetails 用户信息
-     * @return token
+     * @return access-token
      */
     private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return Jwts.builder()
@@ -75,16 +80,6 @@ public class JwtServiceImpl implements IJwtService {
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * applicationConfig.getSecurity().token().expiration()))
                 .signWith(getSigningKey())
                 .compact();
-    }
-
-    /**
-     * token是否过期
-     *
-     * @param token token
-     * @return 是否过期
-     */
-    private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
     }
 
     /**

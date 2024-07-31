@@ -20,11 +20,11 @@ import org.springframework.beans.BeanUtils;
 @Schema(description = "权限新增VO")
 public class AuthorityAddVo {
 
-    @Size(max = 100, message = "{sysyem.domain.vo.AuthorityAddVo.authorityName.Size}")
+    @Size(max = 100, message = "{system.domain.vo.AuthorityAddVo.authorityName.Size}")
     private String authorityName;
-    @Size(max = 100, message = "{sysyem.domain.vo.AuthorityAddVo.authorityKey.Size}")
+    @Size(max = 100, message = "{system.domain.vo.AuthorityAddVo.authorityKey.Size}")
     private String authorityKey;
-    @Size(max = 500, message = "{sysyem.domain.vo.AuthorityAddVo.description.Size}")
+    @Size(max = 500, message = "{system.domain.vo.AuthorityAddVo.description.Size}")
     private String description;
 
     public BasicAuthority transToBasicAuthority() {

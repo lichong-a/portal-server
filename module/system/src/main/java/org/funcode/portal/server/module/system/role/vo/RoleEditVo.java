@@ -21,13 +21,13 @@ import org.springframework.beans.BeanUtils;
 @Schema(description = "角色编辑VO")
 public class RoleEditVo {
 
-    @NotNull(message = "{sysyem.domain.vo.RoleEditVo.id.NotNull}")
+    @NotNull(message = "{system.domain.vo.RoleEditVo.id.NotNull}")
     private Long id;
-    @Size(max = 100, message = "{sysyem.domain.vo.RoleEditVo.roleName.Size}")
+    @Size(max = 100, message = "{system.domain.vo.RoleEditVo.roleName.Size}")
     private String roleName;
-    @Size(max = 100, message = "{sysyem.domain.vo.RoleEditVo.roleKey.Size}")
+    @Size(max = 100, message = "{system.domain.vo.RoleEditVo.roleKey.Size}")
     private String roleKey;
-    @Size(max = 500, message = "{sysyem.domain.vo.RoleEditVo.description.Size}")
+    @Size(max = 500, message = "{system.domain.vo.RoleEditVo.description.Size}")
     private String description;
 
     public Role transToRole() {

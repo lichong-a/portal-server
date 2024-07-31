@@ -6,7 +6,6 @@
 package org.funcode.portal.server.common.core.security.service;
 
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
-import org.funcode.portal.server.common.core.security.domain.vo.request.SignInRequest;
 import org.funcode.portal.server.common.core.security.domain.vo.request.SignUpRequest;
 
 /**
@@ -16,6 +15,4 @@ import org.funcode.portal.server.common.core.security.domain.vo.request.SignUpRe
  */
 public interface IAuthenticationService {
     ResponseResult<String> signup(SignUpRequest request);
-
-    ResponseResult<String> signin(SignInRequest request);
 }

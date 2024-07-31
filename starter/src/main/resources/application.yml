@@ -8,11 +8,17 @@ application:
     admin-username: ${ADMIN_USERNAME}
     # 管理员密码
     admin-password: ${ADMIN_PASSWORD}
+    # 注销成功跳转地址，默认为"/login?logout"
+    logout-success-url:
+    # 登录页地址，默认：/login
+    login-page:
     token:
       # 签名密钥
       signing-key: portalserver8fas8hage9SHVfsd847GD8475fd8880ejf
-      # token过期时间，单位：分钟
+      # access-token过期时间，单位：分钟
       expiration: 30
+      # refresh-token的过期时间，单位：分钟
+      refresh-expiration: 10080
 spring:
   application:
     name: portal-server
@@ -114,6 +120,8 @@ springdoc:
   swagger-ui:
     enabled: ${SWAGGER_ENABLE}
     path: /swagger-ui
+  show-login-endpoint: true
+  show-oauth2-endpoints: true
 logging:
   level:
     root: info

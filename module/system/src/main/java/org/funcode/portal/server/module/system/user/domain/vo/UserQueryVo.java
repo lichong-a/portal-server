@@ -21,18 +21,18 @@ import java.time.LocalDateTime;
 @Data
 @Schema(description = "人员查询条件VO")
 public class UserQueryVo {
-    @Size(max = 100, message = "{sysyem.domain.vo.UserQueryVo.id.Size}")
+    @Size(max = 100, message = "{system.domain.vo.UserQueryVo.id.Size}")
     private Long id;
-    @Size(max = 100, message = "{sysyem.domain.vo.UserQueryVo.nickName.Size}")
+    @Size(max = 100, message = "{system.domain.vo.UserQueryVo.nickName.Size}")
     private String nickName;
-    @Size(max = 100, message = "{sysyem.domain.vo.UserQueryVo.realName.Size}")
+    @Size(max = 100, message = "{system.domain.vo.UserQueryVo.realName.Size}")
     private String realName;
-    @Size(max = 100, message = "{sysyem.domain.vo.UserQueryVo.username.Size}")
+    @Size(max = 100, message = "{system.domain.vo.UserQueryVo.username.Size}")
     private String username;
-    @Size(max = 100, message = "{sysyem.domain.vo.UserQueryVo.email.Size}")
-    @Email(message = "{sysyem.domain.vo.UserQueryVo.email.Email}")
+    @Size(max = 100, message = "{system.domain.vo.UserQueryVo.email.Size}")
+    @Email(message = "{system.domain.vo.UserQueryVo.email.Email}")
     private String email;
-    @Size(max = 100, message = "{sysyem.domain.vo.UserQueryVo.phone.Size}")
+    @Size(max = 100, message = "{system.domain.vo.UserQueryVo.phone.Size}")
     private String phone;
     private LocalDateTime createdAtBegin;
     private LocalDateTime createdAtEnd;

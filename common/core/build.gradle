@@ -10,6 +10,7 @@ java {
 
 dependencies {
     api 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    api "com.github.penggle:kaptcha:${kaptchaVersion}"
     api "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
     api "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
     api "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"

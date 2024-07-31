@@ -21,13 +21,13 @@ import org.springframework.beans.BeanUtils;
 @Schema(description = "权限编辑VO")
 public class AuthorityEditVo {
 
-    @NotNull(message = "{sysyem.domain.vo.AuthorityEditVo.id.NotNull}")
+    @NotNull(message = "{system.domain.vo.AuthorityEditVo.id.NotNull}")
     private Long id;
-    @Size(max = 100, message = "{sysyem.domain.vo.AuthorityEditVo.authorityName.Size}")
+    @Size(max = 100, message = "{system.domain.vo.AuthorityEditVo.authorityName.Size}")
     private String authorityName;
-    @Size(max = 100, message = "{sysyem.domain.vo.AuthorityEditVo.authorityKey.Size}")
+    @Size(max = 100, message = "{system.domain.vo.AuthorityEditVo.authorityKey.Size}")
     private String authorityKey;
-    @Size(max = 500, message = "{sysyem.domain.vo.AuthorityEditVo.description.Size}")
+    @Size(max = 500, message = "{system.domain.vo.AuthorityEditVo.description.Size}")
     private String description;
 
     public BasicAuthority transToBasicAuthority() {

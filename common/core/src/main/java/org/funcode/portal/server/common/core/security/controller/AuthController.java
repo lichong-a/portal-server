@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
-import org.funcode.portal.server.common.core.security.domain.vo.request.SignInRequest;
 import org.funcode.portal.server.common.core.security.domain.vo.request.SignUpRequest;
 import org.funcode.portal.server.common.core.security.service.IAuthenticationService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,11 +33,5 @@ public class AuthController {
     @Operation(summary = "注册")
     public ResponseResult<String> signup(@RequestBody @Valid SignUpRequest request) {
         return authenticationService.signup(request);
-    }
-
-    @PostMapping("/signin")
-    @Operation(summary = "登录")
-    public ResponseResult<String> signin(@RequestBody @Valid SignInRequest request) {
-        return authenticationService.signin(request);
     }
 }

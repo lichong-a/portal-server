@@ -1,0 +1,15 @@
+${AnsiColor.BLACK}${AnsiBackground.BRIGHT_BLACK}====================================================================================================
+${AnsiColor.CYAN}
+███████╗██╗   ██╗███╗   ██╗ ██████╗ ██████╗ ██████╗ ███████╗
+██╔════╝██║   ██║████╗  ██║██╔════╝██╔═══██╗██╔══██╗██╔════╝
+█████╗  ██║   ██║██╔██╗ ██║██║     ██║   ██║██║  ██║█████╗
+██╔══╝  ██║   ██║██║╚██╗██║██║     ██║   ██║██║  ██║██╔══╝
+██║     ╚██████╔╝██║ ╚████║╚██████╗╚██████╔╝██████╔╝███████╗
+╚═╝      ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝
+${AnsiColor.BLACK}${AnsiBackground.BRIGHT_BLACK}====================================================================================================
+${AnsiColor.BRIGHT_YELLOW}${application.title}
+${AnsiColor.BRIGHT_YELLOW}程序版本 : ${application.formatted-version}
+${AnsiColor.BRIGHT_YELLOW}Java 版本 : ${java.version}
+${AnsiColor.BRIGHT_YELLOW}Spring Boot 版本 : ${spring-boot.formatted-version}
+${AnsiColor.BLACK}${AnsiBackground.BRIGHT_BLACK}====================================================================================================
+${AnsiColor.DEFAULT}${AnsiBackground.DEFAULT}

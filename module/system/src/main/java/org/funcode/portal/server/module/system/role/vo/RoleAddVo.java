@@ -20,11 +20,11 @@ import org.springframework.beans.BeanUtils;
 @Schema(description = "角色新增VO")
 public class RoleAddVo {
 
-    @Size(max = 100, message = "{sysyem.domain.vo.RoleAddVo.roleName.Size}")
+    @Size(max = 100, message = "{system.domain.vo.RoleAddVo.roleName.Size}")
     private String roleName;
-    @Size(max = 100, message = "{sysyem.domain.vo.RoleAddVo.roleKey.Size}")
+    @Size(max = 100, message = "{system.domain.vo.RoleAddVo.roleKey.Size}")
     private String roleKey;
-    @Size(max = 500, message = "{sysyem.domain.vo.RoleAddVo.description.Size}")
+    @Size(max = 500, message = "{system.domain.vo.RoleAddVo.description.Size}")
     private String description;
 
     public Role transToRole() {

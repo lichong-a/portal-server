@@ -20,13 +20,13 @@ import java.time.LocalDateTime;
 @Data
 @Schema(description = "权限查询条件VO")
 public class AuthorityQueryVo {
-    @Size(max = 100, message = "{sysyem.domain.vo.AuthorityQueryVo.id.Size}")
+    @Size(max = 100, message = "{system.domain.vo.AuthorityQueryVo.id.Size}")
     private Long id;
-    @Size(max = 100, message = "{sysyem.domain.vo.AuthorityQueryVo.authorityName.Size}")
+    @Size(max = 100, message = "{system.domain.vo.AuthorityQueryVo.authorityName.Size}")
     private String authorityName;
-    @Size(max = 100, message = "{sysyem.domain.vo.AuthorityQueryVo.authorityKey.Size}")
+    @Size(max = 100, message = "{system.domain.vo.AuthorityQueryVo.authorityKey.Size}")
     private String authorityKey;
-    @Size(max = 500, message = "{sysyem.domain.vo.AuthorityQueryVo.description.Size}")
+    @Size(max = 500, message = "{system.domain.vo.AuthorityQueryVo.description.Size}")
     private String description;
     private LocalDateTime createdAtBegin;
     private LocalDateTime createdAtEnd;

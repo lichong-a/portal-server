@@ -6,6 +6,7 @@ buildscript {
         set('redissonVersion', '3.31.0')
         set('springDocVersion', '2.5.0')
         set('jjwtVersion', '0.12.5')
+        set('kaptchaVersion', '2.3.2')
 
         set('hibernatePluginVersion', '6.5.2.Final')
         set('graalvmNativePluginVersion', '0.10.2')

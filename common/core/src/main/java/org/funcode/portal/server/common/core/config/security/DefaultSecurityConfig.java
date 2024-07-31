@@ -7,7 +7,11 @@ package org.funcode.portal.server.common.core.config.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.funcode.portal.server.common.core.config.ApplicationConfig;
 import org.funcode.portal.server.common.core.security.filter.JwtTokenFilter;
+import org.funcode.portal.server.common.core.security.handler.CustomAuthenticationFailureHandler;
+import org.funcode.portal.server.common.core.security.handler.CustomAuthenticationSuccessHandler;
 import org.funcode.portal.server.common.core.security.service.impl.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,6 +46,9 @@ public class DefaultSecurityConfig {
 
     private final UserDetailsServiceImpl userDetailService;
     private final JwtTokenFilter jwtTokenFilter;
+    private final ApplicationConfig applicationConfig;
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -59,8 +66,21 @@ public class DefaultSecurityConfig {
                         .anyRequest()
                         .authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
-                .logout(logout -> logout.addLogoutHandler(clearSiteData))
-                .authenticationProvider(authenticationProvider()).addFilterBefore(
+                .formLogin(login -> login
+                        .usernameParameter("username")
+                        .passwordParameter("password")
+                        .loginPage(StringUtils.isBlank(applicationConfig.getSecurity().loginPage()) ? "/login" : applicationConfig.getSecurity().loginPage())
+                        .loginProcessingUrl("/api/v1/auth/login")
+                        .successHandler(customAuthenticationSuccessHandler)
+                        .failureHandler(customAuthenticationFailureHandler))
+                .logout(logout -> logout
+                        .logoutUrl("/api/v1/auth/logout")
+                        .addLogoutHandler(clearSiteData)
+                        .logoutSuccessUrl(
+                                StringUtils.isBlank(applicationConfig.getSecurity().logoutSuccessUrl()) ? "/login?logout" : applicationConfig.getSecurity().logoutSuccessUrl())
+                )
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(
                         jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
