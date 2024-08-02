@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.funcode.portal.server.common.core.base.entity.BaseEntity;
+import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.CollectionUtils;
@@ -33,45 +35,62 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 @Table(name = "tb_user")
+@Comment("人员表")
+@DynamicUpdate
 public class User extends BaseEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
+    @Comment("人员ID")
     private Long id;
     @Column(length = 100)
+    @Comment("昵称")
     private String nickName;
     @Column(length = 100)
+    @Comment("真实姓名")
     private String realName;
     @Column(nullable = false, unique = true, length = 100)
+    @Comment("用户名")
     private String username;
     @Column(length = 100)
+    @Comment("性别")
     private String gender;
     @Column(unique = true, length = 100)
+    @Comment("邮箱")
     private String email;
     @Column(unique = true, length = 100)
+    @Comment("手机号")
     private String phone;
     @JsonIgnore
     @Column(nullable = false, length = 100)
+    @Comment("密码")
     private String password;
     @Column(length = 300)
+    @Comment("头像")
     private String avatar;
     @Column
     @Temporal(TemporalType.DATE)
+    @Comment("生日")
     private LocalDate birthday;
     @Column(unique = true, length = 100)
+    @Comment("微信ID")
     private String wechatId;
     @Column(nullable = false)
     @Builder.Default
+    @Comment("账号是否未过期")
     private boolean accountNonExpired = true;
     @Column(nullable = false)
     @Builder.Default
+    @Comment("账号是否未锁定")
     private boolean accountNonLocked = true;
     @Column(nullable = false)
     @Builder.Default
+    @Comment("凭据是否未过期")
     private boolean credentialsNonExpired = true;
     @Column(nullable = false)
     @Builder.Default
+    @Comment("是否启用")
     private boolean enabled = true;
     @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(

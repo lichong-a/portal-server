@@ -8,6 +8,8 @@ package org.funcode.portal.server.common.core.security.domain.dto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.funcode.portal.server.common.core.base.entity.BaseEntity;
+import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Set;
@@ -26,20 +28,26 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 @Table(name = "tb_basic_authority")
+@Comment("权限表")
+@DynamicUpdate
 public class BasicAuthority extends BaseEntity implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
+    @Comment("权限ID")
     private Long id;
 
     @Column(nullable = false, length = 100)
+    @Comment("权限名称")
     private String authorityName;
 
     @Column(nullable = false, length = 100)
+    @Comment("权限标识")
     private String authorityKey;
 
     @Column(length = 500)
+    @Comment("权限描述")
     private String description;
 
     @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "basicAuthorities")

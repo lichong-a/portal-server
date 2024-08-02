@@ -97,16 +97,14 @@ spring:
           # 连接分配应该阻塞的最大时间
           max-wait: 2000
   jpa:
-    generate-ddl: false
+    generate-ddl: true
     open-in-view: false
     hibernate:
-      ddl-auto: none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
-        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
+        physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
         format_sql: true
   docker:
     compose:
