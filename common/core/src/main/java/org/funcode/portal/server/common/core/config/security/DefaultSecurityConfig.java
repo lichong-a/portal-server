@@ -60,8 +60,11 @@ public class DefaultSecurityConfig {
                                 "/api/v1/auth/**",
                                 "/swagger-ui",
                                 "/swagger-ui/**",
-                                "/api-docs",
-                                "/api-docs/**"
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/webjars/**",
+                                "favicon.ico",
+                                "/doc.html"
                         ).permitAll()
                         .anyRequest()
                         .authenticated())

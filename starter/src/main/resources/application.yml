@@ -112,14 +112,18 @@ spring:
       file: classpath:docker/compose.yaml
 springdoc:
   api-docs:
-    enabled: true
-    version: openapi_3_1
-    path: /api-docs
+    enabled: ${API_DOC_ENABLE}
+    version: openapi_3_0
+    path: /v3/api-docs
   swagger-ui:
-    enabled: ${SWAGGER_ENABLE}
+    enabled: ${API_DOC_ENABLE}
     path: /swagger-ui
   show-login-endpoint: true
   show-oauth2-endpoints: true
+knife4j:
+  enable: ${API_DOC_ENABLE}
+  setting:
+    language: zh_cn
 logging:
   level:
     root: info

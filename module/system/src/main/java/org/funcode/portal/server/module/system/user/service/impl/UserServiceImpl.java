@@ -5,6 +5,7 @@
 
 package org.funcode.portal.server.module.system.user.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.base.entity.BaseEntity;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
@@ -22,21 +23,10 @@ import org.springframework.stereotype.Service;
  * @since 0.0.1
  */
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl extends BaseServiceImpl<User, Long> implements IUserService {
 
-    /**
-     * repository.
-     */
     private final IUserRepository userRepository;
-
-    /**
-     * init.
-     *
-     * @param repository user dao
-     */
-    public UserServiceImpl(final IUserRepository repository) {
-        this.userRepository = repository;
-    }
 
     /**
      * @return base dao
@@ -61,6 +51,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements IUse
                                 StringUtils.isNotBlank(userQueryVo.getNickName()) ? criteriaBuilder.like(root.get(User.ColumnName.NICK_NAME), "%" + userQueryVo.getNickName() + "%") : null,
                                 StringUtils.isNotBlank(userQueryVo.getRealName()) ? criteriaBuilder.like(root.get(User.ColumnName.REAL_NAME), "%" + userQueryVo.getRealName() + "%") : null,
                                 StringUtils.isNotBlank(userQueryVo.getPhone()) ? criteriaBuilder.like(root.get(User.ColumnName.PHONE), "%" + userQueryVo.getPhone() + "%") : null,
+                                StringUtils.isNotBlank(userQueryVo.getWechatId()) ? criteriaBuilder.like(root.get(User.ColumnName.WECHAT_ID), "%" + userQueryVo.getWechatId() + "%") : null,
                                 userQueryVo.getId() != null ? criteriaBuilder.equal(root.get(User.ColumnName.ID), userQueryVo.getId()) : null,
                                 userQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(BaseEntity.ColumnName.CREATED_AT), userQueryVo.getCreatedAtBegin()) : null,
                                 userQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(BaseEntity.ColumnName.CREATED_AT), userQueryVo.getCreatedAtEnd()) : null,

@@ -6,11 +6,12 @@
 package org.funcode.portal.server.module.system.role.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.funcode.portal.server.common.core.security.domain.dto.Role;
-import org.springframework.beans.BeanUtils;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author 李冲
@@ -18,21 +19,23 @@ import org.springframework.beans.BeanUtils;
  * @since 0.0.1
  */
 @Data
-@Schema(description = "角色编辑VO")
-public class RoleEditVo {
+@Component
+@RequiredArgsConstructor
+@Schema(description = "角色新增或编辑VO")
+public class RoleAddOrEditVo {
 
-    @NotNull(message = "{system.domain.vo.RoleEditVo.id.NotNull}")
+    @Schema(description = "角色ID")
     private Long id;
     @Size(max = 100, message = "{system.domain.vo.RoleEditVo.roleName.Size}")
+    @Schema(description = "角色名称")
     private String roleName;
     @Size(max = 100, message = "{system.domain.vo.RoleEditVo.roleKey.Size}")
+    @Schema(description = "角色标识")
     private String roleKey;
     @Size(max = 500, message = "{system.domain.vo.RoleEditVo.description.Size}")
+    @Schema(description = "角色描述")
     private String description;
+    @Schema(description = "权限ID列表")
+    private List<Long> authorityIds;
 
-    public Role transToRole() {
-        Role role = new Role();
-        BeanUtils.copyProperties(this, role);
-        return role;
-    }
 }

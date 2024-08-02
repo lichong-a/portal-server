@@ -5,11 +5,13 @@
 
 package org.funcode.portal.server.module.system.authority.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.base.entity.BaseEntity;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
 import org.funcode.portal.server.common.core.security.domain.dto.BasicAuthority;
 import org.funcode.portal.server.common.core.security.repository.IBasicAuthorityRepository;
+import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityAddOrEditVo;
 import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityQueryVo;
 import org.funcode.portal.server.module.system.authority.service.IAuthorityService;
 import org.springframework.data.domain.Page;
@@ -22,21 +24,10 @@ import org.springframework.stereotype.Service;
  * @since 0.0.1
  */
 @Service
+@RequiredArgsConstructor
 public class AuthorityServiceImpl extends BaseServiceImpl<BasicAuthority, Long> implements IAuthorityService {
 
-    /**
-     * repository.
-     */
     private final IBasicAuthorityRepository basicAuthorityRepository;
-
-    /**
-     * init.
-     *
-     * @param repository user dao
-     */
-    public AuthorityServiceImpl(final IBasicAuthorityRepository repository) {
-        this.basicAuthorityRepository = repository;
-    }
 
     /**
      * @return base dao
@@ -68,5 +59,12 @@ public class AuthorityServiceImpl extends BaseServiceImpl<BasicAuthority, Long> 
                 ).getRestriction(),
                 authorityQueryVo.getPageRequest()
         );
+    }
+
+    @Override
+    public boolean addOrEditAuthority(AuthorityAddOrEditVo authorityAddOrEditVo) {
+        BasicAuthority basicAuthority = authorityAddOrEditVo.transToBasicAuthority();
+        this.getBaseRepository().save(basicAuthority);
+        return true;
     }
 }

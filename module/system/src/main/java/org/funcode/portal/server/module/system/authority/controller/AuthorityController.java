@@ -11,8 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
 import org.funcode.portal.server.common.core.security.domain.dto.BasicAuthority;
-import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityAddVo;
-import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityEditVo;
+import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityAddOrEditVo;
 import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityQueryVo;
 import org.funcode.portal.server.module.system.authority.service.IAuthorityService;
 import org.springframework.data.domain.Page;
@@ -35,18 +34,11 @@ public class AuthorityController {
 
     private final IAuthorityService authorityService;
 
-    @Operation(summary = "新增权限")
-    @PostMapping("addAuthority")
-    @PreAuthorize(value = "hasAuthority('system:authority:addAuthority')")
-    public ResponseResult<Boolean> addAuthority(@Valid @RequestBody AuthorityAddVo authorityAddVo) {
-        return ResponseResult.success();
-    }
-
-    @Operation(summary = "编辑权限")
-    @PostMapping("editAuthority")
-    @PreAuthorize(value = "hasAuthority('system:authority:editAuthority')")
-    public ResponseResult<Boolean> editAuthority(@Valid @RequestBody AuthorityEditVo authorityEditVo) {
-        return ResponseResult.success();
+    @Operation(summary = "新增或编辑权限")
+    @PostMapping("addOrEditAuthority")
+    @PreAuthorize(value = "hasAuthority('system:authority:addOrEditAuthority')")
+    public ResponseResult<Boolean> addOrEditAuthority(@Valid @RequestBody AuthorityAddOrEditVo authorityAddOrEditVo) {
+        return ResponseResult.success(authorityService.addOrEditAuthority(authorityAddOrEditVo));
     }
 
     @Operation(summary = "根据不同条件模糊分页查询权限列表")

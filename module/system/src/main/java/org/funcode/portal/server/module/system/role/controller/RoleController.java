@@ -12,8 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
 import org.funcode.portal.server.common.core.security.domain.dto.Role;
 import org.funcode.portal.server.module.system.role.service.IRoleService;
-import org.funcode.portal.server.module.system.role.vo.RoleAddVo;
-import org.funcode.portal.server.module.system.role.vo.RoleEditVo;
+import org.funcode.portal.server.module.system.role.vo.RoleAddOrEditVo;
 import org.funcode.portal.server.module.system.role.vo.RoleQueryVo;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,18 +34,11 @@ public class RoleController {
 
     private final IRoleService roleService;
 
-    @Operation(summary = "新增角色")
-    @PostMapping("addRole")
-    @PreAuthorize(value = "hasAuthority('system:role:addAuthority')")
-    public ResponseResult<Boolean> addRole(@Valid @RequestBody RoleAddVo roleAddVo) {
-        return ResponseResult.success();
-    }
-
-    @Operation(summary = "编辑角色")
-    @PostMapping("editRole")
-    @PreAuthorize(value = "hasRole('system:role:editRole')")
-    public ResponseResult<Boolean> editRole(@Valid @RequestBody RoleEditVo roleEditVo) {
-        return ResponseResult.success();
+    @Operation(summary = "新增或编辑角色")
+    @PostMapping("addOrEditRole")
+    @PreAuthorize(value = "hasAuthority('system:role:addOrEditRole')")
+    public ResponseResult<Boolean> addOrEditRole(@Valid @RequestBody RoleAddOrEditVo roleAddOrEditVo) {
+        return ResponseResult.success(roleService.addOrEditRole(roleAddOrEditVo));
     }
 
     @Operation(summary = "根据不同条件模糊分页查询角色列表")

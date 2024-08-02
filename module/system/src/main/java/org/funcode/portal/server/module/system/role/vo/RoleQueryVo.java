@@ -21,16 +21,25 @@ import java.time.LocalDateTime;
 @Schema(description = "角色查询条件VO")
 public class RoleQueryVo {
     @Size(max = 100, message = "{system.domain.vo.AuthorityQueryVo.id.Size}")
+    @Schema(description = "角色ID（精确）")
     private Long id;
     @Size(max = 100, message = "{system.domain.vo.AuthorityQueryVo.authorityName.Size}")
+    @Schema(description = "角色名称（模糊）")
     private String roleName;
     @Size(max = 100, message = "{system.domain.vo.AuthorityQueryVo.authorityKey.Size}")
+    @Schema(description = "角色标识（模糊）")
     private String roleKey;
     @Size(max = 500, message = "{system.domain.vo.AuthorityQueryVo.description.Size}")
+    @Schema(description = "角色描述（模糊）")
     private String description;
+    @Schema(description = "创建时间的开始时间")
     private LocalDateTime createdAtBegin;
+    @Schema(description = "创建时间的结束时间")
     private LocalDateTime createdAtEnd;
+    @Schema(description = "更新时间的开始时间")
     private LocalDateTime updatedAtBegin;
+    @Schema(description = "更新时间的结束时间")
     private LocalDateTime updatedAtEnd;
+    @Schema(description = "分页参数")
     private PageRequest pageRequest;
 }

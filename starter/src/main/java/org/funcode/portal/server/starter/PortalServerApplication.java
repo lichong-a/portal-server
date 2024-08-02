@@ -35,7 +35,8 @@ public class PortalServerApplication {
         boolean swaggerEnabled = "true".equals(env.getProperty("springdoc.swagger-ui.enabled"));
         if (swaggerEnabled) {
             String swaggerPath = Objects.requireNonNull(env.getProperty("springdoc.swagger-ui.path")).substring(1);
-            infoMessage += "Swagger Doc: \thttp://" + ip + ":" + port + path + "/" + swaggerPath + "\n" +
+            infoMessage += "Swagger Doc: \thttp://" + ip + ":" + port + path + "/" + swaggerPath + "\n";
+            infoMessage += "Knife4j Doc: \thttp://" + ip + ":" + port + path + "/doc.html\n" +
                     "----------------------------------------------------------";
         } else {
             infoMessage += "----------------------------------------------------------";

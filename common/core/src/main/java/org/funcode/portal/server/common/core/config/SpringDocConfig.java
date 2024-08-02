@@ -8,13 +8,14 @@ import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
+import org.funcode.portal.server.common.core.constant.SecurityConstant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
 @Configuration
-@SecurityScheme(name = "token", type = SecuritySchemeType.HTTP, paramName = "Authorization", scheme = "Bearer", in = SecuritySchemeIn.HEADER)
+@SecurityScheme(name = "token", type = SecuritySchemeType.APIKEY, paramName = SecurityConstant.TOKEN_HEADER_KEY, in = SecuritySchemeIn.HEADER)
 public class SpringDocConfig {
 
     @Bean

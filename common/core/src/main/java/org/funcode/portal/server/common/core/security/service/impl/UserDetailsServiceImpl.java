@@ -8,6 +8,7 @@ package org.funcode.portal.server.common.core.security.service.impl;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.config.ApplicationConfig;
 import org.funcode.portal.server.common.core.security.domain.dto.User;
+import org.funcode.portal.server.common.core.security.repository.IBasicAuthorityRepository;
 import org.funcode.portal.server.common.core.security.repository.IRoleRepository;
 import org.funcode.portal.server.common.core.security.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +33,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final IUserRepository userRepository;
     private final IRoleRepository roleRepository;
+    private final IBasicAuthorityRepository basicAuthorityRepository;
     private final ApplicationConfig applicationConfig;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserDetailsServiceImpl(IUserRepository userRepository,
                                   IRoleRepository roleRepository,
+                                  IBasicAuthorityRepository basicAuthorityRepository,
                                   ApplicationConfig applicationConfig,
                                   // 为解决依赖循环，此处需要使用@Lazy
                                   @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.basicAuthorityRepository = basicAuthorityRepository;
         this.applicationConfig = applicationConfig;
         this.passwordEncoder = passwordEncoder;
     }
@@ -61,6 +65,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                     .realName("管理员")
                     .nickName("管理员")
                     .roles(new HashSet<>(roleRepository.findAll()))
+                    .basicAuthorities(new HashSet<>(basicAuthorityRepository.findAll()))
                     .build();
         }
         Optional<User> user = userRepository.findOne(

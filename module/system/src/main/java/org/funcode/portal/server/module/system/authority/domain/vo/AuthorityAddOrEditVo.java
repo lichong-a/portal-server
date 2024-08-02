@@ -6,7 +6,6 @@
 package org.funcode.portal.server.module.system.authority.domain.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.funcode.portal.server.common.core.security.domain.dto.BasicAuthority;
@@ -18,16 +17,19 @@ import org.springframework.beans.BeanUtils;
  * @since 0.0.1
  */
 @Data
-@Schema(description = "权限编辑VO")
-public class AuthorityEditVo {
+@Schema(description = "权限新增或编辑VO")
+public class AuthorityAddOrEditVo {
 
-    @NotNull(message = "{system.domain.vo.AuthorityEditVo.id.NotNull}")
+    @Schema(description = "权限ID")
     private Long id;
     @Size(max = 100, message = "{system.domain.vo.AuthorityEditVo.authorityName.Size}")
+    @Schema(description = "权限名称")
     private String authorityName;
     @Size(max = 100, message = "{system.domain.vo.AuthorityEditVo.authorityKey.Size}")
+    @Schema(description = "权限标识")
     private String authorityKey;
     @Size(max = 500, message = "{system.domain.vo.AuthorityEditVo.description.Size}")
+    @Schema(description = "权限描述")
     private String description;
 
     public BasicAuthority transToBasicAuthority() {

@@ -5,16 +5,22 @@
 
 package org.funcode.portal.server.module.system.role.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.base.entity.BaseEntity;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
 import org.funcode.portal.server.common.core.security.domain.dto.Role;
 import org.funcode.portal.server.common.core.security.repository.IRoleRepository;
+import org.funcode.portal.server.module.system.authority.service.IAuthorityService;
 import org.funcode.portal.server.module.system.role.service.IRoleService;
+import org.funcode.portal.server.module.system.role.vo.RoleAddOrEditVo;
 import org.funcode.portal.server.module.system.role.vo.RoleQueryVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
 
 /**
  * @author 李冲
@@ -22,21 +28,12 @@ import org.springframework.stereotype.Service;
  * @since 0.0.1
  */
 @Service
+@RequiredArgsConstructor
 public class RoleServiceImpl extends BaseServiceImpl<Role, Long> implements IRoleService {
 
-    /**
-     * repository.
-     */
     private final IRoleRepository roleRepository;
+    private final IAuthorityService authorityService;
 
-    /**
-     * init.
-     *
-     * @param repository user dao
-     */
-    public RoleServiceImpl(final IRoleRepository repository) {
-        this.roleRepository = repository;
-    }
 
     /**
      * @return base dao
@@ -54,7 +51,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Long> implements IRol
      */
     @Override
     public Page<Role> findPage(RoleQueryVo roleQueryVo) {
-        return this.getBaseRepository().findAll(
+        return this.findAll(
                 (Specification<Role>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
                                 StringUtils.isNotBlank(roleQueryVo.getRoleKey()) ? criteriaBuilder.like(root.get(Role.ColumnName.ROLE_KEY), "%" + roleQueryVo.getRoleKey() + "%") : null,
                                 StringUtils.isNotBlank(roleQueryVo.getRoleName()) ? criteriaBuilder.like(root.get(Role.ColumnName.ROLE_NAME), "%" + roleQueryVo.getRoleName() + "%") : null,
@@ -68,5 +65,24 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Long> implements IRol
                 ).getRestriction(),
                 roleQueryVo.getPageRequest()
         );
+    }
+
+    @Override
+    public boolean addOrEditRole(RoleAddOrEditVo roleAddOrEditVo) {
+        Role role = transAddOrEditVoToRole(roleAddOrEditVo);
+        this.save(role);
+        return true;
+    }
+
+    /**
+     * VO转换为DTO
+     * @param roleAddOrEditVo 新增或编辑的参数
+     * @return 转换结果
+     */
+    public Role transAddOrEditVoToRole(RoleAddOrEditVo roleAddOrEditVo) {
+        Role role = new Role();
+        BeanUtils.copyProperties(this, role);
+        role.setBasicAuthorities(new HashSet<>(authorityService.findList(roleAddOrEditVo.getAuthorityIds())));
+        return role;
     }
 }
