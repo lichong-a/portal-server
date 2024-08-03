@@ -5,6 +5,7 @@
 
 package org.funcode.portal.server.common.core.security.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.funcode.portal.server.common.core.base.entity.BaseEntity;
@@ -25,8 +26,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = true)
-@ToString
+@EqualsAndHashCode(callSuper = true, exclude = {"users", "basicAuthorities"})
+@ToString(callSuper = true, exclude = {"users", "basicAuthorities"})
 @Table(name="tb_role")
 @Comment("角色表")
 @DynamicUpdate
@@ -50,18 +51,16 @@ public class Role extends BaseEntity implements GrantedAuthority {
     @Comment("角色描述")
     private String description;
 
-    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = BasicAuthority.class)
     @JoinTable(
             name = "tb_role_basic_authority",
-            joinColumns = {
-                    @JoinColumn(name = "role_id")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "basic_authority_id")
-            })
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "basic_authority_id"))
+    @JsonIgnore
     private Set<BasicAuthority> basicAuthorities;
 
-    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
     private Set<User> users;
 
     public void setRoleKey(String roleKey) {

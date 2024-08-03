@@ -5,7 +5,12 @@
 
 package org.funcode.portal.server.common.core.security.service;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.io.IOException;
 
 /**
  * @author 李冲
@@ -41,5 +46,8 @@ public interface IJwtService {
      * @return 是否过期
      */
     boolean isTokenExpired(String token);
+
+    void filterVerifyAccessToken(@NonNull String token, @NonNull HttpServletRequest request,
+                                 @NonNull HttpServletResponse response) throws IOException;
 
 }

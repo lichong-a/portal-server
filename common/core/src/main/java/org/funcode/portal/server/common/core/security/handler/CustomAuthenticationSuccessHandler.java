@@ -54,7 +54,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         response.addCookie(cookie);
         response.setStatus(HttpStatus.OK.value());
         // 保存至Redis缓存起来
-        redisTemplate.opsForValue().setIfAbsent(
+        redisTemplate.opsForValue().set(
                 RedisKeyConstant.TOKEN_KEY + currentUser.getUsername(),
                 accessToken,
                 applicationConfig.getSecurity().token().refreshExpiration(),

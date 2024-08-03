@@ -32,8 +32,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = true)
-@ToString
+@EqualsAndHashCode(callSuper = true, exclude = {"roles", "basicAuthorities"})
+@ToString(callSuper = true, exclude = {"roles", "basicAuthorities"})
 @Table(name = "tb_user")
 @Comment("人员表")
 @DynamicUpdate
@@ -92,25 +92,19 @@ public class User extends BaseEntity implements UserDetails {
     @Builder.Default
     @Comment("是否启用")
     private boolean enabled = true;
-    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Role.class)
     @JoinTable(
             name = "tb_user_role",
-            joinColumns = {
-                    @JoinColumn(name = "user_id")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "role_id")
-            })
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JsonIgnore
     private Set<Role> roles;
-    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = BasicAuthority.class)
     @JoinTable(
             name = "tb_user_basic_authority",
-            joinColumns = {
-                    @JoinColumn(name = "user_id")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "basic_authority_id")
-            })
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "basic_authority_id"))
+    @JsonIgnore
     private Set<BasicAuthority> basicAuthorities;
 
     @Override

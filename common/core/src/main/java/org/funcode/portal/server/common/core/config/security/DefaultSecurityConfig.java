@@ -52,6 +52,7 @@ public class DefaultSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        String defaultLoginPage = StringUtils.isBlank(applicationConfig.getSecurity().loginPage()) ? "/login" : applicationConfig.getSecurity().loginPage();
         // HTTP 的 Clear-Site-Data 标头是浏览器支持的指令，用于清除属于拥有网站的 Cookie、存储和缓存
         HeaderWriterLogoutHandler clearSiteData = new HeaderWriterLogoutHandler(new ClearSiteDataHeaderWriter(ClearSiteDataHeaderWriter.Directive.ALL));
         http.csrf(AbstractHttpConfigurer::disable)
@@ -64,7 +65,8 @@ public class DefaultSecurityConfig {
                                 "/v3/api-docs/**",
                                 "/webjars/**",
                                 "favicon.ico",
-                                "/doc.html"
+                                "/doc.html",
+                                defaultLoginPage
                         ).permitAll()
                         .anyRequest()
                         .authenticated())
@@ -72,7 +74,7 @@ public class DefaultSecurityConfig {
                 .formLogin(login -> login
                         .usernameParameter("username")
                         .passwordParameter("password")
-                        .loginPage(StringUtils.isBlank(applicationConfig.getSecurity().loginPage()) ? "/login" : applicationConfig.getSecurity().loginPage())
+                        .loginPage(defaultLoginPage)
                         .loginProcessingUrl("/api/v1/auth/login")
                         .successHandler(customAuthenticationSuccessHandler)
                         .failureHandler(customAuthenticationFailureHandler))

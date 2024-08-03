@@ -5,6 +5,7 @@
 
 package org.funcode.portal.server.common.core.security.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.funcode.portal.server.common.core.base.entity.BaseEntity;
@@ -25,8 +26,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = true)
-@ToString
+@EqualsAndHashCode(callSuper = true, exclude = {"roles", "users"})
+@ToString(callSuper = true, exclude = {"roles", "users"})
 @Table(name = "tb_basic_authority")
 @Comment("权限表")
 @DynamicUpdate
@@ -42,7 +43,7 @@ public class BasicAuthority extends BaseEntity implements GrantedAuthority {
     @Comment("权限名称")
     private String authorityName;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     @Comment("权限标识")
     private String authorityKey;
 
@@ -50,10 +51,12 @@ public class BasicAuthority extends BaseEntity implements GrantedAuthority {
     @Comment("权限描述")
     private String description;
 
-    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "basicAuthorities")
+    @ManyToMany(mappedBy = "basicAuthorities")
+    @JsonIgnore
     private Set<User> users;
 
-    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "basicAuthorities")
+    @ManyToMany(mappedBy = "basicAuthorities")
+    @JsonIgnore
     private Set<Role> roles;
 
     public void setAuthorityKey(String authorityKey) {

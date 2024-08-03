@@ -16,6 +16,7 @@ import org.funcode.portal.server.module.system.user.service.IUserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author 李冲
@@ -74,6 +75,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements IUse
         return this.getBaseRepository().findByEmail(email);
     }
 
+    @Transactional
     @Override
     public User findByUsername(String username) {
         return this.getBaseRepository().findByUsername(username);
