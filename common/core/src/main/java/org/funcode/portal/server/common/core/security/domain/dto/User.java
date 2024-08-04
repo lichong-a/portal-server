@@ -9,6 +9,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.funcode.portal.server.common.core.base.entity.BaseEntity;
+import org.funcode.portal.server.common.core.module.ielts.domain.Course;
+import org.funcode.portal.server.common.core.module.ielts.domain.CourseColumn;
+import org.funcode.portal.server.common.core.module.ielts.domain.Order;
+import org.funcode.portal.server.common.core.module.ielts.domain.RedeemCode;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,8 +36,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = true, exclude = {"roles", "basicAuthorities"})
-@ToString(callSuper = true, exclude = {"roles", "basicAuthorities"})
+@EqualsAndHashCode(callSuper = true, exclude = {"roles", "basicAuthorities", "orders", "redeemCodes"})
+@ToString(callSuper = true, exclude = {"roles", "basicAuthorities", "orders", "redeemCodes"})
 @Table(name = "tb_user")
 @Comment("人员表")
 @DynamicUpdate
@@ -106,6 +110,20 @@ public class User extends BaseEntity implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "basic_authority_id"))
     @JsonIgnore
     private Set<BasicAuthority> basicAuthorities;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<Order> orders;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<RedeemCode> redeemCodes;
+
+    @ManyToMany(mappedBy = "users")
+    private Set<CourseColumn> courseColumns;
+
+    @ManyToMany(mappedBy = "users")
+    private Set<Course> courses;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

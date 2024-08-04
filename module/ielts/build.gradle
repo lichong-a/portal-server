@@ -1,0 +1,16 @@
+plugins {
+    id 'org.hibernate.orm' version "${hibernatePluginVersion}"
+    id 'org.graalvm.buildtools.native' version "${graalvmNativePluginVersion}"
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+dependencies {
+    implementation project(':common:core')
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}

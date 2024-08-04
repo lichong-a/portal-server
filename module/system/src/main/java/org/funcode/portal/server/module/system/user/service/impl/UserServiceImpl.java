@@ -44,6 +44,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements IUse
      * @return page
      */
     @Override
+    @Transactional
     public Page<User> findPage(UserQueryVo userQueryVo) {
         return this.getBaseRepository().findAll(
                 (Specification<User>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
@@ -71,17 +72,19 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements IUse
      * @return User
      */
     @Override
+    @Transactional
     public User findByEmail(String email) {
         return this.getBaseRepository().findByEmail(email);
     }
 
-    @Transactional
     @Override
+    @Transactional
     public User findByUsername(String username) {
         return this.getBaseRepository().findByUsername(username);
     }
 
     @Override
+    @Transactional
     public User findByWechatId(String wechatId) {
         return this.getBaseRepository().findByWechatId(wechatId);
     }

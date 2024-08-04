@@ -19,6 +19,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 
@@ -50,6 +51,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Long> implements IRol
      * @return page
      */
     @Override
+    @Transactional
     public Page<Role> findPage(RoleQueryVo roleQueryVo) {
         return this.findAll(
                 (Specification<Role>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
@@ -68,6 +70,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Long> implements IRol
     }
 
     @Override
+    @Transactional
     public boolean addOrEditRole(RoleAddOrEditVo roleAddOrEditVo) {
         Role role = transAddOrEditVoToRole(roleAddOrEditVo);
         this.save(role);

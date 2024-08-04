@@ -17,6 +17,7 @@ import org.funcode.portal.server.module.system.authority.service.IAuthorityServi
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author 李冲
@@ -44,6 +45,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl<BasicAuthority, Long> 
      * @return page
      */
     @Override
+    @Transactional
     public Page<BasicAuthority> findPage(AuthorityQueryVo authorityQueryVo) {
         return this.getBaseRepository().findAll(
                 (Specification<BasicAuthority>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
@@ -62,6 +64,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl<BasicAuthority, Long> 
     }
 
     @Override
+    @Transactional
     public boolean addOrEditAuthority(AuthorityAddOrEditVo authorityAddOrEditVo) {
         BasicAuthority basicAuthority = authorityAddOrEditVo.transToBasicAuthority();
         this.getBaseRepository().save(basicAuthority);
