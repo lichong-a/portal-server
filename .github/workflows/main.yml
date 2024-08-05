@@ -12,9 +12,6 @@ concurrency:
   group: ${{github.workflow}} - ${{github.ref}}
   cancel-in-progress: true
 
-permissions:
-  contents: read
-
 jobs:
   compile:
     runs-on: ubuntu-latest
