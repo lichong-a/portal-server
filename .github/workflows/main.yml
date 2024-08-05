@@ -1,0 +1,53 @@
+name: portal-server
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+concurrency:
+  group: ${{github.workflow}} - ${{github.ref}}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    if: ${{ github.repository == 'lichong-a/portal-server' }}
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup-env
+
+      - name: Build APP
+        run: ./gradlew clean && ./gradlew :starter:build
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-artifacts
+          path: starter/build/libs/portal-server*.jar
+          retention-days: 1
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: server-artifacts
+          path: starter/build/libs/portal-server*.jar
+
+      - name: Docker Buildx and Push
+        uses: ./.github/actions/docker-buildx-push
+        with:
+          image-name: ${{ github.event_name == 'release' && 'portal-server' || 'portal-server-dev' }}
+          ghcr-token: ${{ secrets.GITHUB_TOKEN }}
+          dockerhub-user: ${{ secrets.DOCKER_USERNAME }}
+          dockerhub-token: ${{ secrets.DOCKER_TOKEN }}
+          push: true
+          platforms: linux/amd64,linux/arm64/v8,linux/ppc64le,linux/s390x

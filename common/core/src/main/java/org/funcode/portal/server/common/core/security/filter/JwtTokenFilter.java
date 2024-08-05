@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.constant.SecurityConstant;
 import org.funcode.portal.server.common.core.security.service.IJwtService;
+import org.funcode.portal.server.common.core.util.CookieUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -34,7 +35,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain)
             throws ServletException, IOException {
-        final String accessToken = request.getHeader(SecurityConstant.TOKEN_HEADER_KEY);
+        // 获取 token，优先从 cookie 获取，其次从 header 获取
+        String accessTokenCookie = CookieUtils.getCookieValue(request, SecurityConstant.TOKEN_COOKIE_KEY);
+        final String accessToken = StringUtils.isBlank(accessTokenCookie) ? request.getHeader(SecurityConstant.TOKEN_HEADER_KEY) : accessTokenCookie;
         // 没 token 场景为 登录 等，直接放行，因为后边有其他的过滤器
         if (StringUtils.isBlank(accessToken)) {
             filterChain.doFilter(request, response);
