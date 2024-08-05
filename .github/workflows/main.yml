@@ -16,6 +16,8 @@ jobs:
   compile:
     runs-on: ubuntu-latest
     if: ${{ github.repository == 'lichong-a/portal-server' }}
+    environment:
+      name: dev
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
