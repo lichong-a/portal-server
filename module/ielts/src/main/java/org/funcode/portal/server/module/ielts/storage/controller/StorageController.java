@@ -6,14 +6,13 @@
 package org.funcode.portal.server.module.ielts.storage.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
+import org.funcode.portal.server.module.ielts.storage.domain.vo.StorageAddOrEditVo;
 import org.funcode.portal.server.module.ielts.storage.service.IStorageService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 李冲
@@ -30,7 +29,14 @@ public class StorageController {
 
     @Operation(summary = "上传文件")
     @PostMapping("/upload")
-    public ResponseResult<Boolean> upload(MultipartFile file) {
-        return ResponseResult.success(storageService.upload(file));
+    public ResponseResult<Boolean> upload(@RequestBody StorageAddOrEditVo storageAddOrEditVo) {
+        return ResponseResult.success(storageService.upload(storageAddOrEditVo));
     }
+
+    @Operation(summary = "删除文件")
+    @GetMapping("/delete")
+    public ResponseResult<Boolean> delete(@RequestParam @Parameter(description = "存储ID") Long storageId) {
+        return ResponseResult.success(storageService.deleteStorage(storageId));
+    }
+
 }

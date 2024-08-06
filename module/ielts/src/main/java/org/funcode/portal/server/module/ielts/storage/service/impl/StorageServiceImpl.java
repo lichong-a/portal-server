@@ -5,24 +5,46 @@
 
 package org.funcode.portal.server.module.ielts.storage.service.impl;
 
+import com.qcloud.cos.COSClient;
+import com.qcloud.cos.model.ObjectMetadata;
+import com.qcloud.cos.model.PutObjectRequest;
+import com.qcloud.cos.model.StorageClass;
+import com.qcloud.cos.model.UploadResult;
+import com.qcloud.cos.transfer.TransferManager;
+import com.qcloud.cos.transfer.TransferManagerConfiguration;
+import com.qcloud.cos.transfer.Upload;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.funcode.portal.server.common.core.base.exception.BusinessException;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
+import org.funcode.portal.server.common.core.config.COSConfig;
+import org.funcode.portal.server.common.core.util.FileUtils;
 import org.funcode.portal.server.common.domain.ielts.Storage;
+import org.funcode.portal.server.module.ielts.storage.domain.vo.StorageAddOrEditVo;
 import org.funcode.portal.server.module.ielts.storage.repository.IStorageRepository;
 import org.funcode.portal.server.module.ielts.storage.service.IStorageService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author 李冲
  * @see <a href="https://lichong.work">李冲博客</a>
  * @since 0.0.1
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class StorageServiceImpl extends BaseServiceImpl<Storage, Long> implements IStorageService {
 
     private final IStorageRepository storageRepository;
+    private final COSClient cosClient;
+    private final COSConfig cosConfig;
+    private final TransferManager transferManager;
 
     /**
      * @return base dao
@@ -33,7 +55,61 @@ public class StorageServiceImpl extends BaseServiceImpl<Storage, Long> implement
     }
 
     @Override
-    public Boolean upload(MultipartFile file) {
-        return null;
+    public Boolean upload(StorageAddOrEditVo storageAddOrEditVo) {
+        try {
+            File localFile = FileUtils.multipartFileToFile(storageAddOrEditVo.getFile());
+            // 设置高级接口的配置项
+            // 分块上传阈值和分块大小分别设置为 5MB 和 1MB（若不特殊设置，分块上传阈值和分块大小的默认值均为5MB）
+            TransferManagerConfiguration transferManagerConfiguration = new TransferManagerConfiguration();
+            transferManagerConfiguration.setMultipartUploadThreshold(5 * 1024 * 1024);
+            transferManagerConfiguration.setMinimumUploadPartSize(5 * 1024 * 1024);
+            transferManager.setConfiguration(transferManagerConfiguration);
+
+            PutObjectRequest putObjectRequest = new PutObjectRequest(cosConfig.getBucketName(), storageAddOrEditVo.getTitle() + System.currentTimeMillis(), localFile);
+            // 设置存储类型（如有需要，不需要请忽略此行代码）, 默认是标准(Standard), 低频(standard_ia)
+            // 更多存储类型请参见 https://cloud.tencent.com/document/product/436/33417
+            putObjectRequest.setStorageClass(StorageClass.Standard);
+            //若需要设置对象的自定义 Headers 可参照下列代码,若不需要可省略下面这几行,对象自定义 Headers 的详细信息可参考 https://cloud.tencent.com/document/product/436/13361
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            //若设置 Content-Type、Cache-Control、Content-Disposition、Content-Encoding、Expires 这五个字自定义 Headers，推荐采用 objectMetadata.setHeader()
+            //自定义header尽量避免特殊字符，使用中文前请先手动对其进行URLEncode
+            objectMetadata.setHeader("title", URLEncoder.encode(storageAddOrEditVo.getTitle(), StandardCharsets.UTF_8));
+            objectMetadata.setHeader("fileType", storageAddOrEditVo.getFileType());
+            //若要设置 “x-cos-meta-[自定义后缀]” 这样的自定义 Header，推荐采用
+            Map<String, String> userMeta = new HashMap<>();
+            userMeta.put("x-cos-meta-author", "lichong.work");
+            objectMetadata.setUserMetadata(userMeta);
+            putObjectRequest.withMetadata(objectMetadata);
+
+            // 高级接口会返回一个异步结果Upload
+            // 可同步地调用 waitForUploadResult 方法等待上传完成，成功返回 UploadResult, 失败抛出异常
+            Upload upload = transferManager.upload(putObjectRequest);
+            UploadResult uploadResult = upload.waitForUploadResult();
+
+            Storage storage = Storage.builder()
+                    .bucketName(uploadResult.getBucketName())
+                    .key(uploadResult.getKey())
+                    .versionId(uploadResult.getVersionId())
+                    .fileType(storageAddOrEditVo.getFileType())
+                    .title(storageAddOrEditVo.getTitle())
+                    .build();
+            getBaseRepository().save(storage);
+        } catch (Exception e) {
+            log.error("上传文件失败，IO异常", e);
+            throw new BusinessException("上传文件失败");
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean deleteStorage(Long storageId) {
+        Storage storage = getBaseRepository().findById(storageId).orElseThrow(() -> new BusinessException("存储不存在"));
+        try {
+            cosClient.deleteObject(cosConfig.getBucketName(), storage.getKey());
+        } catch (Exception e) {
+            log.error("删除文件失败", e);
+            throw new BusinessException("删除文件失败");
+        }
+        return true;
     }
 }

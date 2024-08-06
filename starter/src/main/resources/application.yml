@@ -27,7 +27,6 @@ application:
     prefix-domain: ${COS_PREFIX_DOMAIN}
     bucket-name: ${COS_BUCKET_NAME}
     common: ${COS_COMMON}
-    expiration: ${COS_EXPIRATION}
     project-name: ${spring.application.name}
 spring:
   application:

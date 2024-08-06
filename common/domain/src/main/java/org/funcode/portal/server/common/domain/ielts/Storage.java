@@ -46,8 +46,16 @@ public class Storage extends BaseEntity {
     private int fileType;
 
     @Column(length = 200, nullable = false)
-    @Comment("地址")
-    private String address;
+    @Comment("桶名称")
+    private String bucketName;
+
+    @Column(length = 300, nullable = false)
+    @Comment("唯一标识")
+    private String key;
+
+    @Column(length = 200, nullable = false)
+    @Comment("版本ID")
+    private String versionId;
 
     @OneToOne(mappedBy = "storage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore

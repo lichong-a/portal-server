@@ -11,6 +11,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author 李冲
@@ -35,9 +36,8 @@ public class StorageAddOrEditVo {
     @Schema(description = "文件类型（0:图片；1:音频；2:视频；3:markdown）")
     private int fileType;
 
-    @Size(max = 200, message = "{ielts.domain.vo.StorageAddOrEditVo.address.Size}")
-    @NotNull(message = "{ielts.domain.vo.StorageAddOrEditVo.address.NotNull}")
-    @Schema(description = "地址")
-    private String address;
+    @NotNull(message = "{ielts.domain.vo.StorageAddOrEditVo.file.NotNull}")
+    @Schema(description = "文件")
+    private MultipartFile file;
 
 }
