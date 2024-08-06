@@ -7,10 +7,11 @@ package org.funcode.portal.server.module.ielts.storage.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
-import org.funcode.portal.server.common.core.module.ielts.domain.Storage;
+import org.funcode.portal.server.common.domain.ielts.Storage;
 import org.funcode.portal.server.module.ielts.storage.repository.IStorageRepository;
 import org.funcode.portal.server.module.ielts.storage.service.IStorageService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author 李冲
@@ -29,5 +30,10 @@ public class StorageServiceImpl extends BaseServiceImpl<Storage, Long> implement
     @Override
     public IStorageRepository getBaseRepository() {
         return this.storageRepository;
+    }
+
+    @Override
+    public Boolean upload(MultipartFile file) {
+        return null;
     }
 }

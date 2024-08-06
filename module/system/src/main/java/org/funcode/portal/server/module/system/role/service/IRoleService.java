@@ -6,7 +6,7 @@
 package org.funcode.portal.server.module.system.role.service;
 
 import org.funcode.portal.server.common.core.base.service.IBaseService;
-import org.funcode.portal.server.common.core.security.domain.dto.Role;
+import org.funcode.portal.server.common.domain.security.Role;
 import org.funcode.portal.server.module.system.role.vo.RoleAddOrEditVo;
 import org.funcode.portal.server.module.system.role.vo.RoleQueryVo;
 import org.springframework.data.domain.Page;

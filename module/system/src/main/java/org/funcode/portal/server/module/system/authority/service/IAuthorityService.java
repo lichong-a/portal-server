@@ -6,7 +6,7 @@
 package org.funcode.portal.server.module.system.authority.service;
 
 import org.funcode.portal.server.common.core.base.service.IBaseService;
-import org.funcode.portal.server.common.core.security.domain.dto.BasicAuthority;
+import org.funcode.portal.server.common.domain.security.BasicAuthority;
 import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityAddOrEditVo;
 import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityQueryVo;
 import org.springframework.data.domain.Page;

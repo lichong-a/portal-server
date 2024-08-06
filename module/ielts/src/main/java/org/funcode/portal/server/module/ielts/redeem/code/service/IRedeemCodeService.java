@@ -6,7 +6,7 @@
 package org.funcode.portal.server.module.ielts.redeem.code.service;
 
 import org.funcode.portal.server.common.core.base.service.IBaseService;
-import org.funcode.portal.server.common.core.module.ielts.domain.RedeemCode;
+import org.funcode.portal.server.common.domain.ielts.RedeemCode;
 
 /**
  * @author 李冲

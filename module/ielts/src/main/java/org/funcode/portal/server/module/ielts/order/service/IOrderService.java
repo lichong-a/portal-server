@@ -6,7 +6,7 @@
 package org.funcode.portal.server.module.ielts.order.service;
 
 import org.funcode.portal.server.common.core.base.service.IBaseService;
-import org.funcode.portal.server.common.core.module.ielts.domain.Order;
+import org.funcode.portal.server.common.domain.ielts.Order;
 
 /**
  * @author 李冲

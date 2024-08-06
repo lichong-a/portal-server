@@ -7,7 +7,7 @@ package org.funcode.portal.server.module.ielts.course.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
-import org.funcode.portal.server.common.core.module.ielts.domain.Course;
+import org.funcode.portal.server.common.domain.ielts.Course;
 import org.funcode.portal.server.module.ielts.course.repository.ICourseRepository;
 import org.funcode.portal.server.module.ielts.course.service.ICourseService;
 import org.springframework.stereotype.Service;

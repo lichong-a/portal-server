@@ -6,7 +6,7 @@
 package org.funcode.portal.server.module.ielts.storage.repository;
 
 import org.funcode.portal.server.common.core.base.repository.IBaseRepository;
-import org.funcode.portal.server.common.core.module.ielts.domain.Storage;
+import org.funcode.portal.server.common.domain.ielts.Storage;
 import org.springframework.stereotype.Repository;
 
 /**

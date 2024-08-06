@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
-import org.funcode.portal.server.common.core.security.domain.dto.BasicAuthority;
+import org.funcode.portal.server.common.domain.security.BasicAuthority;
 import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityAddOrEditVo;
 import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityQueryVo;
 import org.funcode.portal.server.module.system.authority.service.IAuthorityService;

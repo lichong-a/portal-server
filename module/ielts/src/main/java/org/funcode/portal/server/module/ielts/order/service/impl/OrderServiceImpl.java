@@ -7,7 +7,7 @@ package org.funcode.portal.server.module.ielts.order.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
-import org.funcode.portal.server.common.core.module.ielts.domain.Order;
+import org.funcode.portal.server.common.domain.ielts.Order;
 import org.funcode.portal.server.module.ielts.order.repository.IOrderRepository;
 import org.funcode.portal.server.module.ielts.order.service.IOrderService;
 import org.springframework.stereotype.Service;

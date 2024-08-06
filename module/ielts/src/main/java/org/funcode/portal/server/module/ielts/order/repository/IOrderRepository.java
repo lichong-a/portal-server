@@ -6,7 +6,7 @@
 package org.funcode.portal.server.module.ielts.order.repository;
 
 import org.funcode.portal.server.common.core.base.repository.IBaseRepository;
-import org.funcode.portal.server.common.core.module.ielts.domain.Order;
+import org.funcode.portal.server.common.domain.ielts.Order;
 import org.springframework.stereotype.Repository;
 
 /**

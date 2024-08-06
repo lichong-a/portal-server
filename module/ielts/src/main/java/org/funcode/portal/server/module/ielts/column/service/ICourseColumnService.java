@@ -6,7 +6,7 @@
 package org.funcode.portal.server.module.ielts.column.service;
 
 import org.funcode.portal.server.common.core.base.service.IBaseService;
-import org.funcode.portal.server.common.core.module.ielts.domain.CourseColumn;
+import org.funcode.portal.server.common.domain.ielts.CourseColumn;
 
 /**
  * @author 李冲

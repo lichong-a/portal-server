@@ -6,7 +6,8 @@
 package org.funcode.portal.server.module.ielts.storage.service;
 
 import org.funcode.portal.server.common.core.base.service.IBaseService;
-import org.funcode.portal.server.common.core.module.ielts.domain.Storage;
+import org.funcode.portal.server.common.domain.ielts.Storage;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author 李冲
@@ -15,4 +16,11 @@ import org.funcode.portal.server.common.core.module.ielts.domain.Storage;
  */
 public interface IStorageService extends IBaseService<Storage, Long> {
 
+    /**
+     * 上传文件
+     *
+     * @param file 文件
+     * @return 上传结果
+     */
+    Boolean upload(MultipartFile file);
 }

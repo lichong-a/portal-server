@@ -3,13 +3,13 @@
  *
  */
 
-package org.funcode.portal.server.common.core.module.ielts.domain;
+package org.funcode.portal.server.common.domain.ielts;
 
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.funcode.portal.server.common.core.base.entity.BaseEntity;
-import org.funcode.portal.server.common.core.security.domain.dto.User;
+import org.funcode.portal.server.common.domain.base.BaseEntity;
+import org.funcode.portal.server.common.domain.security.User;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
 

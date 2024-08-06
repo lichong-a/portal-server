@@ -5,7 +5,6 @@
 
 package org.funcode.portal.server.common.core.config;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -16,7 +15,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Data
 @ConfigurationProperties(prefix = "application")
-@AllArgsConstructor
 public class ApplicationConfig {
 
     private final Security security;

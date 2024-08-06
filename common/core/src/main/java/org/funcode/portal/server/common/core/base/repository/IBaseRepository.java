@@ -5,7 +5,7 @@
 
 package org.funcode.portal.server.common.core.base.repository;
 
-import org.funcode.portal.server.common.core.base.entity.BaseEntity;
+import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.NoRepositoryBean;

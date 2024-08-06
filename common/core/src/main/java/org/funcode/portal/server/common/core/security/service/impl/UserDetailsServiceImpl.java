@@ -7,8 +7,8 @@ package org.funcode.portal.server.common.core.security.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.funcode.portal.server.common.core.security.domain.dto.User;
 import org.funcode.portal.server.common.core.security.repository.IUserRepository;
+import org.funcode.portal.server.common.domain.security.User;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

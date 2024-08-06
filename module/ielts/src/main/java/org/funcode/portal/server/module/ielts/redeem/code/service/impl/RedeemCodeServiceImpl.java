@@ -7,7 +7,7 @@ package org.funcode.portal.server.module.ielts.redeem.code.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
-import org.funcode.portal.server.common.core.module.ielts.domain.RedeemCode;
+import org.funcode.portal.server.common.domain.ielts.RedeemCode;
 import org.funcode.portal.server.module.ielts.redeem.code.repository.IRedeemCodeRepository;
 import org.funcode.portal.server.module.ielts.redeem.code.service.IRedeemCodeService;
 import org.springframework.stereotype.Service;

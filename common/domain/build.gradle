@@ -1,0 +1,16 @@
+plugins {
+    id 'org.hibernate.orm' version "${hibernatePluginVersion}"
+    id 'org.graalvm.buildtools.native' version "${graalvmNativePluginVersion}"
+}
+
+dependencies {
+    api "com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter:${knife4jVersion}"
+    api "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springDocVersion}"
+    api 'org.springframework.boot:spring-boot-starter-data-jpa'
+    api 'org.springframework.boot:spring-boot-starter-security'
+    api 'org.springframework.boot:spring-boot-starter-validation'
+    api 'org.springframework.boot:spring-boot-starter-web'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}

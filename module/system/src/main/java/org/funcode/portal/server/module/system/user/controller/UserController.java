@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
-import org.funcode.portal.server.common.core.security.domain.dto.User;
+import org.funcode.portal.server.common.domain.security.User;
 import org.funcode.portal.server.module.system.user.domain.vo.UserQueryVo;
 import org.funcode.portal.server.module.system.user.service.IUserService;
 import org.springframework.data.domain.Page;

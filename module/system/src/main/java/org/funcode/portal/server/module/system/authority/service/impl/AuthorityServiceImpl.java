@@ -7,10 +7,10 @@ package org.funcode.portal.server.module.system.authority.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.funcode.portal.server.common.core.base.entity.BaseEntity;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
-import org.funcode.portal.server.common.core.security.domain.dto.BasicAuthority;
 import org.funcode.portal.server.common.core.security.repository.IBasicAuthorityRepository;
+import org.funcode.portal.server.common.domain.base.BaseEntity;
+import org.funcode.portal.server.common.domain.security.BasicAuthority;
 import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityAddOrEditVo;
 import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityQueryVo;
 import org.funcode.portal.server.module.system.authority.service.IAuthorityService;

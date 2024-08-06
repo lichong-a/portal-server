@@ -6,7 +6,7 @@
 package org.funcode.portal.server.common.core.security.repository;
 
 import org.funcode.portal.server.common.core.base.repository.IBaseRepository;
-import org.funcode.portal.server.common.core.security.domain.dto.BasicAuthority;
+import org.funcode.portal.server.common.domain.security.BasicAuthority;
 import org.springframework.stereotype.Repository;
 
 /**

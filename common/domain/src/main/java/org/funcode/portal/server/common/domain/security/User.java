@@ -3,16 +3,16 @@
  *
  */
 
-package org.funcode.portal.server.common.core.security.domain.dto;
+package org.funcode.portal.server.common.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.funcode.portal.server.common.core.base.entity.BaseEntity;
-import org.funcode.portal.server.common.core.module.ielts.domain.Course;
-import org.funcode.portal.server.common.core.module.ielts.domain.CourseColumn;
-import org.funcode.portal.server.common.core.module.ielts.domain.Order;
-import org.funcode.portal.server.common.core.module.ielts.domain.RedeemCode;
+import org.funcode.portal.server.common.domain.base.BaseEntity;
+import org.funcode.portal.server.common.domain.ielts.Course;
+import org.funcode.portal.server.common.domain.ielts.CourseColumn;
+import org.funcode.portal.server.common.domain.ielts.Order;
+import org.funcode.portal.server.common.domain.ielts.RedeemCode;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;

@@ -6,10 +6,10 @@
 package org.funcode.portal.server.common.core.base.service.impl;
 
 
-import org.funcode.portal.server.common.core.base.entity.BaseEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.funcode.portal.server.common.core.base.repository.IBaseRepository;
 import org.funcode.portal.server.common.core.base.service.IBaseService;
-import lombok.extern.slf4j.Slf4j;
+import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

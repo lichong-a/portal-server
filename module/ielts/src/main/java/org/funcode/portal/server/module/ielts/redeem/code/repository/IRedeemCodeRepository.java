@@ -6,7 +6,7 @@
 package org.funcode.portal.server.module.ielts.redeem.code.repository;
 
 import org.funcode.portal.server.common.core.base.repository.IBaseRepository;
-import org.funcode.portal.server.common.core.module.ielts.domain.RedeemCode;
+import org.funcode.portal.server.common.domain.ielts.RedeemCode;
 import org.springframework.stereotype.Repository;
 
 /**

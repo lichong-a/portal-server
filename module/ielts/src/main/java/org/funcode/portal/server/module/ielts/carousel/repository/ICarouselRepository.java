@@ -6,7 +6,7 @@
 package org.funcode.portal.server.module.ielts.carousel.repository;
 
 import org.funcode.portal.server.common.core.base.repository.IBaseRepository;
-import org.funcode.portal.server.common.core.module.ielts.domain.Carousel;
+import org.funcode.portal.server.common.domain.ielts.Carousel;
 import org.springframework.stereotype.Repository;
 
 /**

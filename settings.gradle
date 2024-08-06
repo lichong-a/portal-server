@@ -1,7 +1,11 @@
 rootProject.name = 'portal-server'
-include 'common:core', 'starter', 'module:system'
+include 'starter'
+findProject('starter')?.name = 'starter'
+include 'common:domain'
+findProject(':common:domain')?.name = 'domain'
+include 'common:core'
 findProject(':common:core')?.name = 'core'
+include 'module:system'
 findProject(':module:system')?.name = 'system'
 include 'module:ielts'
 findProject(':module:ielts')?.name = 'ielts'
-

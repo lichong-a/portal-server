@@ -7,10 +7,10 @@ package org.funcode.portal.server.module.system.user.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.funcode.portal.server.common.core.base.entity.BaseEntity;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
-import org.funcode.portal.server.common.core.security.domain.dto.User;
 import org.funcode.portal.server.common.core.security.repository.IUserRepository;
+import org.funcode.portal.server.common.domain.base.BaseEntity;
+import org.funcode.portal.server.common.domain.security.User;
 import org.funcode.portal.server.module.system.user.domain.vo.UserQueryVo;
 import org.funcode.portal.server.module.system.user.service.IUserService;
 import org.springframework.data.domain.Page;

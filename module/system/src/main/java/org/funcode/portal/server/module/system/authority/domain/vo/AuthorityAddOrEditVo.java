@@ -8,7 +8,7 @@ package org.funcode.portal.server.module.system.authority.domain.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.funcode.portal.server.common.core.security.domain.dto.BasicAuthority;
+import org.funcode.portal.server.common.domain.security.BasicAuthority;
 import org.springframework.beans.BeanUtils;
 
 /**

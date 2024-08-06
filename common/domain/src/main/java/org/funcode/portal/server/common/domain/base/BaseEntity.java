@@ -3,7 +3,7 @@
  *
  */
 
-package org.funcode.portal.server.common.core.base.entity;
+package org.funcode.portal.server.common.domain.base;
 
 import jakarta.persistence.*;
 import lombok.*;

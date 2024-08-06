@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
-import org.funcode.portal.server.common.core.security.domain.dto.Role;
+import org.funcode.portal.server.common.domain.security.Role;
 import org.funcode.portal.server.module.system.role.service.IRoleService;
 import org.funcode.portal.server.module.system.role.vo.RoleAddOrEditVo;
 import org.funcode.portal.server.module.system.role.vo.RoleQueryVo;

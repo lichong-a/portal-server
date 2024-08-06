@@ -6,7 +6,7 @@
 package org.funcode.portal.server.module.ielts.course.repository;
 
 import org.funcode.portal.server.common.core.base.repository.IBaseRepository;
-import org.funcode.portal.server.common.core.module.ielts.domain.Course;
+import org.funcode.portal.server.common.domain.ielts.Course;
 import org.springframework.stereotype.Repository;
 
 /**
