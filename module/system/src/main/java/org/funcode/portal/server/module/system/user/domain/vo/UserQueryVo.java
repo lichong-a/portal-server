@@ -21,7 +21,6 @@ import java.time.LocalDateTime;
 @Data
 @Schema(description = "人员查询条件VO")
 public class UserQueryVo {
-    @Size(max = 100, message = "{system.domain.vo.UserQueryVo.id.Size}")
     @Schema(description = "人员ID（精确）")
     private Long id;
     @Size(max = 100, message = "{system.domain.vo.UserQueryVo.nickName.Size}")

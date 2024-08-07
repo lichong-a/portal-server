@@ -42,8 +42,8 @@ public class RoleController {
     }
 
     @Operation(summary = "根据不同条件模糊分页查询角色列表")
-    @PostMapping("getRolePageList")
-    @PreAuthorize(value = "hasRole('system:role:getRolePageList')")
+    @PostMapping("pageList")
+    @PreAuthorize(value = "hasRole('system:role:pageList')")
     public ResponseResult<Page<Role>> getRolePageList(@Valid @RequestBody RoleQueryVo roleQueryVo) {
         return ResponseResult.success(roleService.findPage(roleQueryVo));
     }

@@ -8,6 +8,8 @@ package org.funcode.portal.server.module.ielts.storage.service;
 import org.funcode.portal.server.common.core.base.service.IBaseService;
 import org.funcode.portal.server.common.domain.ielts.Storage;
 import org.funcode.portal.server.module.ielts.storage.domain.vo.StorageAddOrEditVo;
+import org.funcode.portal.server.module.ielts.storage.domain.vo.StorageQueryVo;
+import org.springframework.data.domain.Page;
 
 /**
  * @author 李冲
@@ -25,4 +27,6 @@ public interface IStorageService extends IBaseService<Storage, Long> {
     Boolean upload(StorageAddOrEditVo storageAddOrEditVo);
 
     Boolean deleteStorage(Long storageId);
+
+    Page<Storage> findPage(StorageQueryVo storageQueryVo);
 }

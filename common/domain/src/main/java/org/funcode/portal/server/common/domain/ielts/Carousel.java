@@ -50,4 +50,11 @@ public class Carousel extends BaseEntity {
     @Comment("图片文件")
     private Storage storage;
 
+    public static final class ColumnName {
+        public static final String ID = "id";
+        public static final String CAROUSEL_ORDER = "carousel_order";
+        public static final String TITLE = "title";
+        public static final String STORAGE_ID = "storage_id";
+    }
+
 }

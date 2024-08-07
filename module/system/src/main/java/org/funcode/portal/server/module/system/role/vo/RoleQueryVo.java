@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 @Data
 @Schema(description = "角色查询条件VO")
 public class RoleQueryVo {
-    @Size(max = 100, message = "{system.domain.vo.AuthorityQueryVo.id.Size}")
     @Schema(description = "角色ID（精确）")
     private Long id;
     @Size(max = 100, message = "{system.domain.vo.AuthorityQueryVo.authorityName.Size}")

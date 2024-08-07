@@ -52,8 +52,8 @@ public class UserController {
     }
 
     @Operation(summary = "根据不同条件模糊分页查询人员列表")
-    @PostMapping("getUserPageList")
-    @PreAuthorize(value = "hasAuthority('system:user:getUserPageList')")
+    @PostMapping("pageList")
+    @PreAuthorize(value = "hasAuthority('system:user:pageList')")
     public ResponseResult<Page<User>> getUserPageList(@Valid @RequestBody UserQueryVo userQueryVo) {
         return ResponseResult.success(userService.findPage(userQueryVo));
     }

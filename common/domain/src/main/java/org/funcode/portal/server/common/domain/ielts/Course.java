@@ -99,4 +99,14 @@ public class Course extends BaseEntity {
     @JsonIgnore
     private Set<User> users;
 
+    public static final class ColumnName {
+        public static final String ID = "id";
+        public static final String TITLE = "title";
+        public static final String STATUS = "status";
+        public static final String PRICE = "price";
+        public static final String COURSE_DESCRIPTION_STORAGE_ID = "course_description_storage_id";
+        public static final String COURSE_MEDIA_STORAGE_ID = "course_media_storage_id";
+        public static final String COURSE_COVER_STORAGE_ID = "course_cover_storage_id";
+    }
+
 }

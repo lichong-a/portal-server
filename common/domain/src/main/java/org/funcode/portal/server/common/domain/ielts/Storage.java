@@ -33,27 +33,27 @@ public class Storage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false)
+    @Column(name = ColumnName.ID, nullable = false, updatable = false)
     @Comment("存储ID")
     private Long id;
 
-    @Column(length = 100, nullable = false)
+    @Column(name = ColumnName.TITLE, length = 100, nullable = false)
     @Comment("标题")
     private String title;
 
-    @Column(length = 10)
+    @Column(name = ColumnName.FILE_TYPE, length = 10)
     @Comment("文件类型（0:图片；1:音频；2:视频；3:markdown）")
     private int fileType;
 
-    @Column(length = 200, nullable = false)
+    @Column(name = ColumnName.BUCKET_NAME, length = 200, nullable = false)
     @Comment("桶名称")
     private String bucketName;
 
-    @Column(length = 300, nullable = false)
+    @Column(name = ColumnName.KEY, length = 300, nullable = false)
     @Comment("唯一标识")
     private String key;
 
-    @Column(length = 200, nullable = false)
+    @Column(name = ColumnName.VERSION_ID, length = 200, nullable = false)
     @Comment("版本ID")
     private String versionId;
 
@@ -92,5 +92,14 @@ public class Storage extends BaseEntity {
     @JsonIgnore
     @Comment("课程专栏封面")
     private CourseColumn coverCourseColumn;
+
+    public static final class ColumnName {
+        public static final String ID = "id";
+        public static final String TITLE = "title";
+        public static final String FILE_TYPE = "file_type";
+        public static final String BUCKET_NAME = "bucket_name";
+        public static final String KEY = "key";
+        public static final String VERSION_ID = "version_id";
+    }
 
 }
