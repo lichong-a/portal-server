@@ -5,20 +5,28 @@
 
 package org.funcode.portal.server.starter.init;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.config.ApplicationConfig;
 import org.funcode.portal.server.common.core.security.repository.IBasicAuthorityRepository;
 import org.funcode.portal.server.common.core.security.repository.IRoleRepository;
 import org.funcode.portal.server.common.core.security.repository.IUserRepository;
+import org.funcode.portal.server.common.core.util.ClassUtil;
 import org.funcode.portal.server.common.domain.security.BasicAuthority;
 import org.funcode.portal.server.common.domain.security.Role;
 import org.funcode.portal.server.common.domain.security.User;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,14 +57,54 @@ public class InitData {
         log.info("=======开始初始化数据...=========================================================");
         // 权限初始化
         Set<BasicAuthority> authorities = new HashSet<>();
-        authorities.add(BasicAuthority.builder().authorityName("新增或编辑权限").authorityKey("system:authority:addOrEditAuthority").build());
-        authorities.add(BasicAuthority.builder().authorityName("根据不同条件模糊分页查询权限列表").authorityKey("system:authority:getAuthorityPageList").build());
-        authorities.add(BasicAuthority.builder().authorityName("新增或编辑角色").authorityKey("system:role:addOrEditRole").build());
-        authorities.add(BasicAuthority.builder().authorityName("根据不同条件模糊分页查询角色列表").authorityKey("system:role:getRolePageList").build());
-        authorities.add(BasicAuthority.builder().authorityName("根据邮箱获取人员").authorityKey("system:user:getUserByEmail").build());
-        authorities.add(BasicAuthority.builder().authorityName("根据用户名获取人员").authorityKey("system:user:getUserByUsername").build());
-        authorities.add(BasicAuthority.builder().authorityName("根据微信ID获取人员").authorityKey("system:user:getUserByWechatId").build());
-        authorities.add(BasicAuthority.builder().authorityName("根据不同条件模糊分页查询人员列表").authorityKey("system:user:addOrEditAuthority").build());
+        // 包下面的类
+        Set<Class<?>> clazzs = ClassUtil.getClasses("org.funcode.portal.server");
+        for (Class<?> clazz : clazzs) {
+            if (!clazz.isAnnotationPresent(RestController.class) && !clazz.isAnnotationPresent(Controller.class)) {
+                continue;
+            }
+            if (clazz.isAnnotationPresent(PreAuthorize.class)) {
+                // 获取类上的注解
+                PreAuthorize clazzPreAuthorizeAnno = clazz.getAnnotation(PreAuthorize.class);
+                String clazzPreAuthorizeAnnoValue = clazzPreAuthorizeAnno.value();
+                String authority = extractAuthority(clazzPreAuthorizeAnnoValue);
+                if (StringUtils.isNotBlank(authority) && !StringUtils.startsWith(authority, "ROLE_")) {
+                    BasicAuthority clazzBasicAuthority = BasicAuthority.builder().authorityKey(authority).build();
+                    if (clazz.isAnnotationPresent(Tag.class)) {
+                        // 获取类上的注解
+                        Tag clazzTagAnno = clazz.getAnnotation(Tag.class);
+                        String clazzTagName = clazzTagAnno.name();
+                        String clazzTagDescription = clazzTagAnno.description();
+                        clazzBasicAuthority.setAuthorityName(clazzTagName);
+                        clazzBasicAuthority.setDescription(clazzTagDescription);
+                    }
+                    authorities.add(clazzBasicAuthority);
+                }
+            }
+
+            // 获取方法上的注解
+            Method[] methods = clazz.getDeclaredMethods();
+            for (Method method : methods) {
+                if (method.isAnnotationPresent(PreAuthorize.class)) {
+                    // 获取方法上的注解
+                    PreAuthorize methodPreAuthorizeAnno = method.getAnnotation(PreAuthorize.class);
+                    String methodPreAuthorizeAnnoValue = methodPreAuthorizeAnno.value();
+                    String authority = extractAuthority(methodPreAuthorizeAnnoValue);
+                    if (StringUtils.isNotBlank(authority) && !StringUtils.startsWith(authority, "ROLE_")) {
+                        BasicAuthority methodBasicAuthority = BasicAuthority.builder().authorityKey(authority).build();
+                        if (method.isAnnotationPresent(Operation.class)) {
+                            // 获取方法上的注解
+                            Operation methodOperationAnno = method.getAnnotation(Operation.class);
+                            String methodOperationSummary = methodOperationAnno.summary();
+                            String methodOperationDescription = methodOperationAnno.description();
+                            methodBasicAuthority.setAuthorityName(methodOperationSummary);
+                            methodBasicAuthority.setDescription(methodOperationDescription);
+                        }
+                        authorities.add(methodBasicAuthority);
+                    }
+                }
+            }
+        }
         basicAuthorityRepository.saveAllAndFlush(authorities);
         // 角色初始化
         Set<Role> roles = new HashSet<>();
@@ -74,5 +122,19 @@ public class InitData {
                 .build();
         userRepository.saveAndFlush(adminUser);
         log.info("=======初始化数据结束=========================================================");
+    }
+
+    /**
+     * 提取 hasAuthority 值的简单正则表达式
+     */
+    private static String extractAuthority(String value) {
+        String authority = null;
+        String regex = "hasAuthority\\('(.*?)'\\)";
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(regex);
+        java.util.regex.Matcher matcher = pattern.matcher(value);
+        if (matcher.find()) {
+            authority = matcher.group(1);
+        }
+        return authority;
     }
 }
