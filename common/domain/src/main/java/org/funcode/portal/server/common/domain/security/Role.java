@@ -71,6 +71,13 @@ public class Role extends BaseEntity implements GrantedAuthority {
         }
     }
 
+    public String getRoleKey() {
+        if (roleKey.toUpperCase().startsWith("ROLE_")) {
+            return roleKey.toUpperCase();
+        }
+        return "ROLE_" + roleKey.toUpperCase();
+    }
+
     @Override
     public String getAuthority() {
         return this.roleKey;
