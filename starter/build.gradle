@@ -32,6 +32,15 @@ bootJar {
     }
 }
 
+graalvmNative {
+    toolchainDetection = true
+    binaries {
+        main {
+            verbose = true
+        }
+    }
+}
+
 dependencies {
     implementation project(':common:core')
     implementation project(':module:system')

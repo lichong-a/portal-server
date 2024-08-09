@@ -40,9 +40,4 @@ public class BaseEntity {
     @Comment("乐观锁版本号")
     public long version;
 
-    public static final class ColumnName {
-        public static final String CREATED_AT = "created_at";
-        public static final String UPDATED_AT = "updated_at";
-        public static final String VERSION = "version";
-    }
 }

@@ -48,5 +48,7 @@ jobs:
           ghcr-token: ${{ secrets.GITHUB_TOKEN }}
           dockerhub-user: ${{ secrets.DOCKER_USERNAME }}
           dockerhub-token: ${{ secrets.DOCKER_TOKEN }}
+          aliyun-registry-user: ${{ secrets.ALIYUN_REGISTRY_USER }}
+          aliyun-registry-password: ${{ secrets.ALIYUN_REGISTRY_PASSWORD }}
           push: true
           platforms: linux/amd64,linux/arm64/v8,linux/ppc64le,linux/s390x
