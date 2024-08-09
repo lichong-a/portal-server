@@ -54,7 +54,7 @@ public class CourseController {
     }
 
     @Operation(summary = "根据不同条件分页查询课程列表")
-    @GetMapping("pageList")
+    @PostMapping("pageList")
     @PreAuthorize(value = "hasAuthority('ielts:course:pageList')")
     public ResponseResult<Page<Course>> pageList(@Valid @RequestBody CourseQueryVo courseQueryVo) {
         return ResponseResult.success(courseService.findPage(courseQueryVo));

@@ -44,7 +44,7 @@ public class AuthorityController {
     @Operation(summary = "根据不同条件模糊分页查询权限列表")
     @PostMapping("pageList")
     @PreAuthorize(value = "hasAuthority('system:authority:pageList')")
-    public ResponseResult<Page<BasicAuthority>> getAuthorityPageList(@Valid @RequestBody AuthorityQueryVo authorityQueryVo) {
+    public ResponseResult<Page<BasicAuthority>> pageList(@Valid @RequestBody AuthorityQueryVo authorityQueryVo) {
         return ResponseResult.success(authorityService.findPage(authorityQueryVo));
     }
 }

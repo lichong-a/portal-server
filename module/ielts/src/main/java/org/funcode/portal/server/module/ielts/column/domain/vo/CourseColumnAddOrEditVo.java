@@ -35,5 +35,9 @@ public class CourseColumnAddOrEditVo {
     @DecimalMin(value = "0.00", message = "{ielts.domain.vo.CourseColumnAddOrEditVo.price.DecimalMin}")
     @Schema(description = "价格")
     private BigDecimal price;
+    @Schema(description = "专栏封面文件ID")
+    private Long courseColumnCoverStorageId;
+    @Schema(description = "专栏简介文件ID")
+    private Long courseColumnDescriptionStorageId;
 
 }

@@ -41,8 +41,12 @@ public class RedeemCode extends BaseEntity {
     private Long id;
 
     @Column(nullable = false)
-    @Comment("状态（0：待消费;1：已消费；2:已弃用）")
+    @Comment("状态（0：待消费;1：已消费；2:手动弃用）")
     private int status;
+
+    @Column(nullable = false, unique = true, length = 200)
+    @Comment("兑换码字符串")
+    private String code;
 
     @Column
     @Temporal(TemporalType.TIMESTAMP)
@@ -54,15 +58,15 @@ public class RedeemCode extends BaseEntity {
     @Comment("兑换时间")
     private LocalDateTime redeemTime;
 
-    @ManyToMany(mappedBy = "redeemCodes")
+    @ManyToMany(mappedBy = "redeemCodes", fetch = FetchType.EAGER)
     private Set<Course> courses;
 
-    @ManyToMany(mappedBy = "redeemCodes")
+    @ManyToMany(mappedBy = "redeemCodes", fetch = FetchType.EAGER)
     private Set<CourseColumn> courseColumns;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "redeem_code_user_id", referencedColumnName = "id")
-    @Comment("人员")
+    @Comment("兑换人")
     private User user;
 
 }

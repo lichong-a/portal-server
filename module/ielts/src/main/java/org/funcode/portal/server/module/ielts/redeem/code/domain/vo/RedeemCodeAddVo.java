@@ -6,10 +6,12 @@
 package org.funcode.portal.server.module.ielts.redeem.code.domain.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author 李冲
@@ -19,13 +21,14 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @RequiredArgsConstructor
-@Schema(description = "兑换码新增或编辑VO")
-public class RedeemCodeAddOrEditVo {
+@Schema(description = "兑换码新增VO")
+public class RedeemCodeAddVo {
 
-    @Schema(description = "兑换码ID")
-    private Long id;
-    @Size(max = 100, message = "{ielts.domain.vo.RedeemCodeAddOrEditVo.title.Size}")
-    @Schema(description = "兑换码标题")
-    private String title;
+    @Schema(description = "过期时间（默认1天过期）")
+    private LocalDateTime expireTime;
+    @Schema(description = "课程ID列表")
+    private List<Long> courseIds;
+    @Schema(description = "课程专栏ID列表")
+    private List<Long> courseColumnIds;
 
 }

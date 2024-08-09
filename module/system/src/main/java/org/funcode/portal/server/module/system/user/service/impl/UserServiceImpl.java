@@ -65,12 +65,6 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements IUse
         );
     }
 
-    /**
-     * find by email.
-     *
-     * @param email email
-     * @return User
-     */
     @Override
     @Transactional
     public User findByEmail(String email) {

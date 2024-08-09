@@ -29,6 +29,7 @@ import org.funcode.portal.server.module.ielts.storage.service.IStorageService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.net.URLEncoder;
@@ -60,6 +61,7 @@ public class StorageServiceImpl extends BaseServiceImpl<Storage, Long> implement
     }
 
     @Override
+    @Transactional
     public Boolean upload(StorageAddOrEditVo storageAddOrEditVo) {
         try {
             File localFile = FileUtils.multipartFileToFile(storageAddOrEditVo.getFile());
@@ -107,6 +109,7 @@ public class StorageServiceImpl extends BaseServiceImpl<Storage, Long> implement
     }
 
     @Override
+    @Transactional
     public Boolean deleteStorage(Long storageId) {
         Storage storage = getBaseRepository().findById(storageId).orElseThrow(() -> new BusinessException("存储不存在"));
         try {
@@ -119,6 +122,7 @@ public class StorageServiceImpl extends BaseServiceImpl<Storage, Long> implement
     }
 
     @Override
+    @Transactional
     public Page<Storage> findPage(StorageQueryVo storageQueryVo) {
         return this.findAll(
                 (Specification<Storage>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(

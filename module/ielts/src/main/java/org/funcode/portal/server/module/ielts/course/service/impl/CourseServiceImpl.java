@@ -19,6 +19,7 @@ import org.funcode.portal.server.module.ielts.storage.repository.IStorageReposit
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author 李冲
@@ -38,6 +39,7 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long> implements 
     }
 
     @Override
+    @Transactional
     public Course addOrEdit(CourseAddOrEditVo courseAddOrEditVo) {
         Course course = transAddOrEditVoToCourse(courseAddOrEditVo);
         if (course == null) return null;
@@ -45,6 +47,7 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long> implements 
     }
 
     @Override
+    @Transactional
     public Page<Course> findPage(CourseQueryVo courseQueryVo) {
         return getBaseRepository().findAll(
                 (Specification<Course>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
