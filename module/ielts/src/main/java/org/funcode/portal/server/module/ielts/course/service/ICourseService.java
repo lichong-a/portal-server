@@ -5,8 +5,12 @@
 
 package org.funcode.portal.server.module.ielts.course.service;
 
+import jakarta.validation.Valid;
 import org.funcode.portal.server.common.core.base.service.IBaseService;
 import org.funcode.portal.server.common.domain.ielts.Course;
+import org.funcode.portal.server.module.ielts.course.domain.vo.CourseAddOrEditVo;
+import org.funcode.portal.server.module.ielts.course.domain.vo.CourseQueryVo;
+import org.springframework.data.domain.Page;
 
 /**
  * @author 李冲
@@ -15,4 +19,19 @@ import org.funcode.portal.server.common.domain.ielts.Course;
  */
 public interface ICourseService extends IBaseService<Course, Long> {
 
+    /**
+     * 添加或编辑课程
+     *
+     * @param courseAddOrEditVo 课程添加或编辑VO
+     * @return 课程
+     */
+    Course addOrEdit(CourseAddOrEditVo courseAddOrEditVo);
+
+    /**
+     * 根据条件分页查询课程列表
+     *
+     * @param courseQueryVo 课程查询条件VO
+     * @return 课程分页列表
+     */
+    Page<Course> findPage(@Valid CourseQueryVo courseQueryVo);
 }

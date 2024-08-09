@@ -37,7 +37,7 @@ public class AuthorityController {
     @Operation(summary = "新增或编辑权限")
     @PostMapping("addOrEditAuthority")
     @PreAuthorize(value = "hasAuthority('system:authority:addOrEditAuthority')")
-    public ResponseResult<Boolean> addOrEditAuthority(@Valid @RequestBody AuthorityAddOrEditVo authorityAddOrEditVo) {
+    public ResponseResult<BasicAuthority> addOrEditAuthority(@Valid @RequestBody AuthorityAddOrEditVo authorityAddOrEditVo) {
         return ResponseResult.success(authorityService.addOrEditAuthority(authorityAddOrEditVo));
     }
 

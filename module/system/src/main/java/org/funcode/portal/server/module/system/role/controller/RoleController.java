@@ -37,7 +37,7 @@ public class RoleController {
     @Operation(summary = "新增或编辑角色")
     @PostMapping("addOrEditRole")
     @PreAuthorize(value = "hasAuthority('system:role:addOrEditRole')")
-    public ResponseResult<Boolean> addOrEditRole(@Valid @RequestBody RoleAddOrEditVo roleAddOrEditVo) {
+    public ResponseResult<Role> addOrEditRole(@Valid @RequestBody RoleAddOrEditVo roleAddOrEditVo) {
         return ResponseResult.success(roleService.addOrEditRole(roleAddOrEditVo));
     }
 

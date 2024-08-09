@@ -68,10 +68,4 @@ public class BasicAuthority extends BaseEntity implements GrantedAuthority {
         return this.authorityKey;
     }
 
-    public static final class ColumnName {
-        public static final String ID = "id";
-        public static final String AUTHORITY_NAME = "authority_name";
-        public static final String AUTHORITY_KEY = "authority_key";
-        public static final String DESCRIPTION = "description";
-    }
 }

@@ -28,7 +28,7 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(callSuper = true, exclude = {"users", "basicAuthorities"})
 @ToString(callSuper = true, exclude = {"users", "basicAuthorities"})
-@Table(name="tb_role")
+@Table(name = "tb_role")
 @Comment("角色表")
 @DynamicUpdate
 public class Role extends BaseEntity implements GrantedAuthority {
@@ -83,10 +83,4 @@ public class Role extends BaseEntity implements GrantedAuthority {
         return this.roleKey;
     }
 
-    public static final class ColumnName {
-        public static final String ID = "id";
-        public static final String ROLE_NAME = "role_name";
-        public static final String ROLE_KEY = "role_key";
-        public static final String DESCRIPTION = "description";
-    }
 }

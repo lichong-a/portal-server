@@ -137,21 +137,4 @@ public class User extends BaseEntity implements UserDetails {
         return result;
     }
 
-    public static final class ColumnName {
-        public static final String ID = "id";
-        public static final String NICK_NAME = "nick_name";
-        public static final String REAL_NAME = "real_name";
-        public static final String USERNAME = "username";
-        public static final String GENDER = "gender";
-        public static final String EMAIL = "email";
-        public static final String PHONE = "phone";
-        public static final String PASSWORD = "password";
-        public static final String AVATAR = "avatar";
-        public static final String BIRTHDAY = "birthday";
-        public static final String WECHAT_ID = "wechat_id";
-        public static final String ACCOUNT_NON_EXPIRED = "account_non_expired";
-        public static final String ACCOUNT_NON_LOCKED = "account_non_locked";
-        public static final String CREDENTIALS_NON_EXPIRED = "credentials_non_expired";
-        public static final String ENABLED = "enabled";
-    }
 }

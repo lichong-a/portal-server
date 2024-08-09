@@ -65,12 +65,4 @@ public class Order extends BaseEntity {
     @ManyToMany(mappedBy = "orders")
     private Set<CourseColumn> courseColumns;
 
-    public static final class ColumnName {
-        public static final String ID = "id";
-        public static final String TRADE_TYPE = "trade_type";
-        public static final String PAYMENT_TIME = "payment_time";
-        public static final String PRICE = "price";
-        public static final String ORDER_USER_ID = "order_user_id";
-    }
-
 }

@@ -14,5 +14,12 @@ import org.funcode.portal.server.common.core.security.domain.vo.request.SignUpRe
  * @since 0.0.1
  */
 public interface IAuthenticationService {
+
+    /**
+     * 注册
+     *
+     * @param request 注册请求
+     * @return 注册结果
+     */
     ResponseResult<String> signup(SignUpRequest request);
 }

@@ -20,6 +20,7 @@ import java.io.IOException;
 public interface IJwtService {
     /**
      * 解析 token 获取 username
+     *
      * @param token access-token
      * @return username
      */
@@ -27,6 +28,7 @@ public interface IJwtService {
 
     /**
      * 生成 access-token
+     *
      * @param userDetails 用户信息
      * @return access-token
      */
@@ -34,7 +36,8 @@ public interface IJwtService {
 
     /**
      * access-token 是否合法
-     * @param token access-token
+     *
+     * @param token       access-token
      * @param userDetails 用户信息
      * @return 是否合法
      */
@@ -42,11 +45,20 @@ public interface IJwtService {
 
     /**
      * access-token 是否过期
+     *
      * @param token access-token
      * @return 是否过期
      */
     boolean isTokenExpired(String token);
 
+    /**
+     * 验证 access-token
+     *
+     * @param token    access-token
+     * @param request  请求体
+     * @param response 响应体
+     * @throws IOException 异常
+     */
     void filterVerifyAccessToken(@NonNull String token, @NonNull HttpServletRequest request,
                                  @NonNull HttpServletResponse response) throws IOException;
 

@@ -16,4 +16,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface IRoleRepository extends IBaseRepository<Role, Long> {
+
+    Role findByRoleKey(String roleKey);
 }

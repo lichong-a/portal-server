@@ -34,12 +34,14 @@ public class StorageController {
 
     @Operation(summary = "上传文件")
     @PostMapping("upload")
+    @PreAuthorize(value = "hasAuthority('ielts:storage:upload')")
     public ResponseResult<Boolean> upload(@Valid @RequestBody StorageAddOrEditVo storageAddOrEditVo) {
         return ResponseResult.success(storageService.upload(storageAddOrEditVo));
     }
 
     @Operation(summary = "删除文件")
     @GetMapping("delete")
+    @PreAuthorize(value = "hasAuthority('ielts:storage:delete')")
     public ResponseResult<Boolean> delete(@RequestParam @Parameter(description = "存储ID") Long storageId) {
         return ResponseResult.success(storageService.deleteStorage(storageId));
     }

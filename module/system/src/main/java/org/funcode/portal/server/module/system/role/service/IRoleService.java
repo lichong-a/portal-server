@@ -32,6 +32,6 @@ public interface IRoleService extends IBaseService<Role, Long> {
      * @param roleAddOrEditVo 参数
      * @return 结果
      */
-    boolean addOrEditRole(RoleAddOrEditVo roleAddOrEditVo);
+    Role addOrEditRole(RoleAddOrEditVo roleAddOrEditVo);
 
 }

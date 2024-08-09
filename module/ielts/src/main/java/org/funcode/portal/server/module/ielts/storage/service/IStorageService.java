@@ -26,7 +26,19 @@ public interface IStorageService extends IBaseService<Storage, Long> {
      */
     Boolean upload(StorageAddOrEditVo storageAddOrEditVo);
 
+    /**
+     * 删除文件
+     *
+     * @param storageId 文件ID
+     * @return 是否删除成功
+     */
     Boolean deleteStorage(Long storageId);
 
+    /**
+     * 分页查询
+     *
+     * @param storageQueryVo 查询条件
+     * @return 分页查询结果
+     */
     Page<Storage> findPage(StorageQueryVo storageQueryVo);
 }

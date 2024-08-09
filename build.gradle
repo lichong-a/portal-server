@@ -50,6 +50,7 @@ subprojects {
     dependencies {
         compileOnly "org.projectlombok:lombok"
         annotationProcessor "org.projectlombok:lombok"
+        annotationProcessor "org.hibernate.orm:hibernate-jpamodelgen:${hibernatePluginVersion}"
     }
     dependencyManagement {
         imports {

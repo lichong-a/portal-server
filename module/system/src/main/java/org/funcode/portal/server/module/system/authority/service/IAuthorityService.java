@@ -32,5 +32,5 @@ public interface IAuthorityService extends IBaseService<BasicAuthority, Long> {
      * @param authorityAddOrEditVo 参数
      * @return 结果
      */
-    boolean addOrEditAuthority(AuthorityAddOrEditVo authorityAddOrEditVo);
+    BasicAuthority addOrEditAuthority(AuthorityAddOrEditVo authorityAddOrEditVo);
 }

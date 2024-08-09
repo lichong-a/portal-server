@@ -9,8 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
 import org.funcode.portal.server.common.core.security.repository.IUserRepository;
-import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.funcode.portal.server.common.domain.security.User;
+import org.funcode.portal.server.common.domain.security.User_;
 import org.funcode.portal.server.module.system.user.domain.vo.UserQueryVo;
 import org.funcode.portal.server.module.system.user.service.IUserService;
 import org.springframework.data.domain.Page;
@@ -46,19 +46,19 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements IUse
     @Override
     @Transactional
     public Page<User> findPage(UserQueryVo userQueryVo) {
-        return this.getBaseRepository().findAll(
+        return getBaseRepository().findAll(
                 (Specification<User>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
-                                StringUtils.isNotBlank(userQueryVo.getEmail()) ? criteriaBuilder.like(root.get(User.ColumnName.EMAIL), "%" + userQueryVo.getEmail() + "%") : null,
-                                StringUtils.isNotBlank(userQueryVo.getUsername()) ? criteriaBuilder.like(root.get(User.ColumnName.USERNAME), "%" + userQueryVo.getUsername() + "%") : null,
-                                StringUtils.isNotBlank(userQueryVo.getNickName()) ? criteriaBuilder.like(root.get(User.ColumnName.NICK_NAME), "%" + userQueryVo.getNickName() + "%") : null,
-                                StringUtils.isNotBlank(userQueryVo.getRealName()) ? criteriaBuilder.like(root.get(User.ColumnName.REAL_NAME), "%" + userQueryVo.getRealName() + "%") : null,
-                                StringUtils.isNotBlank(userQueryVo.getPhone()) ? criteriaBuilder.like(root.get(User.ColumnName.PHONE), "%" + userQueryVo.getPhone() + "%") : null,
-                                StringUtils.isNotBlank(userQueryVo.getWechatId()) ? criteriaBuilder.like(root.get(User.ColumnName.WECHAT_ID), "%" + userQueryVo.getWechatId() + "%") : null,
-                                userQueryVo.getId() != null ? criteriaBuilder.equal(root.get(User.ColumnName.ID), userQueryVo.getId()) : null,
-                                userQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(BaseEntity.ColumnName.CREATED_AT), userQueryVo.getCreatedAtBegin()) : null,
-                                userQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(BaseEntity.ColumnName.CREATED_AT), userQueryVo.getCreatedAtEnd()) : null,
-                                userQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(BaseEntity.ColumnName.UPDATED_AT), userQueryVo.getUpdatedAtBegin()) : null,
-                                userQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(BaseEntity.ColumnName.UPDATED_AT), userQueryVo.getUpdatedAtEnd()) : null
+                                StringUtils.isNotBlank(userQueryVo.getEmail()) ? criteriaBuilder.like(root.get(User_.email), "%" + userQueryVo.getEmail() + "%") : null,
+                                StringUtils.isNotBlank(userQueryVo.getUsername()) ? criteriaBuilder.like(root.get(User_.username), "%" + userQueryVo.getUsername() + "%") : null,
+                                StringUtils.isNotBlank(userQueryVo.getNickName()) ? criteriaBuilder.like(root.get(User_.nickName), "%" + userQueryVo.getNickName() + "%") : null,
+                                StringUtils.isNotBlank(userQueryVo.getRealName()) ? criteriaBuilder.like(root.get(User_.realName), "%" + userQueryVo.getRealName() + "%") : null,
+                                StringUtils.isNotBlank(userQueryVo.getPhone()) ? criteriaBuilder.like(root.get(User_.phone), "%" + userQueryVo.getPhone() + "%") : null,
+                                StringUtils.isNotBlank(userQueryVo.getWechatId()) ? criteriaBuilder.like(root.get(User_.wechatId), "%" + userQueryVo.getWechatId() + "%") : null,
+                                userQueryVo.getId() != null ? criteriaBuilder.equal(root.get(User_.id), userQueryVo.getId()) : null,
+                                userQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(User_.createdAt), userQueryVo.getCreatedAtBegin()) : null,
+                                userQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(User_.createdAt), userQueryVo.getCreatedAtEnd()) : null,
+                                userQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(User_.updatedAt), userQueryVo.getUpdatedAtBegin()) : null,
+                                userQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(User_.updatedAt), userQueryVo.getUpdatedAtEnd()) : null
                         )
                 ).getRestriction(),
                 userQueryVo.getPageRequest()
@@ -74,19 +74,19 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements IUse
     @Override
     @Transactional
     public User findByEmail(String email) {
-        return this.getBaseRepository().findByEmail(email);
+        return getBaseRepository().findByEmail(email);
     }
 
     @Override
     @Transactional
     public User findByUsername(String username) {
-        return this.getBaseRepository().findByUsername(username);
+        return getBaseRepository().findByUsername(username);
     }
 
     @Override
     @Transactional
     public User findByWechatId(String wechatId) {
-        return this.getBaseRepository().findByWechatId(wechatId);
+        return getBaseRepository().findByWechatId(wechatId);
     }
 
 }

@@ -6,6 +6,7 @@
 package org.funcode.portal.server.module.ielts.carousel.domain.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -29,5 +30,8 @@ public class CarouselAddOrEditVo {
     private String title;
     @Schema(description = "顺序")
     private long carouselOrder;
+    @NotNull(message = "{ielts.domain.vo.CarouselAddOrEditVo.storageId.NotNull}")
+    @Schema(description = "轮播图片文件ID")
+    private Long storageId;
 
 }

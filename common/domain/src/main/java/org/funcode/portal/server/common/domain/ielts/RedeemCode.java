@@ -65,12 +65,4 @@ public class RedeemCode extends BaseEntity {
     @Comment("人员")
     private User user;
 
-    public static final class ColumnName {
-        public static final String ID = "id";
-        public static final String STATUS = "status";
-        public static final String EXPIRE_TIME = "expire_time";
-        public static final String REDEEM_TIME = "redeem_time";
-        public static final String REDEEM_CODE_USER_ID = "redeem_code_user_id";
-    }
-
 }

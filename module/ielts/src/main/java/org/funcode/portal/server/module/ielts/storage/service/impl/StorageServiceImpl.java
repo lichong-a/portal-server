@@ -20,8 +20,8 @@ import org.funcode.portal.server.common.core.base.exception.BusinessException;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
 import org.funcode.portal.server.common.core.config.COSConfig;
 import org.funcode.portal.server.common.core.util.FileUtils;
-import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.funcode.portal.server.common.domain.ielts.Storage;
+import org.funcode.portal.server.common.domain.ielts.Storage_;
 import org.funcode.portal.server.module.ielts.storage.domain.vo.StorageAddOrEditVo;
 import org.funcode.portal.server.module.ielts.storage.domain.vo.StorageQueryVo;
 import org.funcode.portal.server.module.ielts.storage.repository.IStorageRepository;
@@ -122,16 +122,16 @@ public class StorageServiceImpl extends BaseServiceImpl<Storage, Long> implement
     public Page<Storage> findPage(StorageQueryVo storageQueryVo) {
         return this.findAll(
                 (Specification<Storage>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
-                                StringUtils.isNotBlank(storageQueryVo.getBucketName()) ? criteriaBuilder.like(root.get(Storage.ColumnName.BUCKET_NAME), "%" + storageQueryVo.getBucketName() + "%") : null,
-                                StringUtils.isNotBlank(storageQueryVo.getTitle()) ? criteriaBuilder.like(root.get(Storage.ColumnName.TITLE), "%" + storageQueryVo.getTitle() + "%") : null,
-                                StringUtils.isNotBlank(storageQueryVo.getKey()) ? criteriaBuilder.like(root.get(Storage.ColumnName.KEY), "%" + storageQueryVo.getKey() + "%") : null,
-                                storageQueryVo.getId() != null ? criteriaBuilder.equal(root.get(Storage.ColumnName.ID), storageQueryVo.getId()) : null,
-                                storageQueryVo.getFileType() != null ? criteriaBuilder.equal(root.get(Storage.ColumnName.FILE_TYPE), storageQueryVo.getFileType()) : null,
-                                storageQueryVo.getVersionId() != null ? criteriaBuilder.equal(root.get(Storage.ColumnName.VERSION_ID), storageQueryVo.getVersionId()) : null,
-                                storageQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(BaseEntity.ColumnName.CREATED_AT), storageQueryVo.getCreatedAtBegin()) : null,
-                                storageQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(BaseEntity.ColumnName.CREATED_AT), storageQueryVo.getCreatedAtEnd()) : null,
-                                storageQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(BaseEntity.ColumnName.UPDATED_AT), storageQueryVo.getUpdatedAtBegin()) : null,
-                                storageQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(BaseEntity.ColumnName.UPDATED_AT), storageQueryVo.getUpdatedAtEnd()) : null
+                                StringUtils.isNotBlank(storageQueryVo.getBucketName()) ? criteriaBuilder.like(root.get(Storage_.bucketName), "%" + storageQueryVo.getBucketName() + "%") : null,
+                                StringUtils.isNotBlank(storageQueryVo.getTitle()) ? criteriaBuilder.like(root.get(Storage_.title), "%" + storageQueryVo.getTitle() + "%") : null,
+                                StringUtils.isNotBlank(storageQueryVo.getKey()) ? criteriaBuilder.like(root.get(Storage_.key), "%" + storageQueryVo.getKey() + "%") : null,
+                                storageQueryVo.getId() != null ? criteriaBuilder.equal(root.get(Storage_.id), storageQueryVo.getId()) : null,
+                                storageQueryVo.getFileType() != null ? criteriaBuilder.equal(root.get(Storage_.fileType), storageQueryVo.getFileType()) : null,
+                                storageQueryVo.getVersionId() != null ? criteriaBuilder.equal(root.get(Storage_.versionId), storageQueryVo.getVersionId()) : null,
+                                storageQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Storage_.createdAt), storageQueryVo.getCreatedAtBegin()) : null,
+                                storageQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Storage_.createdAt), storageQueryVo.getCreatedAtEnd()) : null,
+                                storageQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Storage_.updatedAt), storageQueryVo.getUpdatedAtBegin()) : null,
+                                storageQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Storage_.updatedAt), storageQueryVo.getUpdatedAtEnd()) : null
                         )
                 ).getRestriction(),
                 storageQueryVo.getPageRequest()

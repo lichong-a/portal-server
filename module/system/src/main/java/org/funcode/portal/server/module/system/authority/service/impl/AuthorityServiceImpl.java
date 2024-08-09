@@ -9,8 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
 import org.funcode.portal.server.common.core.security.repository.IBasicAuthorityRepository;
-import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.funcode.portal.server.common.domain.security.BasicAuthority;
+import org.funcode.portal.server.common.domain.security.BasicAuthority_;
 import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityAddOrEditVo;
 import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityQueryVo;
 import org.funcode.portal.server.module.system.authority.service.IAuthorityService;
@@ -47,16 +47,16 @@ public class AuthorityServiceImpl extends BaseServiceImpl<BasicAuthority, Long> 
     @Override
     @Transactional
     public Page<BasicAuthority> findPage(AuthorityQueryVo authorityQueryVo) {
-        return this.getBaseRepository().findAll(
+        return getBaseRepository().findAll(
                 (Specification<BasicAuthority>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
-                                StringUtils.isNotBlank(authorityQueryVo.getAuthorityKey()) ? criteriaBuilder.like(root.get(BasicAuthority.ColumnName.AUTHORITY_KEY), "%" + authorityQueryVo.getAuthorityKey() + "%") : null,
-                                StringUtils.isNotBlank(authorityQueryVo.getAuthorityName()) ? criteriaBuilder.like(root.get(BasicAuthority.ColumnName.AUTHORITY_NAME), "%" + authorityQueryVo.getAuthorityName() + "%") : null,
-                                StringUtils.isNotBlank(authorityQueryVo.getDescription()) ? criteriaBuilder.like(root.get(BasicAuthority.ColumnName.DESCRIPTION), "%" + authorityQueryVo.getDescription() + "%") : null,
-                                authorityQueryVo.getId() != null ? criteriaBuilder.equal(root.get(BasicAuthority.ColumnName.ID), authorityQueryVo.getId()) : null,
-                                authorityQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(BaseEntity.ColumnName.CREATED_AT), authorityQueryVo.getCreatedAtBegin()) : null,
-                                authorityQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(BaseEntity.ColumnName.CREATED_AT), authorityQueryVo.getCreatedAtEnd()) : null,
-                                authorityQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(BaseEntity.ColumnName.UPDATED_AT), authorityQueryVo.getUpdatedAtBegin()) : null,
-                                authorityQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(BaseEntity.ColumnName.UPDATED_AT), authorityQueryVo.getUpdatedAtEnd()) : null
+                                StringUtils.isNotBlank(authorityQueryVo.getAuthorityKey()) ? criteriaBuilder.like(root.get(BasicAuthority_.authorityKey), "%" + authorityQueryVo.getAuthorityKey() + "%") : null,
+                                StringUtils.isNotBlank(authorityQueryVo.getAuthorityName()) ? criteriaBuilder.like(root.get(BasicAuthority_.authorityName), "%" + authorityQueryVo.getAuthorityName() + "%") : null,
+                                StringUtils.isNotBlank(authorityQueryVo.getDescription()) ? criteriaBuilder.like(root.get(BasicAuthority_.description), "%" + authorityQueryVo.getDescription() + "%") : null,
+                                authorityQueryVo.getId() != null ? criteriaBuilder.equal(root.get(BasicAuthority_.id), authorityQueryVo.getId()) : null,
+                                authorityQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(BasicAuthority_.createdAt), authorityQueryVo.getCreatedAtBegin()) : null,
+                                authorityQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(BasicAuthority_.createdAt), authorityQueryVo.getCreatedAtEnd()) : null,
+                                authorityQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(BasicAuthority_.updatedAt), authorityQueryVo.getUpdatedAtBegin()) : null,
+                                authorityQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(BasicAuthority_.updatedAt), authorityQueryVo.getUpdatedAtEnd()) : null
                         )
                 ).getRestriction(),
                 authorityQueryVo.getPageRequest()
@@ -65,9 +65,8 @@ public class AuthorityServiceImpl extends BaseServiceImpl<BasicAuthority, Long> 
 
     @Override
     @Transactional
-    public boolean addOrEditAuthority(AuthorityAddOrEditVo authorityAddOrEditVo) {
+    public BasicAuthority addOrEditAuthority(AuthorityAddOrEditVo authorityAddOrEditVo) {
         BasicAuthority basicAuthority = authorityAddOrEditVo.transToBasicAuthority();
-        this.getBaseRepository().save(basicAuthority);
-        return true;
+        return getBaseRepository().save(basicAuthority);
     }
 }

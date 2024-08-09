@@ -9,8 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
 import org.funcode.portal.server.common.core.security.repository.IRoleRepository;
-import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.funcode.portal.server.common.domain.security.Role;
+import org.funcode.portal.server.common.domain.security.Role_;
 import org.funcode.portal.server.module.system.authority.service.IAuthorityService;
 import org.funcode.portal.server.module.system.role.service.IRoleService;
 import org.funcode.portal.server.module.system.role.vo.RoleAddOrEditVo;
@@ -53,16 +53,16 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Long> implements IRol
     @Override
     @Transactional
     public Page<Role> findPage(RoleQueryVo roleQueryVo) {
-        return this.findAll(
+        return getBaseRepository().findAll(
                 (Specification<Role>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
-                                StringUtils.isNotBlank(roleQueryVo.getRoleKey()) ? criteriaBuilder.like(root.get(Role.ColumnName.ROLE_KEY), "%" + roleQueryVo.getRoleKey() + "%") : null,
-                                StringUtils.isNotBlank(roleQueryVo.getRoleName()) ? criteriaBuilder.like(root.get(Role.ColumnName.ROLE_NAME), "%" + roleQueryVo.getRoleName() + "%") : null,
-                                StringUtils.isNotBlank(roleQueryVo.getDescription()) ? criteriaBuilder.like(root.get(Role.ColumnName.DESCRIPTION), "%" + roleQueryVo.getDescription() + "%") : null,
-                                roleQueryVo.getId() != null ? criteriaBuilder.equal(root.get(Role.ColumnName.ID), roleQueryVo.getId()) : null,
-                                roleQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(BaseEntity.ColumnName.CREATED_AT), roleQueryVo.getCreatedAtBegin()) : null,
-                                roleQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(BaseEntity.ColumnName.CREATED_AT), roleQueryVo.getCreatedAtEnd()) : null,
-                                roleQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(BaseEntity.ColumnName.UPDATED_AT), roleQueryVo.getUpdatedAtBegin()) : null,
-                                roleQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(BaseEntity.ColumnName.UPDATED_AT), roleQueryVo.getUpdatedAtEnd()) : null
+                                StringUtils.isNotBlank(roleQueryVo.getRoleKey()) ? criteriaBuilder.like(root.get(Role_.roleKey), "%" + roleQueryVo.getRoleKey() + "%") : null,
+                                StringUtils.isNotBlank(roleQueryVo.getRoleName()) ? criteriaBuilder.like(root.get(Role_.roleName), "%" + roleQueryVo.getRoleName() + "%") : null,
+                                StringUtils.isNotBlank(roleQueryVo.getDescription()) ? criteriaBuilder.like(root.get(Role_.description), "%" + roleQueryVo.getDescription() + "%") : null,
+                                roleQueryVo.getId() != null ? criteriaBuilder.equal(root.get(Role_.id), roleQueryVo.getId()) : null,
+                                roleQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Role_.createdAt), roleQueryVo.getCreatedAtBegin()) : null,
+                                roleQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Role_.createdAt), roleQueryVo.getCreatedAtEnd()) : null,
+                                roleQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Role_.updatedAt), roleQueryVo.getUpdatedAtBegin()) : null,
+                                roleQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Role_.updatedAt), roleQueryVo.getUpdatedAtEnd()) : null
                         )
                 ).getRestriction(),
                 roleQueryVo.getPageRequest()
@@ -71,20 +71,20 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Long> implements IRol
 
     @Override
     @Transactional
-    public boolean addOrEditRole(RoleAddOrEditVo roleAddOrEditVo) {
+    public Role addOrEditRole(RoleAddOrEditVo roleAddOrEditVo) {
         Role role = transAddOrEditVoToRole(roleAddOrEditVo);
-        this.save(role);
-        return true;
+        return getBaseRepository().save(role);
     }
 
     /**
      * VO转换为DTO
+     *
      * @param roleAddOrEditVo 新增或编辑的参数
      * @return 转换结果
      */
     public Role transAddOrEditVoToRole(RoleAddOrEditVo roleAddOrEditVo) {
         Role role = new Role();
-        BeanUtils.copyProperties(this, role);
+        BeanUtils.copyProperties(roleAddOrEditVo, role);
         role.setBasicAuthorities(new HashSet<>(authorityService.findList(roleAddOrEditVo.getAuthorityIds())));
         return role;
     }

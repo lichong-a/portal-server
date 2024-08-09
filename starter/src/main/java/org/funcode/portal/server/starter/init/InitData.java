@@ -17,10 +17,12 @@ import org.funcode.portal.server.common.core.security.repository.IRoleRepository
 import org.funcode.portal.server.common.core.security.repository.IUserRepository;
 import org.funcode.portal.server.common.core.util.ClassUtil;
 import org.funcode.portal.server.common.domain.security.BasicAuthority;
+import org.funcode.portal.server.common.domain.security.BasicAuthority_;
 import org.funcode.portal.server.common.domain.security.Role;
 import org.funcode.portal.server.common.domain.security.User;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -28,7 +30,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Method;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author 李冲
@@ -49,14 +55,9 @@ public class InitData {
     @PostConstruct
     @DependsOn("flywayInitStarter")
     public void init() {
-        long userCount = userRepository.count();
-        if (userCount > 0) {
-            log.info("已经完成过初始化...直接启动...");
-            return;
-        }
         log.info("=======开始初始化数据...=========================================================");
         // 权限初始化
-        Set<BasicAuthority> authorities = new HashSet<>();
+        Set<BasicAuthority> systemAuthorities = new HashSet<>();
         // 包下面的类
         Set<Class<?>> clazzs = ClassUtil.getClasses("org.funcode.portal.server");
         for (Class<?> clazz : clazzs) {
@@ -78,7 +79,7 @@ public class InitData {
                         clazzBasicAuthority.setAuthorityName(clazzTagName);
                         clazzBasicAuthority.setDescription(clazzTagDescription);
                     }
-                    authorities.add(clazzBasicAuthority);
+                    systemAuthorities.add(clazzBasicAuthority);
                 }
             }
 
@@ -100,26 +101,43 @@ public class InitData {
                             methodBasicAuthority.setAuthorityName(methodOperationSummary);
                             methodBasicAuthority.setDescription(methodOperationDescription);
                         }
-                        authorities.add(methodBasicAuthority);
+                        systemAuthorities.add(methodBasicAuthority);
                     }
                 }
             }
         }
-        basicAuthorityRepository.saveAllAndFlush(authorities);
+        List<String> authorityKeys = systemAuthorities.stream().map(BasicAuthority::getAuthorityKey).toList();
+        Map<String, BasicAuthority> authorityMap = systemAuthorities.stream().collect(Collectors.toMap(BasicAuthority::getAuthorityKey, Function.identity()));
+        List<BasicAuthority> alreadyExistAuthorities = basicAuthorityRepository.findAll(
+                (Specification<BasicAuthority>) (root, query, criteriaBuilder) -> query.where(
+                        root.get(BasicAuthority_.authorityKey).in(authorityKeys)
+                ).getRestriction());
+        // 将查询到已存在的权限覆盖到最终权限列表中
+        alreadyExistAuthorities.forEach(authority -> authorityMap.put(authority.getAuthorityKey(), authority));
+        List<BasicAuthority> finalAuthorities = authorityMap.values().stream().toList();
+        finalAuthorities = basicAuthorityRepository.saveAllAndFlush(finalAuthorities);
         // 角色初始化
+        Role adminRole = roleRepository.findByRoleKey("admin");
+        Role studentRole = roleRepository.findByRoleKey("student");
         Set<Role> roles = new HashSet<>();
-        roles.add(Role.builder().roleName("管理员").roleKey("admin").basicAuthorities(authorities).build());
-        roles.add(Role.builder().roleName("学员").roleKey("student").build());
+        roles.add(Role.builder().id(adminRole == null ? null : adminRole.getId()).roleName("管理员").roleKey("admin").basicAuthorities(new HashSet<>(finalAuthorities)).build());
+        roles.add(Role.builder().id(studentRole == null ? null : studentRole.getId()).roleName("学员").roleKey("student").build());
         roleRepository.saveAllAndFlush(roles);
         // 人员初始化
-        User adminUser = User.builder()
-                .username(applicationConfig.getSecurity().adminUsername())
-                .password(passwordEncoder.encode(applicationConfig.getSecurity().adminPassword()))
-                .realName("管理员")
-                .nickName("管理员")
-                .roles(roles)
-                .basicAuthorities(authorities)
-                .build();
+        User adminUser = userRepository.findByUsername(applicationConfig.getSecurity().adminUsername());
+        if (adminUser != null) {
+            adminUser.setBasicAuthorities(new HashSet<>(finalAuthorities));
+            adminUser.setPassword(passwordEncoder.encode(applicationConfig.getSecurity().adminPassword()));
+        } else {
+            adminUser = User.builder()
+                    .username(applicationConfig.getSecurity().adminUsername())
+                    .password(passwordEncoder.encode(applicationConfig.getSecurity().adminPassword()))
+                    .realName("管理员")
+                    .nickName("管理员")
+                    .roles(roles)
+                    .basicAuthorities(new HashSet<>(finalAuthorities))
+                    .build();
+        }
         userRepository.saveAndFlush(adminUser);
         log.info("=======初始化数据结束=========================================================");
     }

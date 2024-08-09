@@ -33,46 +33,46 @@ public class Storage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = ColumnName.ID, nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false)
     @Comment("存储ID")
     private Long id;
 
-    @Column(name = ColumnName.TITLE, length = 100, nullable = false)
+    @Column(length = 100, nullable = false)
     @Comment("标题")
     private String title;
 
-    @Column(name = ColumnName.FILE_TYPE, length = 10)
+    @Column(length = 10)
     @Comment("文件类型（0:图片；1:音频；2:视频；3:markdown）")
     private int fileType;
 
-    @Column(name = ColumnName.BUCKET_NAME, length = 200, nullable = false)
+    @Column(length = 200, nullable = false)
     @Comment("桶名称")
     private String bucketName;
 
-    @Column(name = ColumnName.KEY, length = 300, nullable = false)
+    @Column(length = 300, nullable = false)
     @Comment("唯一标识")
     private String key;
 
-    @Column(name = ColumnName.VERSION_ID, length = 200, nullable = false)
+    @Column(length = 200, nullable = false)
     @Comment("版本ID")
     private String versionId;
 
-    @OneToOne(mappedBy = "storage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "storage", cascade = CascadeType.ALL)
     @JsonIgnore
     @Comment("轮播")
     private Carousel carousel;
 
-    @OneToOne(mappedBy = "courseDescriptionStorage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "courseDescriptionStorage", cascade = CascadeType.ALL)
     @JsonIgnore
     @Comment("课程简介")
     private Course descriptionCourse;
 
-    @OneToOne(mappedBy = "courseMediaStorage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "courseMediaStorage", cascade = CascadeType.ALL)
     @JsonIgnore
     @Comment("课程音视频")
     private Course mediaCourse;
 
-    @OneToOne(mappedBy = "courseCoverStorage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "courseCoverStorage", cascade = CascadeType.ALL)
     @JsonIgnore
     @Comment("课程封面")
     private Course coverCourse;
@@ -83,23 +83,14 @@ public class Storage extends BaseEntity {
     @Comment("课程资料")
     private Course attachmentCourse;
 
-    @OneToOne(mappedBy = "courseColumnDescriptionStorage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "courseColumnDescriptionStorage", cascade = CascadeType.ALL)
     @JsonIgnore
     @Comment("课程专栏简介")
     private CourseColumn descriptionCourseColumn;
 
-    @OneToOne(mappedBy = "courseColumnCoverStorage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "courseColumnCoverStorage", cascade = CascadeType.ALL)
     @JsonIgnore
     @Comment("课程专栏封面")
     private CourseColumn coverCourseColumn;
-
-    public static final class ColumnName {
-        public static final String ID = "id";
-        public static final String TITLE = "title";
-        public static final String FILE_TYPE = "file_type";
-        public static final String BUCKET_NAME = "bucket_name";
-        public static final String KEY = "key";
-        public static final String VERSION_ID = "version_id";
-    }
 
 }
