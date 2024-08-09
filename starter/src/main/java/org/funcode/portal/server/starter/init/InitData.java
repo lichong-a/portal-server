@@ -119,9 +119,26 @@ public class InitData {
         // 角色初始化
         Role adminRole = roleRepository.findByRoleKey("admin");
         Role studentRole = roleRepository.findByRoleKey("student");
+        if (adminRole == null) {
+            adminRole = Role.builder()
+                    .roleName("管理员")
+                    .roleKey("admin")
+                    .description("管理员角色")
+                    .basicAuthorities(new HashSet<>(finalAuthorities))
+                    .build();
+        } else {
+            adminRole.setBasicAuthorities(new HashSet<>(finalAuthorities));
+        }
+        if (studentRole == null) {
+            studentRole = Role.builder()
+                    .roleName("学员")
+                    .roleKey("student")
+                    .description("学员角色")
+                    .build();
+        }
         Set<Role> roles = new HashSet<>();
-        roles.add(Role.builder().id(adminRole == null ? null : adminRole.getId()).roleName("管理员").roleKey("admin").basicAuthorities(new HashSet<>(finalAuthorities)).build());
-        roles.add(Role.builder().id(studentRole == null ? null : studentRole.getId()).roleName("学员").roleKey("student").build());
+        roles.add(adminRole);
+        roles.add(studentRole);
         roleRepository.saveAllAndFlush(roles);
         // 人员初始化
         User adminUser = userRepository.findByUsername(applicationConfig.getSecurity().adminUsername());
