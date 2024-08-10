@@ -2,9 +2,9 @@ FROM eclipse-temurin:21-jre
 
 WORKDIR application
 ARG JAR_FILE=starter/build/libs/portal-server*.jar
-COPY ${JAR_FILE} /application/application.jar
-COPY starter/src/main/resources/application.yml /application/config/application.yml
-COPY starter/src/main/resources/docker/.env /application/config/.env
+ADD ${JAR_FILE} /application/application.jar
+COPY starter/src/main/resources/application.yml /application/config
+COPY starter/src/main/resources/docker/.env /application/config
 
 ENV JVM_OPTS="-Xmx2048m -Xms512m" \
     APP_OPS="--spring.config.import=optional:file:/application/config/.env[.properties]" \
