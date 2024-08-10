@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:21-jre
 
 WORKDIR application
 ARG JAR_FILE=starter/build/libs/portal-server*.jar
