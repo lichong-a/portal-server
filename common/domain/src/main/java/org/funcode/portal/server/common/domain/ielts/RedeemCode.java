@@ -58,13 +58,13 @@ public class RedeemCode extends BaseEntity {
     @Comment("兑换时间")
     private LocalDateTime redeemTime;
 
-    @ManyToMany(mappedBy = "redeemCodes", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "redeemCodes")
     private Set<Course> courses;
 
-    @ManyToMany(mappedBy = "redeemCodes", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "redeemCodes")
     private Set<CourseColumn> courseColumns;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "redeem_code_user_id", referencedColumnName = "id")
     @Comment("兑换人")
     private User user;

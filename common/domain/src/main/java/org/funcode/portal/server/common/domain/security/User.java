@@ -96,14 +96,14 @@ public class User extends BaseEntity implements UserDetails {
     @Builder.Default
     @Comment("是否启用")
     private boolean enabled = true;
-    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Role.class)
     @JoinTable(
             name = "tb_user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     @JsonIgnore
     private Set<Role> roles;
-    @ManyToMany(targetEntity = BasicAuthority.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = BasicAuthority.class)
     @JoinTable(
             name = "tb_user_basic_authority",
             joinColumns = @JoinColumn(name = "user_id"),

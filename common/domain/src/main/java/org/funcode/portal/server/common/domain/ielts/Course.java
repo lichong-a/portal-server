@@ -68,7 +68,7 @@ public class Course extends BaseEntity {
     @Comment("课程封面文件")
     private Storage courseCoverStorage;
 
-    @OneToMany(mappedBy = "attachmentCourse", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "attachmentCourse")
     private Set<Storage> courseAttachmentStorages;
 
     @ManyToMany(mappedBy = "courses")

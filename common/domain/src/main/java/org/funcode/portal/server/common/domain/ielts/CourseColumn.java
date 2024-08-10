@@ -63,7 +63,7 @@ public class CourseColumn extends BaseEntity {
     @Comment("课程专栏封面文件")
     private Storage courseColumnCoverStorage;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
             name = "tb_course_course_column",
             joinColumns = @JoinColumn(name = "course_column_id"),

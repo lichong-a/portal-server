@@ -54,7 +54,7 @@ public class Order extends BaseEntity {
     @Comment("金额")
     private BigDecimal price;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "order_user_id", referencedColumnName = "id")
     @Comment("人员")
     private User user;
