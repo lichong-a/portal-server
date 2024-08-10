@@ -36,6 +36,8 @@ graalvmNative {
     toolchainDetection = true
     binaries {
         main {
+            imageName = 'portal-server'
+            mainClass = 'org.funcode.portal.server.starter.PortalServerApplication'
             verbose = true
         }
     }
