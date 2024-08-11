@@ -3,17 +3,17 @@
  *
  */
 
-package org.funcode.portal.server.module.system.authority.service.impl;
+package org.funcode.portal.server.common.core.security.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
+import org.funcode.portal.server.common.core.security.domain.vo.authority.AuthorityAddOrEditVo;
+import org.funcode.portal.server.common.core.security.domain.vo.authority.AuthorityQueryVo;
 import org.funcode.portal.server.common.core.security.repository.IBasicAuthorityRepository;
+import org.funcode.portal.server.common.core.security.service.IAuthorityService;
 import org.funcode.portal.server.common.domain.security.BasicAuthority;
 import org.funcode.portal.server.common.domain.security.BasicAuthority_;
-import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityAddOrEditVo;
-import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityQueryVo;
-import org.funcode.portal.server.module.system.authority.service.IAuthorityService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;

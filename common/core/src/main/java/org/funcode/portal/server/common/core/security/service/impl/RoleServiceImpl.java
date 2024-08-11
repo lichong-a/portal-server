@@ -3,18 +3,18 @@
  *
  */
 
-package org.funcode.portal.server.module.system.role.service.impl;
+package org.funcode.portal.server.common.core.security.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
+import org.funcode.portal.server.common.core.security.domain.vo.role.RoleAddOrEditVo;
+import org.funcode.portal.server.common.core.security.domain.vo.role.RoleQueryVo;
 import org.funcode.portal.server.common.core.security.repository.IRoleRepository;
+import org.funcode.portal.server.common.core.security.service.IAuthorityService;
+import org.funcode.portal.server.common.core.security.service.IRoleService;
 import org.funcode.portal.server.common.domain.security.Role;
 import org.funcode.portal.server.common.domain.security.Role_;
-import org.funcode.portal.server.module.system.authority.service.IAuthorityService;
-import org.funcode.portal.server.module.system.role.service.IRoleService;
-import org.funcode.portal.server.module.system.role.vo.RoleAddOrEditVo;
-import org.funcode.portal.server.module.system.role.vo.RoleQueryVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;

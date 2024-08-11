@@ -3,7 +3,7 @@
  *
  */
 
-package org.funcode.portal.server.module.system.authority.domain.vo;
+package org.funcode.portal.server.common.core.security.domain.vo.authority;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Size;

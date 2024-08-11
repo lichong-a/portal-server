@@ -15,6 +15,7 @@ import org.funcode.portal.server.module.ielts.order.service.IOrderService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author 李冲
@@ -33,6 +34,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements IO
     }
 
     @Override
+    @Transactional
     public Page<Order> pageList(OrderQueryVo orderQueryVo) {
         return getBaseRepository().findAll(
                 (Specification<Order>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(

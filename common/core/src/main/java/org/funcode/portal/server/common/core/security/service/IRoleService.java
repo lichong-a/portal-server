@@ -3,12 +3,12 @@
  *
  */
 
-package org.funcode.portal.server.module.system.role.service;
+package org.funcode.portal.server.common.core.security.service;
 
 import org.funcode.portal.server.common.core.base.service.IBaseService;
+import org.funcode.portal.server.common.core.security.domain.vo.role.RoleAddOrEditVo;
+import org.funcode.portal.server.common.core.security.domain.vo.role.RoleQueryVo;
 import org.funcode.portal.server.common.domain.security.Role;
-import org.funcode.portal.server.module.system.role.vo.RoleAddOrEditVo;
-import org.funcode.portal.server.module.system.role.vo.RoleQueryVo;
 import org.springframework.data.domain.Page;
 
 /**

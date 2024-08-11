@@ -3,12 +3,12 @@
  *
  */
 
-package org.funcode.portal.server.module.system.authority.service;
+package org.funcode.portal.server.common.core.security.service;
 
 import org.funcode.portal.server.common.core.base.service.IBaseService;
+import org.funcode.portal.server.common.core.security.domain.vo.authority.AuthorityAddOrEditVo;
+import org.funcode.portal.server.common.core.security.domain.vo.authority.AuthorityQueryVo;
 import org.funcode.portal.server.common.domain.security.BasicAuthority;
-import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityAddOrEditVo;
-import org.funcode.portal.server.module.system.authority.domain.vo.AuthorityQueryVo;
 import org.springframework.data.domain.Page;
 
 /**

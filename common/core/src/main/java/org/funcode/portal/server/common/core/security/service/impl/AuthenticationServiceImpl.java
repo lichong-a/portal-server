@@ -11,10 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
 import org.funcode.portal.server.common.core.base.http.response.ResponseStatusEnum;
-import org.funcode.portal.server.common.core.security.domain.vo.request.SignUpRequest;
+import org.funcode.portal.server.common.core.security.domain.vo.signup.SignUpRequest;
 import org.funcode.portal.server.common.core.security.repository.IUserRepository;
 import org.funcode.portal.server.common.core.security.service.IAuthenticationService;
-import org.funcode.portal.server.common.core.security.service.IJwtService;
 import org.funcode.portal.server.common.domain.security.User;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,7 +30,6 @@ import org.springframework.stereotype.Service;
 public class AuthenticationServiceImpl implements IAuthenticationService {
     private final IUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final IJwtService jwtService;
 
     @Override
     @Transactional(rollbackOn = Exception.class)

@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     /**
-     * exception handler for bad request.
+     * exception handler for bad signup.
      *
      * @param e exception
      * @return ResponseResult

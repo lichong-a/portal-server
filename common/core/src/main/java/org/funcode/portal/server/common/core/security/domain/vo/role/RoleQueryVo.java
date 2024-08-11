@@ -3,7 +3,7 @@
  *
  */
 
-package org.funcode.portal.server.module.system.role.vo;
+package org.funcode.portal.server.common.core.security.domain.vo.role;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Size;
