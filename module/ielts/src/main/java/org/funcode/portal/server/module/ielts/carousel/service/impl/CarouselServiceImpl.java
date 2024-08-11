@@ -44,12 +44,12 @@ public class CarouselServiceImpl extends BaseServiceImpl<Carousel, Long> impleme
     public Page<Carousel> findPage(CarouselQueryVo carouselQueryVo) {
         return getBaseRepository().findAll(
                 (Specification<Carousel>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
-                                StringUtils.isNotBlank(carouselQueryVo.getTitle()) ? criteriaBuilder.like(root.get(Carousel_.title), "%" + carouselQueryVo.getTitle() + "%") : null,
-                                carouselQueryVo.getId() != null ? criteriaBuilder.equal(root.get(Carousel_.id), carouselQueryVo.getId()) : null,
-                                carouselQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Carousel_.createdAt), carouselQueryVo.getCreatedAtBegin()) : null,
-                                carouselQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Carousel_.createdAt), carouselQueryVo.getCreatedAtEnd()) : null,
-                                carouselQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Carousel_.updatedAt), carouselQueryVo.getUpdatedAtBegin()) : null,
-                                carouselQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Carousel_.updatedAt), carouselQueryVo.getUpdatedAtEnd()) : null
+                                StringUtils.isNotBlank(carouselQueryVo.getTitle()) ? criteriaBuilder.like(root.get(Carousel_.title), "%" + carouselQueryVo.getTitle() + "%") : criteriaBuilder.conjunction(),
+                                carouselQueryVo.getId() != null ? criteriaBuilder.equal(root.get(Carousel_.id), carouselQueryVo.getId()) : criteriaBuilder.conjunction(),
+                                carouselQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Carousel_.createdAt), carouselQueryVo.getCreatedAtBegin()) : criteriaBuilder.conjunction(),
+                                carouselQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Carousel_.createdAt), carouselQueryVo.getCreatedAtEnd()) : criteriaBuilder.conjunction(),
+                                carouselQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Carousel_.updatedAt), carouselQueryVo.getUpdatedAtBegin()) : criteriaBuilder.conjunction(),
+                                carouselQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Carousel_.updatedAt), carouselQueryVo.getUpdatedAtEnd()) : criteriaBuilder.conjunction()
                         )
                 ).getRestriction(),
                 carouselQueryVo.getPageRequest()

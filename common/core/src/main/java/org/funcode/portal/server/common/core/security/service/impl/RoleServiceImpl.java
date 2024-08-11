@@ -55,14 +55,14 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Long> implements IRol
     public Page<Role> findPage(RoleQueryVo roleQueryVo) {
         return getBaseRepository().findAll(
                 (Specification<Role>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
-                                StringUtils.isNotBlank(roleQueryVo.getRoleKey()) ? criteriaBuilder.like(root.get(Role_.roleKey), "%" + roleQueryVo.getRoleKey() + "%") : null,
-                                StringUtils.isNotBlank(roleQueryVo.getRoleName()) ? criteriaBuilder.like(root.get(Role_.roleName), "%" + roleQueryVo.getRoleName() + "%") : null,
-                                StringUtils.isNotBlank(roleQueryVo.getDescription()) ? criteriaBuilder.like(root.get(Role_.description), "%" + roleQueryVo.getDescription() + "%") : null,
-                                roleQueryVo.getId() != null ? criteriaBuilder.equal(root.get(Role_.id), roleQueryVo.getId()) : null,
-                                roleQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Role_.createdAt), roleQueryVo.getCreatedAtBegin()) : null,
-                                roleQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Role_.createdAt), roleQueryVo.getCreatedAtEnd()) : null,
-                                roleQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Role_.updatedAt), roleQueryVo.getUpdatedAtBegin()) : null,
-                                roleQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Role_.updatedAt), roleQueryVo.getUpdatedAtEnd()) : null
+                                StringUtils.isNotBlank(roleQueryVo.getRoleKey()) ? criteriaBuilder.like(root.get(Role_.roleKey), "%" + roleQueryVo.getRoleKey() + "%") : criteriaBuilder.conjunction(),
+                                StringUtils.isNotBlank(roleQueryVo.getRoleName()) ? criteriaBuilder.like(root.get(Role_.roleName), "%" + roleQueryVo.getRoleName() + "%") : criteriaBuilder.conjunction(),
+                                StringUtils.isNotBlank(roleQueryVo.getDescription()) ? criteriaBuilder.like(root.get(Role_.description), "%" + roleQueryVo.getDescription() + "%") : criteriaBuilder.conjunction(),
+                                roleQueryVo.getId() != null ? criteriaBuilder.equal(root.get(Role_.id), roleQueryVo.getId()) : criteriaBuilder.conjunction(),
+                                roleQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Role_.createdAt), roleQueryVo.getCreatedAtBegin()) : criteriaBuilder.conjunction(),
+                                roleQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Role_.createdAt), roleQueryVo.getCreatedAtEnd()) : criteriaBuilder.conjunction(),
+                                roleQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Role_.updatedAt), roleQueryVo.getUpdatedAtBegin()) : criteriaBuilder.conjunction(),
+                                roleQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Role_.updatedAt), roleQueryVo.getUpdatedAtEnd()) : criteriaBuilder.conjunction()
                         )
                 ).getRestriction(),
                 roleQueryVo.getPageRequest()

@@ -51,13 +51,13 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long> implements 
     public Page<Course> findPage(CourseQueryVo courseQueryVo) {
         return getBaseRepository().findAll(
                 (Specification<Course>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
-                                StringUtils.isNotBlank(courseQueryVo.getTitle()) ? criteriaBuilder.like(root.get(Course_.title), "%" + courseQueryVo.getTitle() + "%") : null,
-                                courseQueryVo.getId() != null ? criteriaBuilder.equal(root.get(Course_.id), courseQueryVo.getId()) : null,
-                                courseQueryVo.getStatus() != null ? criteriaBuilder.equal(root.get(Course_.status), courseQueryVo.getStatus()) : null,
-                                courseQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Course_.createdAt), courseQueryVo.getCreatedAtBegin()) : null,
-                                courseQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Course_.createdAt), courseQueryVo.getCreatedAtEnd()) : null,
-                                courseQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Course_.updatedAt), courseQueryVo.getUpdatedAtBegin()) : null,
-                                courseQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Course_.updatedAt), courseQueryVo.getUpdatedAtEnd()) : null
+                                StringUtils.isNotBlank(courseQueryVo.getTitle()) ? criteriaBuilder.like(root.get(Course_.title), "%" + courseQueryVo.getTitle() + "%") : criteriaBuilder.conjunction(),
+                                courseQueryVo.getId() != null ? criteriaBuilder.equal(root.get(Course_.id), courseQueryVo.getId()) : criteriaBuilder.conjunction(),
+                                courseQueryVo.getStatus() != null ? criteriaBuilder.equal(root.get(Course_.status), courseQueryVo.getStatus()) : criteriaBuilder.conjunction(),
+                                courseQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Course_.createdAt), courseQueryVo.getCreatedAtBegin()) : criteriaBuilder.conjunction(),
+                                courseQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Course_.createdAt), courseQueryVo.getCreatedAtEnd()) : criteriaBuilder.conjunction(),
+                                courseQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Course_.updatedAt), courseQueryVo.getUpdatedAtBegin()) : criteriaBuilder.conjunction(),
+                                courseQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Course_.updatedAt), courseQueryVo.getUpdatedAtEnd()) : criteriaBuilder.conjunction()
                         )
                 ).getRestriction(),
                 courseQueryVo.getPageRequest()

@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.funcode.portal.server.common.domain.base.PageRequestVo;
 import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDateTime;
@@ -51,5 +52,10 @@ public class UserQueryVo {
     @Schema(description = "更新时间的结束时间")
     private LocalDateTime updatedAtEnd;
     @Schema(description = "分页参数")
-    private PageRequest pageRequest;
+    private PageRequestVo pageRequestVo;
+
+    @Schema(hidden = true)
+    public PageRequest getPageRequest() {
+        return PageRequest.of(pageRequestVo.getCurrentPage() - 1, pageRequestVo.getPageSize());
+    }
 }

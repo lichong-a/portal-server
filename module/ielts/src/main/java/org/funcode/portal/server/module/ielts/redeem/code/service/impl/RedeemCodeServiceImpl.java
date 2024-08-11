@@ -138,17 +138,17 @@ public class RedeemCodeServiceImpl extends BaseServiceImpl<RedeemCode, Long> imp
     public Page<RedeemCode> pageList(RedeemCodeQueryVo redeemCodeQueryVo) {
         return getBaseRepository().findAll(
                 (Specification<RedeemCode>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
-                                StringUtils.isNotBlank(redeemCodeQueryVo.getCode()) ? criteriaBuilder.like(root.get(RedeemCode_.code), "%" + redeemCodeQueryVo.getCode() + "%") : null,
-                                redeemCodeQueryVo.getId() != null ? criteriaBuilder.equal(root.get(RedeemCode_.id), redeemCodeQueryVo.getId()) : null,
-                                redeemCodeQueryVo.getStatus() != null ? criteriaBuilder.equal(root.get(RedeemCode_.status), redeemCodeQueryVo.getStatus()) : null,
-                                redeemCodeQueryVo.getExpireTimeBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(RedeemCode_.expireTime), redeemCodeQueryVo.getExpireTimeBegin()) : null,
-                                redeemCodeQueryVo.getExpireTimeEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(RedeemCode_.expireTime), redeemCodeQueryVo.getExpireTimeEnd()) : null,
-                                redeemCodeQueryVo.getRedeemTimeBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(RedeemCode_.redeemTime), redeemCodeQueryVo.getRedeemTimeBegin()) : null,
-                                redeemCodeQueryVo.getRedeemTimeEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(RedeemCode_.redeemTime), redeemCodeQueryVo.getRedeemTimeEnd()) : null,
-                                redeemCodeQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(RedeemCode_.createdAt), redeemCodeQueryVo.getCreatedAtBegin()) : null,
-                                redeemCodeQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(RedeemCode_.createdAt), redeemCodeQueryVo.getCreatedAtEnd()) : null,
-                                redeemCodeQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(RedeemCode_.updatedAt), redeemCodeQueryVo.getUpdatedAtBegin()) : null,
-                                redeemCodeQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(RedeemCode_.updatedAt), redeemCodeQueryVo.getUpdatedAtEnd()) : null
+                                StringUtils.isNotBlank(redeemCodeQueryVo.getCode()) ? criteriaBuilder.like(root.get(RedeemCode_.code), "%" + redeemCodeQueryVo.getCode() + "%") : criteriaBuilder.conjunction(),
+                                redeemCodeQueryVo.getId() != null ? criteriaBuilder.equal(root.get(RedeemCode_.id), redeemCodeQueryVo.getId()) : criteriaBuilder.conjunction(),
+                                redeemCodeQueryVo.getStatus() != null ? criteriaBuilder.equal(root.get(RedeemCode_.status), redeemCodeQueryVo.getStatus()) : criteriaBuilder.conjunction(),
+                                redeemCodeQueryVo.getExpireTimeBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(RedeemCode_.expireTime), redeemCodeQueryVo.getExpireTimeBegin()) : criteriaBuilder.conjunction(),
+                                redeemCodeQueryVo.getExpireTimeEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(RedeemCode_.expireTime), redeemCodeQueryVo.getExpireTimeEnd()) : criteriaBuilder.conjunction(),
+                                redeemCodeQueryVo.getRedeemTimeBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(RedeemCode_.redeemTime), redeemCodeQueryVo.getRedeemTimeBegin()) : criteriaBuilder.conjunction(),
+                                redeemCodeQueryVo.getRedeemTimeEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(RedeemCode_.redeemTime), redeemCodeQueryVo.getRedeemTimeEnd()) : criteriaBuilder.conjunction(),
+                                redeemCodeQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(RedeemCode_.createdAt), redeemCodeQueryVo.getCreatedAtBegin()) : criteriaBuilder.conjunction(),
+                                redeemCodeQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(RedeemCode_.createdAt), redeemCodeQueryVo.getCreatedAtEnd()) : criteriaBuilder.conjunction(),
+                                redeemCodeQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(RedeemCode_.updatedAt), redeemCodeQueryVo.getUpdatedAtBegin()) : criteriaBuilder.conjunction(),
+                                redeemCodeQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(RedeemCode_.updatedAt), redeemCodeQueryVo.getUpdatedAtEnd()) : criteriaBuilder.conjunction()
                         )
                 ).getRestriction(),
                 redeemCodeQueryVo.getPageRequest()

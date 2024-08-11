@@ -49,14 +49,14 @@ public class AuthorityServiceImpl extends BaseServiceImpl<BasicAuthority, Long> 
     public Page<BasicAuthority> findPage(AuthorityQueryVo authorityQueryVo) {
         return getBaseRepository().findAll(
                 (Specification<BasicAuthority>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
-                                StringUtils.isNotBlank(authorityQueryVo.getAuthorityKey()) ? criteriaBuilder.like(root.get(BasicAuthority_.authorityKey), "%" + authorityQueryVo.getAuthorityKey() + "%") : null,
-                                StringUtils.isNotBlank(authorityQueryVo.getAuthorityName()) ? criteriaBuilder.like(root.get(BasicAuthority_.authorityName), "%" + authorityQueryVo.getAuthorityName() + "%") : null,
-                                StringUtils.isNotBlank(authorityQueryVo.getDescription()) ? criteriaBuilder.like(root.get(BasicAuthority_.description), "%" + authorityQueryVo.getDescription() + "%") : null,
-                                authorityQueryVo.getId() != null ? criteriaBuilder.equal(root.get(BasicAuthority_.id), authorityQueryVo.getId()) : null,
-                                authorityQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(BasicAuthority_.createdAt), authorityQueryVo.getCreatedAtBegin()) : null,
-                                authorityQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(BasicAuthority_.createdAt), authorityQueryVo.getCreatedAtEnd()) : null,
-                                authorityQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(BasicAuthority_.updatedAt), authorityQueryVo.getUpdatedAtBegin()) : null,
-                                authorityQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(BasicAuthority_.updatedAt), authorityQueryVo.getUpdatedAtEnd()) : null
+                                StringUtils.isNotBlank(authorityQueryVo.getAuthorityKey()) ? criteriaBuilder.like(root.get(BasicAuthority_.authorityKey), "%" + authorityQueryVo.getAuthorityKey() + "%") : criteriaBuilder.conjunction(),
+                                StringUtils.isNotBlank(authorityQueryVo.getAuthorityName()) ? criteriaBuilder.like(root.get(BasicAuthority_.authorityName), "%" + authorityQueryVo.getAuthorityName() + "%") : criteriaBuilder.conjunction(),
+                                StringUtils.isNotBlank(authorityQueryVo.getDescription()) ? criteriaBuilder.like(root.get(BasicAuthority_.description), "%" + authorityQueryVo.getDescription() + "%") : criteriaBuilder.conjunction(),
+                                authorityQueryVo.getId() != null ? criteriaBuilder.equal(root.get(BasicAuthority_.id), authorityQueryVo.getId()) : criteriaBuilder.conjunction(),
+                                authorityQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(BasicAuthority_.createdAt), authorityQueryVo.getCreatedAtBegin()) : criteriaBuilder.conjunction(),
+                                authorityQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(BasicAuthority_.createdAt), authorityQueryVo.getCreatedAtEnd()) : criteriaBuilder.conjunction(),
+                                authorityQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(BasicAuthority_.updatedAt), authorityQueryVo.getUpdatedAtBegin()) : criteriaBuilder.conjunction(),
+                                authorityQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(BasicAuthority_.updatedAt), authorityQueryVo.getUpdatedAtEnd()) : criteriaBuilder.conjunction()
                         )
                 ).getRestriction(),
                 authorityQueryVo.getPageRequest()

@@ -36,9 +36,9 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     public ResponseResult<String> signup(SignUpRequest request) {
         // 判断用户是否已经存在
         var hasExistsUser = userRepository.exists((Specification<User>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.or(
-                        StringUtils.isNotBlank(request.getEmail()) ? criteriaBuilder.equal(root.get("email"), request.getEmail()) : null,
-                        StringUtils.isNotBlank(request.getUsername()) ? criteriaBuilder.equal(root.get("username"), request.getUsername()) : null,
-                        StringUtils.isNotBlank(request.getPhone()) ? criteriaBuilder.equal(root.get("phone"), request.getPhone()) : null
+                        StringUtils.isNotBlank(request.getEmail()) ? criteriaBuilder.equal(root.get("email"), request.getEmail()) : criteriaBuilder.disjunction(),
+                        StringUtils.isNotBlank(request.getUsername()) ? criteriaBuilder.equal(root.get("username"), request.getUsername()) : criteriaBuilder.disjunction(),
+                        StringUtils.isNotBlank(request.getPhone()) ? criteriaBuilder.equal(root.get("phone"), request.getPhone()) : criteriaBuilder.disjunction()
                 )
         ).getRestriction());
         if (hasExistsUser) {

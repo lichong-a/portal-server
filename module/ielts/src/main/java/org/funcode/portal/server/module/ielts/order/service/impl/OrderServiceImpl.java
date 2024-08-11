@@ -38,16 +38,16 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements IO
     public Page<Order> pageList(OrderQueryVo orderQueryVo) {
         return getBaseRepository().findAll(
                 (Specification<Order>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
-                                orderQueryVo.getId() != null ? criteriaBuilder.equal(root.get(Order_.id), orderQueryVo.getId()) : null,
-                                orderQueryVo.getTradeType() != null ? criteriaBuilder.equal(root.get(Order_.tradeType), orderQueryVo.getTradeType()) : null,
-                                orderQueryVo.getPriceMin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Order_.price), orderQueryVo.getPriceMin()) : null,
-                                orderQueryVo.getPriceMax() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Order_.price), orderQueryVo.getPriceMax()) : null,
-                                orderQueryVo.getPaymentTimeBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Order_.paymentTime), orderQueryVo.getPaymentTimeBegin()) : null,
-                                orderQueryVo.getPaymentTimeEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Order_.paymentTime), orderQueryVo.getPaymentTimeEnd()) : null,
-                                orderQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Order_.createdAt), orderQueryVo.getCreatedAtBegin()) : null,
-                                orderQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Order_.createdAt), orderQueryVo.getCreatedAtEnd()) : null,
-                                orderQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Order_.updatedAt), orderQueryVo.getUpdatedAtBegin()) : null,
-                                orderQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Order_.updatedAt), orderQueryVo.getUpdatedAtEnd()) : null
+                                orderQueryVo.getId() != null ? criteriaBuilder.equal(root.get(Order_.id), orderQueryVo.getId()) : criteriaBuilder.conjunction(),
+                                orderQueryVo.getTradeType() != null ? criteriaBuilder.equal(root.get(Order_.tradeType), orderQueryVo.getTradeType()) : criteriaBuilder.conjunction(),
+                                orderQueryVo.getPriceMin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Order_.price), orderQueryVo.getPriceMin()) : criteriaBuilder.conjunction(),
+                                orderQueryVo.getPriceMax() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Order_.price), orderQueryVo.getPriceMax()) : criteriaBuilder.conjunction(),
+                                orderQueryVo.getPaymentTimeBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Order_.paymentTime), orderQueryVo.getPaymentTimeBegin()) : criteriaBuilder.conjunction(),
+                                orderQueryVo.getPaymentTimeEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Order_.paymentTime), orderQueryVo.getPaymentTimeEnd()) : criteriaBuilder.conjunction(),
+                                orderQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Order_.createdAt), orderQueryVo.getCreatedAtBegin()) : criteriaBuilder.conjunction(),
+                                orderQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Order_.createdAt), orderQueryVo.getCreatedAtEnd()) : criteriaBuilder.conjunction(),
+                                orderQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(Order_.updatedAt), orderQueryVo.getUpdatedAtBegin()) : criteriaBuilder.conjunction(),
+                                orderQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(Order_.updatedAt), orderQueryVo.getUpdatedAtEnd()) : criteriaBuilder.conjunction()
                         )
                 ).getRestriction(),
                 orderQueryVo.getPageRequest()

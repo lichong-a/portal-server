@@ -48,17 +48,17 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements IUse
     public Page<User> findPage(UserQueryVo userQueryVo) {
         return getBaseRepository().findAll(
                 (Specification<User>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
-                                StringUtils.isNotBlank(userQueryVo.getEmail()) ? criteriaBuilder.like(root.get(User_.email), "%" + userQueryVo.getEmail() + "%") : null,
-                                StringUtils.isNotBlank(userQueryVo.getUsername()) ? criteriaBuilder.like(root.get(User_.username), "%" + userQueryVo.getUsername() + "%") : null,
-                                StringUtils.isNotBlank(userQueryVo.getNickName()) ? criteriaBuilder.like(root.get(User_.nickName), "%" + userQueryVo.getNickName() + "%") : null,
-                                StringUtils.isNotBlank(userQueryVo.getRealName()) ? criteriaBuilder.like(root.get(User_.realName), "%" + userQueryVo.getRealName() + "%") : null,
-                                StringUtils.isNotBlank(userQueryVo.getPhone()) ? criteriaBuilder.like(root.get(User_.phone), "%" + userQueryVo.getPhone() + "%") : null,
-                                StringUtils.isNotBlank(userQueryVo.getWechatId()) ? criteriaBuilder.like(root.get(User_.wechatId), "%" + userQueryVo.getWechatId() + "%") : null,
-                                userQueryVo.getId() != null ? criteriaBuilder.equal(root.get(User_.id), userQueryVo.getId()) : null,
-                                userQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(User_.createdAt), userQueryVo.getCreatedAtBegin()) : null,
-                                userQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(User_.createdAt), userQueryVo.getCreatedAtEnd()) : null,
-                                userQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(User_.updatedAt), userQueryVo.getUpdatedAtBegin()) : null,
-                                userQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(User_.updatedAt), userQueryVo.getUpdatedAtEnd()) : null
+                                StringUtils.isNotBlank(userQueryVo.getEmail()) ? criteriaBuilder.like(root.get(User_.email), "%" + userQueryVo.getEmail() + "%") : criteriaBuilder.conjunction(),
+                                StringUtils.isNotBlank(userQueryVo.getUsername()) ? criteriaBuilder.like(root.get(User_.username), "%" + userQueryVo.getUsername() + "%") : criteriaBuilder.conjunction(),
+                                StringUtils.isNotBlank(userQueryVo.getNickName()) ? criteriaBuilder.like(root.get(User_.nickName), "%" + userQueryVo.getNickName() + "%") : criteriaBuilder.conjunction(),
+                                StringUtils.isNotBlank(userQueryVo.getRealName()) ? criteriaBuilder.like(root.get(User_.realName), "%" + userQueryVo.getRealName() + "%") : criteriaBuilder.conjunction(),
+                                StringUtils.isNotBlank(userQueryVo.getPhone()) ? criteriaBuilder.like(root.get(User_.phone), "%" + userQueryVo.getPhone() + "%") : criteriaBuilder.conjunction(),
+                                StringUtils.isNotBlank(userQueryVo.getWechatId()) ? criteriaBuilder.like(root.get(User_.wechatId), "%" + userQueryVo.getWechatId() + "%") : criteriaBuilder.conjunction(),
+                                userQueryVo.getId() != null ? criteriaBuilder.equal(root.get(User_.id), userQueryVo.getId()) : criteriaBuilder.conjunction(),
+                                userQueryVo.getCreatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(User_.createdAt), userQueryVo.getCreatedAtBegin()) : criteriaBuilder.conjunction(),
+                                userQueryVo.getCreatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(User_.createdAt), userQueryVo.getCreatedAtEnd()) : criteriaBuilder.conjunction(),
+                                userQueryVo.getUpdatedAtBegin() != null ? criteriaBuilder.greaterThanOrEqualTo(root.get(User_.updatedAt), userQueryVo.getUpdatedAtBegin()) : criteriaBuilder.conjunction(),
+                                userQueryVo.getUpdatedAtEnd() != null ? criteriaBuilder.lessThanOrEqualTo(root.get(User_.updatedAt), userQueryVo.getUpdatedAtEnd()) : criteriaBuilder.conjunction()
                         )
                 ).getRestriction(),
                 userQueryVo.getPageRequest()
