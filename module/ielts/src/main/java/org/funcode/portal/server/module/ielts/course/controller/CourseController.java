@@ -49,7 +49,7 @@ public class CourseController {
     @Operation(summary = "根据ID查询课程")
     @GetMapping("findById")
     @PreAuthorize(value = "hasAuthority('ielts:course:findById')")
-    public ResponseResult<Course> find(@RequestParam Long id) {
+    public ResponseResult<Course> findById(@RequestParam Long id) {
         return ResponseResult.success(courseService.find(id));
     }
 
