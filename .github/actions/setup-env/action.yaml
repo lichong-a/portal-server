@@ -10,9 +10,10 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Setup JDK
-      uses: actions/setup-java@v4
+    - name: Setup graalvm
+      uses: graalvm/setup-graalvm@v1
       with:
-        distribution: "temurin"
+        distribution: "liberica"
         cache: "gradle"
         java-version: ${{ inputs.java-version }}
+        java-package: 'jdk+fx'

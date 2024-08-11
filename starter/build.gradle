@@ -6,6 +6,7 @@ plugins {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
+        vendor = JvmVendorSpec.BELLSOFT
     }
 }
 
@@ -16,31 +17,40 @@ configurations {
 }
 
 springBoot {
+    mainClass = 'org.funcode.portal.server.starter.PortalServerApplication'
+    bootBuildImage {
+        imageName = "${rootProject.name}"
+        docker {
+            if (System.getProperty('os.name').toLowerCase().contains('windows')){
+                host = "//./pipe/dockerDesktopLinuxEngine"
+            }
+        }
+        verboseLogging = true
+    }
     buildInfo {
         properties {
-            artifact = 'portal-server'
-            name = 'portal-server'
+            artifact = "${rootProject.name}"
+            name = "${rootProject.name}"
+        }
+    }
+    bootJar {
+        launchScript()
+        archiveClassifier = 'boot'
+        archiveBaseName = "${rootProject.name}"
+        manifest {
+            attributes 'Implementation-Title': "${rootProject.name} Application",
+                    'Implementation-Vendor': "${rootProject.name} Team",
+                    'Start-Class': 'org.funcode.portal.server.starter.PortalServerApplication'
         }
     }
 }
 
-bootJar {
-    archiveBaseName = 'portal-server'
-    manifest {
-        attributes 'Implementation-Title': 'portal-server Application',
-                'Implementation-Vendor': 'portal-server Team'
-    }
+jar {
+    archiveClassifier = ''
 }
 
-graalvmNative {
-    toolchainDetection = true
-    binaries {
-        main {
-            imageName = 'portal-server'
-            mainClass = 'org.funcode.portal.server.starter.PortalServerApplication'
-            verbose = true
-        }
-    }
+clean {
+    delete rootProject.file('logs')
 }
 
 dependencies {

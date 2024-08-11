@@ -25,8 +25,15 @@ jobs:
       - name: Setup Environment
         uses: ./.github/actions/setup-env
 
-      - name: Build APP
-        run: ./gradlew clean && ./gradlew :starter:build
+      - name: Show paths
+        run: |
+          echo "GRAALVM_HOME: $GRAALVM_HOME"
+          echo "JAVA_HOME: $JAVA_HOME"
+          java --version
+          native-image --version
+
+      - name: Build APP jar
+        run: ./gradlew clean && ./gradlew :starter:bootJar
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4

@@ -7,6 +7,7 @@ package org.funcode.portal.server.common.core.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 /**
  * @author 李冲
@@ -17,6 +18,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "application")
 public class ApplicationConfig {
 
+    @NestedConfigurationProperty
     private final Security security;
 
     /**
@@ -28,12 +30,12 @@ public class ApplicationConfig {
      */
     public record Security(String adminUsername,
                            String adminPassword,
-                           Token token,
+                           @NestedConfigurationProperty Token token,
                            String logoutSuccessUrl,
                            String loginPage) {
         /**
-         * @param signingKey 签名密钥
-         * @param expiration access-token过期时间，单位：分钟
+         * @param signingKey        签名密钥
+         * @param expiration        access-token过期时间，单位：分钟
          * @param refreshExpiration refresh-token的过期时间，单位：分钟
          */
         public record Token(String signingKey,
