@@ -81,7 +81,7 @@ public class GlobalExceptionHandler {
     public ResponseResult<BusinessException> processBusinessException(BusinessException businessException) {
         log.error(businessException.getLocalizedMessage(), businessException);
         // 这里可以屏蔽掉后台的异常栈信息，直接返回"business error"
-        return ResponseResult.fail(businessException, businessException.getLocalizedMessage());
+        return ResponseResult.fail(businessException.getLocalizedMessage());
     }
 
     /**
@@ -95,6 +95,6 @@ public class GlobalExceptionHandler {
     public ResponseResult<Exception> processException(Exception exception) {
         log.error(exception.getLocalizedMessage(), exception);
         // 这里可以屏蔽掉后台的异常栈信息，直接返回"server error"
-        return ResponseResult.fail(exception, exception.getLocalizedMessage());
+        return ResponseResult.fail(exception.getLocalizedMessage());
     }
 }
