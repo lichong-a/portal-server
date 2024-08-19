@@ -49,7 +49,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = false, of = {"id"})
+@EqualsAndHashCode(callSuper = false, of = {"id", "tradeType", "paymentTime", "price"})
 @ToString(callSuper = true)
 @Table(name = "tb_order")
 @Comment("订单管理表")
