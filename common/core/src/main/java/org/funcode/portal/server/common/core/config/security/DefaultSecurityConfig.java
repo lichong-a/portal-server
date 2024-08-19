@@ -33,6 +33,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import static org.funcode.portal.server.common.core.constant.SecurityConstant.TOKEN_HEADER_KEY;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 /**
@@ -117,6 +118,7 @@ public class DefaultSecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(applicationConfig.getSecurity().corsAllowedOrigins());
         configuration.setAllowedMethods(applicationConfig.getSecurity().corsAllowedMethods());
+        configuration.addAllowedHeader(TOKEN_HEADER_KEY);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
