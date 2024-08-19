@@ -19,6 +19,13 @@ application:
       expiration: 30
       # refresh-token的过期时间，单位：分钟
       refresh-expiration: 10080
+    cors-allowed-origins:
+      - https://ielts.lichong.work
+      - http://localhost:8080
+      - http://localhost:3000
+    cors-allowed-methods:
+      - GET
+      - POST
   cos:
     secret-id: ${COS_SECRET_ID}
     secret-key: ${COS_SECRET_KEY}
