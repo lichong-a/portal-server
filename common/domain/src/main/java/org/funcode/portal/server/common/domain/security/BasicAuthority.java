@@ -6,8 +6,20 @@
 package org.funcode.portal.server.common.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
@@ -26,8 +38,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = true, exclude = {"roles", "users"})
-@ToString(callSuper = true, exclude = {"roles", "users"})
+@EqualsAndHashCode(callSuper = false, of = {"id", "authorityKey"})
+@ToString(callSuper = true, exclude = {"roles"})
 @Table(name = "tb_basic_authority")
 @Comment("权限表")
 @DynamicUpdate
@@ -50,10 +62,6 @@ public class BasicAuthority extends BaseEntity implements GrantedAuthority {
     @Column(length = 500)
     @Comment("权限描述")
     private String description;
-
-    @ManyToMany(mappedBy = "basicAuthorities")
-    @JsonIgnore
-    private Set<User> users;
 
     @ManyToMany(mappedBy = "basicAuthorities")
     @JsonIgnore

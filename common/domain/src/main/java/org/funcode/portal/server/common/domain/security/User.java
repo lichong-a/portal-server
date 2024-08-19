@@ -6,8 +6,26 @@
 package org.funcode.portal.server.common.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.funcode.portal.server.common.domain.ielts.Course;
 import org.funcode.portal.server.common.domain.ielts.CourseColumn;
@@ -36,8 +54,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = true, exclude = {"roles", "basicAuthorities", "orders", "redeemCodes"})
-@ToString(callSuper = true, exclude = {"roles", "basicAuthorities", "orders", "redeemCodes"})
+@EqualsAndHashCode(callSuper = false, of = {"id"})
+@ToString(callSuper = true)
 @Table(name = "tb_user")
 @Comment("人员表")
 @DynamicUpdate
@@ -101,18 +119,9 @@ public class User extends BaseEntity implements UserDetails {
             name = "tb_user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @JsonIgnore
     private Set<Role> roles;
-    @ManyToMany(targetEntity = BasicAuthority.class, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "tb_user_basic_authority",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "basic_authority_id"))
-    @JsonIgnore
-    private Set<BasicAuthority> basicAuthorities;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
     private Set<Order> orders;
 
     @OneToMany(mappedBy = "user")
@@ -128,12 +137,11 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> result = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(roles)) {
-            result.addAll(roles);
+        if (CollectionUtils.isEmpty(roles)) {
+            return result;
         }
-        if (!CollectionUtils.isEmpty(basicAuthorities)) {
-            result.addAll(basicAuthorities);
-        }
+        result.addAll(roles);
+        roles.forEach(role -> result.addAll(role.getBasicAuthorities()));
         return result;
     }
 

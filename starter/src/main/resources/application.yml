@@ -115,6 +115,9 @@ spring:
       hibernate:
         physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
         format_sql: true
+        transaction:
+          jta:
+            platform: org.springframework.boot.orm.jpa.hibernate.SpringJtaPlatform
   docker:
     compose:
       enabled: ${COMPOSE_ENABLE}

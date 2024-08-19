@@ -15,6 +15,7 @@ import org.funcode.portal.server.module.ielts.order.service.IOrderService;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +35,7 @@ public class OrderController {
     @Operation(summary = "根据不同条件分页查询订单列表")
     @PostMapping("/pageList")
     @PreAuthorize("hasAuthority('ielts:order:pageList')")
-    public ResponseResult<Page<Order>> pageList(OrderQueryVo orderQueryVo) {
+    public ResponseResult<Page<Order>> pageList(@RequestBody OrderQueryVo orderQueryVo) {
         return ResponseResult.success(orderService.pageList(orderQueryVo));
     }
 }

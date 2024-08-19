@@ -32,7 +32,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false, of = {"id"})
 @ToString(callSuper = true)
 @Table(name = "tb_carousel")
 @Comment("兑换码管理表")

@@ -28,8 +28,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = true, exclude = {"courseColumns", "orders", "redeemCodes", "users"})
-@ToString(callSuper = true, exclude = {"courseColumns", "orders", "redeemCodes", "users"})
+@EqualsAndHashCode(callSuper = false, of = {"id"})
+@ToString(callSuper = true)
 @Table(name = "tb_course")
 @Comment("课程管理表")
 @DynamicUpdate

@@ -24,8 +24,8 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = true, exclude = {"carousel", "descriptionCourse", "mediaCourse", "coverCourse", "attachmentCourse"})
-@ToString(callSuper = true, exclude = {"carousel", "descriptionCourse", "mediaCourse", "coverCourse", "attachmentCourse"})
+@EqualsAndHashCode(callSuper = false, of = {"id"})
+@ToString(callSuper = true)
 @Table(name = "tb_storage")
 @Comment("存储管理表")
 @DynamicUpdate

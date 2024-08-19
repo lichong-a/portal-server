@@ -143,7 +143,6 @@ public class InitData {
         // 人员初始化
         User adminUser = userRepository.findByUsername(applicationConfig.getSecurity().adminUsername());
         if (adminUser != null) {
-            adminUser.setBasicAuthorities(new HashSet<>(finalAuthorities));
             adminUser.setPassword(passwordEncoder.encode(applicationConfig.getSecurity().adminPassword()));
         } else {
             adminUser = User.builder()
@@ -152,7 +151,6 @@ public class InitData {
                     .realName("管理员")
                     .nickName("管理员")
                     .roles(roles)
-                    .basicAuthorities(new HashSet<>(finalAuthorities))
                     .build();
         }
         userRepository.saveAndFlush(adminUser);

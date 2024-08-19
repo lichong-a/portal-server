@@ -23,8 +23,8 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = true, exclude = {"storage"})
-@ToString(callSuper = true, exclude = {"storage"})
+@EqualsAndHashCode(callSuper = false, of = {"id"})
+@ToString(callSuper = true)
 @Table(name = "tb_carousel")
 @Comment("轮播管理表")
 @DynamicUpdate
