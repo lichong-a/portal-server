@@ -67,8 +67,8 @@ public class CourseController {
     }
 
     @Operation(summary = "首页分页查询已上架课程列表")
-    @PostMapping("pageList/anonymous")
-    public ResponseResult<Page<Course>> pageListAnonymous(@Valid @RequestBody PageRequestVo pageRequestVo) {
+    @GetMapping("pageList/anonymous")
+    public ResponseResult<Page<Course>> pageListAnonymous(@Valid @RequestParam PageRequestVo pageRequestVo) {
         return ResponseResult.success(courseService.findPage(pageRequestVo));
     }
 }

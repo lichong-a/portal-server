@@ -35,6 +35,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static org.funcode.portal.server.common.core.constant.SecurityConstant.TOKEN_HEADER_KEY;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 /**
  * @author 李冲
@@ -74,7 +75,7 @@ public class DefaultSecurityConfig {
                                 "/doc.html",
                                 defaultLoginPage
                         ).permitAll()
-                        .requestMatchers("**/anonymous")
+                        .requestMatchers(antMatcher("/**/anonymous"))
                         .permitAll()
                         .anyRequest()
                         .authenticated())
