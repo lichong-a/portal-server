@@ -69,7 +69,7 @@ public class Storage extends BaseEntity {
     @Comment("唯一标识")
     private String key;
 
-    @Column(length = 200, nullable = false)
+    @Column(length = 200)
     @Comment("版本ID")
     private String versionId;
 

@@ -32,7 +32,6 @@ public class StorageAddOrEditVo {
     @Schema(description = "存储标题")
     private String title;
 
-    @Size(max = 10, message = "{ielts.domain.vo.StorageAddOrEditVo.fileType.Size}")
     @Schema(description = "文件类型（0:图片；1:音频；2:视频；3:markdown）")
     private int fileType;
 

@@ -62,9 +62,10 @@ public class StorageServiceImpl extends BaseServiceImpl<Storage, Long> implement
 
     @Override
     @Transactional
-    public Boolean upload(StorageAddOrEditVo storageAddOrEditVo) {
+    public Storage upload(StorageAddOrEditVo storageAddOrEditVo) {
+        File localFile = null;
         try {
-            File localFile = FileUtils.multipartFileToFile(storageAddOrEditVo.getFile());
+            localFile = FileUtils.multipartFileToFile(storageAddOrEditVo.getFile());
             // 设置高级接口的配置项
             // 分块上传阈值和分块大小分别设置为 5MB 和 1MB（若不特殊设置，分块上传阈值和分块大小的默认值均为5MB）
             TransferManagerConfiguration transferManagerConfiguration = new TransferManagerConfiguration();
@@ -100,12 +101,15 @@ public class StorageServiceImpl extends BaseServiceImpl<Storage, Long> implement
                     .fileType(storageAddOrEditVo.getFileType())
                     .title(storageAddOrEditVo.getTitle())
                     .build();
-            getBaseRepository().save(storage);
+            return getBaseRepository().save(storage);
         } catch (Exception e) {
             log.error("上传文件失败，IO异常", e);
             throw new BusinessException("上传文件失败");
+        } finally {
+            if (localFile != null) {
+                FileUtils.delteTempFile(localFile);
+            }
         }
-        return true;
     }
 
     @Override

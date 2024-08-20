@@ -24,7 +24,7 @@ public interface IStorageService extends IBaseService<Storage, Long> {
      * @param storageAddOrEditVo 参数
      * @return 上传结果
      */
-    Boolean upload(StorageAddOrEditVo storageAddOrEditVo);
+    Storage upload(StorageAddOrEditVo storageAddOrEditVo);
 
     /**
      * 删除文件

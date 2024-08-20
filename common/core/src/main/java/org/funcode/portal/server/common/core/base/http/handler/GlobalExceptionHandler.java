@@ -5,6 +5,7 @@
 
 package org.funcode.portal.server.common.core.base.http.handler;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -82,6 +83,19 @@ public class GlobalExceptionHandler {
         log.error(businessException.getLocalizedMessage(), businessException);
         // 这里可以屏蔽掉后台的异常栈信息，直接返回"business error"
         return ResponseResult.fail(businessException.getLocalizedMessage());
+    }
+
+    /**
+     * handle Jwt exception.
+     *
+     * @param jwtException business exception
+     * @return ResponseResult
+     */
+    @ResponseBody
+    @ExceptionHandler(JwtException.class)
+    public ResponseResult<JwtException> processBusinessException(JwtException jwtException) {
+        log.error(jwtException.getLocalizedMessage(), jwtException);
+        return ResponseResult.fail(jwtException.getLocalizedMessage());
     }
 
     /**
