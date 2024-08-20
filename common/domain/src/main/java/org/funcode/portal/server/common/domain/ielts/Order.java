@@ -7,6 +7,7 @@ package org.funcode.portal.server.common.domain.ielts;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -54,6 +55,7 @@ import java.util.Set;
 @Table(name = "tb_order")
 @Comment("订单管理表")
 @DynamicUpdate
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Order extends BaseEntity {
 
     @Id

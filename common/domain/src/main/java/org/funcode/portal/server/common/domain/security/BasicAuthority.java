@@ -6,6 +6,7 @@
 package org.funcode.portal.server.common.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -43,6 +44,7 @@ import java.util.Set;
 @Table(name = "tb_basic_authority")
 @Comment("权限表")
 @DynamicUpdate
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class BasicAuthority extends BaseEntity implements GrantedAuthority {
 
     @Id
