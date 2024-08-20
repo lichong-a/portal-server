@@ -6,6 +6,7 @@
 package org.funcode.portal.server.module.ielts.column.service;
 
 import org.funcode.portal.server.common.core.base.service.IBaseService;
+import org.funcode.portal.server.common.domain.base.PageRequestVo;
 import org.funcode.portal.server.common.domain.ielts.CourseColumn;
 import org.funcode.portal.server.module.ielts.column.domain.vo.CourseColumnAddOrEditVo;
 import org.funcode.portal.server.module.ielts.column.domain.vo.CourseColumnQueryVo;
@@ -33,5 +34,13 @@ public interface ICourseColumnService extends IBaseService<CourseColumn, Long> {
      * @return 专栏分页列表
      */
     Page<CourseColumn> findPage(CourseColumnQueryVo courseColumnQueryVo);
+
+    /**
+     * 首页分页查询已上架专栏列表
+     *
+     * @param pageRequestVo 分页查询条件VO
+     * @return 专栏分页列表
+     */
+    Page<CourseColumn> findPage(PageRequestVo pageRequestVo);
 
 }

@@ -10,13 +10,19 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
+import org.funcode.portal.server.common.domain.base.PageRequestVo;
 import org.funcode.portal.server.common.domain.ielts.Course;
 import org.funcode.portal.server.module.ielts.course.domain.vo.CourseAddOrEditVo;
 import org.funcode.portal.server.module.ielts.course.domain.vo.CourseQueryVo;
 import org.funcode.portal.server.module.ielts.course.service.ICourseService;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author 李冲
@@ -58,5 +64,11 @@ public class CourseController {
     @PreAuthorize(value = "hasAuthority('ielts:course:pageList')")
     public ResponseResult<Page<Course>> pageList(@Valid @RequestBody CourseQueryVo courseQueryVo) {
         return ResponseResult.success(courseService.findPage(courseQueryVo));
+    }
+
+    @Operation(summary = "首页分页查询已上架课程列表")
+    @PostMapping("pageList/anonymous")
+    public ResponseResult<Page<Course>> pageListAnonymous(@Valid @RequestBody PageRequestVo pageRequestVo) {
+        return ResponseResult.success(courseService.findPage(pageRequestVo));
     }
 }

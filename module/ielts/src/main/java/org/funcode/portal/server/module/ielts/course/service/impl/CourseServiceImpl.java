@@ -8,6 +8,7 @@ package org.funcode.portal.server.module.ielts.course.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
+import org.funcode.portal.server.common.domain.base.PageRequestVo;
 import org.funcode.portal.server.common.domain.ielts.Course;
 import org.funcode.portal.server.common.domain.ielts.Course_;
 import org.funcode.portal.server.common.domain.ielts.Storage;
@@ -61,6 +62,17 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long> implements 
                         )
                 ).getRestriction(),
                 courseQueryVo.getPageRequest()
+        );
+    }
+
+    @Override
+    @Transactional
+    public Page<Course> findPage(PageRequestVo pageRequestVo) {
+        return getBaseRepository().findAll(
+                (Specification<Course>) (root, query, criteriaBuilder) -> query.where(
+                        criteriaBuilder.equal(root.get(Course_.status), 1)
+                ).getRestriction(),
+                pageRequestVo.getPageRequest()
         );
     }
 

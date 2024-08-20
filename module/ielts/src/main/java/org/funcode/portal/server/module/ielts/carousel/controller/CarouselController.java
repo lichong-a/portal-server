@@ -16,7 +16,12 @@ import org.funcode.portal.server.module.ielts.carousel.domain.vo.CarouselQueryVo
 import org.funcode.portal.server.module.ielts.carousel.service.ICarouselService;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -56,7 +61,7 @@ public class CarouselController {
     }
 
     @Operation(summary = "获取当前所有可用的轮播列表")
-    @GetMapping("availableList")
+    @GetMapping("availableList/anonymous")
     public ResponseResult<List<Carousel>> availableList() {
         return ResponseResult.success(carouselService.findAll());
     }

@@ -74,6 +74,8 @@ public class DefaultSecurityConfig {
                                 "/doc.html",
                                 defaultLoginPage
                         ).permitAll()
+                        .requestMatchers("**/anonymous")
+                        .permitAll()
                         .anyRequest()
                         .authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))

@@ -7,6 +7,7 @@ package org.funcode.portal.server.module.ielts.course.service;
 
 import jakarta.validation.Valid;
 import org.funcode.portal.server.common.core.base.service.IBaseService;
+import org.funcode.portal.server.common.domain.base.PageRequestVo;
 import org.funcode.portal.server.common.domain.ielts.Course;
 import org.funcode.portal.server.module.ielts.course.domain.vo.CourseAddOrEditVo;
 import org.funcode.portal.server.module.ielts.course.domain.vo.CourseQueryVo;
@@ -34,4 +35,12 @@ public interface ICourseService extends IBaseService<Course, Long> {
      * @return 课程分页列表
      */
     Page<Course> findPage(@Valid CourseQueryVo courseQueryVo);
+
+    /**
+     * 首页分页查询已上架课程列表
+     *
+     * @param pageRequestVo 分页请求
+     * @return 课程分页列表
+     */
+    Page<Course> findPage(@Valid PageRequestVo pageRequestVo);
 }
