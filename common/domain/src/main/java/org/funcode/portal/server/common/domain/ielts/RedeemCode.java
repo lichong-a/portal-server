@@ -50,7 +50,7 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(callSuper = false, of = {"id", "code"})
 @ToString(callSuper = true)
-@Table(name = "tb_carousel")
+@Table(name = "tb_redeem_code")
 @Comment("兑换码管理表")
 @DynamicUpdate
 public class RedeemCode extends BaseEntity {
