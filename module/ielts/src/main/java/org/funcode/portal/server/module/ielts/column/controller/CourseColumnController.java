@@ -66,9 +66,9 @@ public class CourseColumnController {
         return ResponseResult.success(courseColumnService.findPage(courseColumnQueryVo));
     }
 
-    @Operation(summary = "首页分页查询已上架专栏列表")
+    @Operation(summary = "分页查询已上架专栏列表")
     @GetMapping("pageList/anonymous")
-    public ResponseResult<Page<CourseColumn>> pageListAnonymous(@Valid @RequestParam PageRequestVo pageRequestVo) {
+    public ResponseResult<Page<CourseColumn>> pageListAnonymous(@Valid PageRequestVo pageRequestVo) {
         return ResponseResult.success(courseColumnService.findPage(pageRequestVo));
     }
 }
