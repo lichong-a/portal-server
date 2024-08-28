@@ -10,13 +10,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.config.ApplicationConfig;
 import org.funcode.portal.server.common.core.security.filter.JwtTokenFilter;
+import org.funcode.portal.server.common.core.security.filter.WechatAuthenticationFilter;
 import org.funcode.portal.server.common.core.security.handler.CustomAuthenticationFailureHandler;
 import org.funcode.portal.server.common.core.security.handler.CustomAuthenticationSuccessHandler;
+import org.funcode.portal.server.common.core.security.handler.WechatAuthenticationFailureHandler;
+import org.funcode.portal.server.common.core.security.handler.WechatAuthenticationSuccessHandler;
+import org.funcode.portal.server.common.core.security.provider.WeChatAuthenticationProvider;
 import org.funcode.portal.server.common.core.security.service.impl.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -34,6 +38,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static org.funcode.portal.server.common.core.constant.SecurityConstant.TOKEN_HEADER_KEY;
+import static org.funcode.portal.server.common.core.security.filter.WechatAuthenticationFilter.WECHAT_LOGIN_PATH;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
@@ -56,12 +61,15 @@ public class DefaultSecurityConfig {
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   WeChatAuthenticationProvider weChatAuthenticationProvider,
+                                                   WechatAuthenticationFilter weChatAuthenticationFilter) throws Exception {
         String defaultLoginPage = StringUtils.isBlank(applicationConfig.getSecurity().loginPage()) ? "/login" : applicationConfig.getSecurity().loginPage();
         // HTTP 的 Clear-Site-Data 标头是浏览器支持的指令，用于清除属于拥有网站的 Cookie、存储和缓存
         HeaderWriterLogoutHandler clearSiteData = new HeaderWriterLogoutHandler(new ClearSiteDataHeaderWriter(ClearSiteDataHeaderWriter.Directive.ALL));
-        http.cors(cors -> cors
-                .configurationSource(corsWebsiteConfigurationSource()))
+        http
+                .cors(cors -> cors
+                        .configurationSource(corsWebsiteConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(
@@ -75,10 +83,9 @@ public class DefaultSecurityConfig {
                                 "/doc.html",
                                 defaultLoginPage
                         ).permitAll()
-                        .requestMatchers(antMatcher("/**/anonymous"))
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated())
+                        .requestMatchers(HttpMethod.POST, WECHAT_LOGIN_PATH).permitAll()
+                        .requestMatchers(antMatcher("/**/anonymous")).permitAll()
+                        .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .formLogin(login -> login
                         .usernameParameter("username")
@@ -93,18 +100,30 @@ public class DefaultSecurityConfig {
                         .logoutSuccessUrl(
                                 StringUtils.isBlank(applicationConfig.getSecurity().logoutSuccessUrl()) ? "/login?logout" : applicationConfig.getSecurity().logoutSuccessUrl())
                 )
-                .authenticationProvider(authenticationProvider())
+                .authenticationProvider(weChatAuthenticationProvider)
+                .authenticationProvider(daoAuthenticationProvider())
                 .addFilterBefore(
-                        jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+                        jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(
+                        weChatAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
+    }
+
+    @Bean
+    public WechatAuthenticationFilter weChatAuthenticationFilter(AuthenticationManager authenticationManager,
+                                                                 WechatAuthenticationSuccessHandler wechatAuthenticationSuccessHandler,
+                                                                 WechatAuthenticationFailureHandler wechatAuthenticationFailureHandler) {
+        WechatAuthenticationFilter filter = new WechatAuthenticationFilter(authenticationManager, wechatAuthenticationSuccessHandler, wechatAuthenticationFailureHandler);
+        filter.setAuthenticationManager(authenticationManager);
+        return filter;
     }
 
     @Bean
@@ -117,7 +136,7 @@ public class DefaultSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    CorsConfigurationSource corsWebsiteConfigurationSource() {
+    private CorsConfigurationSource corsWebsiteConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(applicationConfig.getSecurity().corsAllowedOrigins());
         configuration.setAllowedMethods(applicationConfig.getSecurity().corsAllowedMethods());
