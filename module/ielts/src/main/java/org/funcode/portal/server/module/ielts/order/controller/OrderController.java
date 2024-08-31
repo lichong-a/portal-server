@@ -7,6 +7,7 @@ package org.funcode.portal.server.module.ielts.order.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
 import org.funcode.portal.server.common.domain.ielts.Order;
@@ -35,7 +36,7 @@ public class OrderController {
     @Operation(summary = "根据不同条件分页查询订单列表")
     @PostMapping("/pageList")
     @PreAuthorize("hasAuthority('ielts:order:pageList')")
-    public ResponseResult<Page<Order>> pageList(@RequestBody OrderQueryVo orderQueryVo) {
+    public ResponseResult<Page<Order>> pageList(@Valid @RequestBody OrderQueryVo orderQueryVo) {
         return ResponseResult.success(orderService.pageList(orderQueryVo));
     }
 }

@@ -7,6 +7,7 @@ package org.funcode.portal.server.module.ielts.redeem.code.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
 import org.funcode.portal.server.common.domain.ielts.RedeemCode;
@@ -15,10 +16,7 @@ import org.funcode.portal.server.module.ielts.redeem.code.domain.vo.RedeemCodeQu
 import org.funcode.portal.server.module.ielts.redeem.code.service.IRedeemCodeService;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 李冲
@@ -64,7 +62,7 @@ public class RedeemCodeController {
     @Operation(summary = "根据不同条件分页查询兑换码列表")
     @PostMapping("/pageList")
     @PreAuthorize("hasAuthority('ielts:redeemCode:pageList')")
-    public ResponseResult<Page<RedeemCode>> pageList(RedeemCodeQueryVo redeemCodeQueryVo) {
+    public ResponseResult<Page<RedeemCode>> pageList(@Valid @RequestBody RedeemCodeQueryVo redeemCodeQueryVo) {
         return ResponseResult.success(redeemCodeService.pageList(redeemCodeQueryVo));
     }
 }

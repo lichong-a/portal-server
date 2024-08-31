@@ -17,12 +17,7 @@ import org.funcode.portal.server.module.ielts.column.domain.vo.CourseColumnQuery
 import org.funcode.portal.server.module.ielts.column.service.ICourseColumnService;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 李冲
@@ -40,7 +35,7 @@ public class CourseColumnController {
     @Operation(summary = "新增或编辑专栏")
     @PostMapping("addOrEdit")
     @PreAuthorize(value = "hasAuthority('ielts:courseColumn:addOrEdit')")
-    public ResponseResult<CourseColumn> addOrEdit(CourseColumnAddOrEditVo courseColumnAddOrEditVo) {
+    public ResponseResult<CourseColumn> addOrEdit(@Valid @RequestBody CourseColumnAddOrEditVo courseColumnAddOrEditVo) {
         return ResponseResult.success(courseColumnService.addOrEdit(courseColumnAddOrEditVo));
     }
 

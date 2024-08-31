@@ -17,12 +17,7 @@ import org.funcode.portal.server.module.ielts.course.domain.vo.CourseQueryVo;
 import org.funcode.portal.server.module.ielts.course.service.ICourseService;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 李冲
@@ -40,7 +35,7 @@ public class CourseController {
     @Operation(summary = "新增或编辑课程")
     @PostMapping("addOrEdit")
     @PreAuthorize(value = "hasAuthority('ielts:course:addOrEdit')")
-    public ResponseResult<Course> addOrEdit(CourseAddOrEditVo courseAddOrEditVo) {
+    public ResponseResult<Course> addOrEdit(@Valid @RequestBody CourseAddOrEditVo courseAddOrEditVo) {
         return ResponseResult.success(courseService.addOrEdit(courseAddOrEditVo));
     }
 
