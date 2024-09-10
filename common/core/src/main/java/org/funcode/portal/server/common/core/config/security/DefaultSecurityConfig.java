@@ -84,6 +84,7 @@ public class DefaultSecurityConfig {
                                 defaultLoginPage
                         ).permitAll()
                         .requestMatchers(HttpMethod.POST, WECHAT_LOGIN_PATH).permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         .requestMatchers(antMatcher("/**/anonymous")).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
@@ -138,7 +139,7 @@ public class DefaultSecurityConfig {
 
     private CorsConfigurationSource corsWebsiteConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(applicationConfig.getSecurity().corsAllowedOrigins());
+        configuration.setAllowedOriginPatterns(applicationConfig.getSecurity().corsAllowedOriginPatterns());
         configuration.setAllowedMethods(applicationConfig.getSecurity().corsAllowedMethods());
         configuration.addAllowedHeader(TOKEN_HEADER_KEY);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

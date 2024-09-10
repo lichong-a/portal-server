@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -38,6 +39,7 @@ public class BaseEntity {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     @Comment("创建时间")
+    @Schema(description = "创建时间")
     public LocalDateTime createdAt;
     @Column
     @Temporal(TemporalType.TIMESTAMP)
@@ -46,10 +48,12 @@ public class BaseEntity {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     @Comment("修改时间")
+    @Schema(description = "修改时间")
     public LocalDateTime updatedAt;
     @Version
     @Column(nullable = false)
     @Comment("乐观锁版本号")
+    @Schema(description = "乐观锁版本号")
     @JsonIgnore
     public long version;
 
