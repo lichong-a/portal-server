@@ -39,7 +39,7 @@ public class RedeemCodeController {
     }
 
     @Operation(summary = "新增兑换码")
-    @GetMapping("/add")
+    @PostMapping("/add")
     @PreAuthorize("hasAuthority('ielts:redeemCode:add')")
     public ResponseResult<RedeemCode> add(RedeemCodeAddVo redeemCodeAddVo) {
         return ResponseResult.success(redeemCodeService.addRedeemCode(redeemCodeAddVo));

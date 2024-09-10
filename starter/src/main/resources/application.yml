@@ -23,12 +23,12 @@ application:
       # refresh-token的过期时间，单位：分钟
       refresh-expiration: 10080
     cors-allowed-origin-patterns:
-      - https://ielts.lichong.work
+      - '*'
+    cors-allowed-origins:
       - '*'
     cors-allowed-methods:
-      - GET
-      - POST
-      - OPTIONS
+      - '*'
+    cors-allow-credentials: true
   cos:
     secret-id: ${COS_SECRET_ID}
     secret-key: ${COS_SECRET_KEY}

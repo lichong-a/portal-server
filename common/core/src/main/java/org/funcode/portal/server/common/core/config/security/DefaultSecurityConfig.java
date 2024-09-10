@@ -139,8 +139,10 @@ public class DefaultSecurityConfig {
 
     private CorsConfigurationSource corsWebsiteConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(applicationConfig.getSecurity().corsAllowedOrigins());
         configuration.setAllowedOriginPatterns(applicationConfig.getSecurity().corsAllowedOriginPatterns());
         configuration.setAllowedMethods(applicationConfig.getSecurity().corsAllowedMethods());
+        configuration.setAllowCredentials(applicationConfig.getSecurity().corsAllowCredentials());
         configuration.addAllowedHeader(TOKEN_HEADER_KEY);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
