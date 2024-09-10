@@ -5,6 +5,7 @@
 
 package org.funcode.portal.server.common.core.base.http.response;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
@@ -17,26 +18,31 @@ import java.io.Serializable;
  */
 @Data
 @Builder
+@Schema(description = "统一返回结果")
 public class ResponseResult<T> {
 
     /**
      * response timestamp.
      */
+    @Schema(description = "时间戳")
     private long timestamp;
 
     /**
      * response code, 200 -> OK.
      */
+    @Schema(description = "状态码")
     private String status;
 
     /**
      * response message.
      */
+    @Schema(description = "消息")
     private String message;
 
     /**
      * response data.
      */
+    @Schema(description = "数据")
     private T data;
 
     /**

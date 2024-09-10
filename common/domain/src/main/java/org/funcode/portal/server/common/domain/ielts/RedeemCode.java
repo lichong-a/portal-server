@@ -12,24 +12,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
+import lombok.*;
 import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.funcode.portal.server.common.domain.security.User;
 import org.hibernate.annotations.Comment;
@@ -53,6 +38,7 @@ import java.util.Set;
 @ToString(callSuper = true)
 @Table(name = "tb_redeem_code")
 @Comment("兑换码管理表")
+@Schema(description = "兑换码")
 @DynamicUpdate
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class RedeemCode extends BaseEntity {
@@ -61,14 +47,17 @@ public class RedeemCode extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     @Comment("兑换码ID")
+    @Schema(description = "兑换码ID")
     private Long id;
 
     @Column(nullable = false)
     @Comment("状态（0：待消费;1：已消费；2:手动弃用）")
+    @Schema(description = "状态（0：待消费;1：已消费；2:手动弃用）")
     private int status;
 
     @Column(nullable = false, unique = true, length = 200)
     @Comment("兑换码字符串")
+    @Schema(description = "兑换码字符串")
     private String code;
 
     @Column
@@ -77,6 +66,7 @@ public class RedeemCode extends BaseEntity {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     @Comment("过期时间")
+    @Schema(description = "过期时间")
     private LocalDateTime expireTime;
 
     @Column
@@ -85,6 +75,7 @@ public class RedeemCode extends BaseEntity {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     @Comment("兑换时间")
+    @Schema(description = "兑换时间")
     private LocalDateTime redeemTime;
 
     @ManyToMany(mappedBy = "redeemCodes")
@@ -96,6 +87,7 @@ public class RedeemCode extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "redeem_code_user_id", referencedColumnName = "id")
     @Comment("兑换人")
+    @Schema(description = "兑换人")
     private User user;
 
 }

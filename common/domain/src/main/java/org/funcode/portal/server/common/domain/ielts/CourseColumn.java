@@ -8,23 +8,9 @@ package org.funcode.portal.server.common.domain.ielts;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
+import lombok.*;
 import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.funcode.portal.server.common.domain.security.User;
 import org.hibernate.annotations.Comment;
@@ -48,6 +34,7 @@ import java.util.Set;
 @ToString(callSuper = true)
 @Table(name = "tb_course_column")
 @Comment("课程专栏管理表")
+@Schema(description = "课程专栏")
 @DynamicUpdate
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CourseColumn extends BaseEntity {
@@ -56,28 +43,34 @@ public class CourseColumn extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     @Comment("课程专栏ID")
+    @Schema(description = "课程专栏ID")
     private Long id;
 
     @Column(length = 100, nullable = false)
     @Comment("课程专栏标题")
+    @Schema(description = "课程专栏标题")
     private String title;
 
     @Column(nullable = false)
     @Comment("专栏状态（0：已下架;1：已上架;2：下架并静止播放）")
+    @Schema(description = "专栏状态（0：已下架;1：已上架;2：下架并静止播放）")
     private int status;
 
     @Column(nullable = false)
     @Comment("课程专栏价格")
+    @Schema(description = "课程专栏价格")
     private BigDecimal price;
 
     @OneToOne
     @JoinColumn(name = "course_column_description_storage_id", referencedColumnName = "id")
     @Comment("课程专栏简介文件")
+    @Schema(description = "课程专栏简介文件")
     private Storage courseColumnDescriptionStorage;
 
     @OneToOne
     @JoinColumn(name = "course_column_cover_storage_id", referencedColumnName = "id")
     @Comment("课程专栏封面文件")
+    @Schema(description = "课程专栏封面文件")
     private Storage courseColumnCoverStorage;
 
     @ManyToMany

@@ -12,24 +12,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
+import lombok.*;
 import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.funcode.portal.server.common.domain.security.User;
 import org.hibernate.annotations.Comment;
@@ -54,6 +39,7 @@ import java.util.Set;
 @ToString(callSuper = true)
 @Table(name = "tb_order")
 @Comment("订单管理表")
+@Schema(description = "订单")
 @DynamicUpdate
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Order extends BaseEntity {
@@ -62,10 +48,12 @@ public class Order extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     @Comment("订单ID")
+    @Schema(description = "订单ID")
     private Long id;
 
     @Column(nullable = false)
     @Comment("交易方式（0：兑换码;1：微信支付）")
+    @Schema(description = "交易方式（0：兑换码;1：微信支付）")
     private int tradeType;
 
     @Column
@@ -74,15 +62,18 @@ public class Order extends BaseEntity {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     @Comment("付款时间")
+    @Schema(description = "付款时间")
     private LocalDateTime paymentTime;
 
     @Column
     @Comment("金额")
+    @Schema(description = "金额")
     private BigDecimal price;
 
     @ManyToOne
     @JoinColumn(name = "order_user_id", referencedColumnName = "id")
     @Comment("人员")
+    @Schema(description = "人员")
     private User user;
 
     @ManyToMany(mappedBy = "orders")

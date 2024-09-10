@@ -7,26 +7,9 @@ package org.funcode.portal.server.common.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
+import lombok.*;
 import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.funcode.portal.server.common.domain.ielts.Course;
 import org.funcode.portal.server.common.domain.ielts.CourseColumn;
@@ -59,6 +42,7 @@ import java.util.Set;
 @ToString(callSuper = true)
 @Table(name = "tb_user")
 @Comment("人员表")
+@Schema(description = "人员")
 @DynamicUpdate
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User extends BaseEntity implements UserDetails {
@@ -67,54 +51,69 @@ public class User extends BaseEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     @Comment("人员ID")
+    @Schema(description = "人员ID")
     private Long id;
     @Column(length = 100)
     @Comment("昵称")
+    @Schema(description = "昵称")
     private String nickName;
     @Column(length = 100)
     @Comment("真实姓名")
+    @Schema(description = "真实姓名")
     private String realName;
     @Column(nullable = false, unique = true, length = 100)
     @Comment("用户名")
+    @Schema(description = "用户名")
     private String username;
     @Column(length = 100)
     @Comment("性别")
+    @Schema(description = "性别")
     private String gender;
     @Column(unique = true, length = 100)
     @Comment("邮箱")
+    @Schema(description = "邮箱")
     private String email;
     @Column(unique = true, length = 100)
     @Comment("手机号")
+    @Schema(description = "手机号")
     private String phone;
     @JsonIgnore
     @Column(nullable = false, length = 100)
     @Comment("密码")
+    @Schema(description = "密码")
     private String password;
     @Column(length = 300)
     @Comment("头像")
+    @Schema(description = "头像")
     private String avatar;
     @Column
     @Temporal(TemporalType.DATE)
     @Comment("生日")
+    @Schema(description = "生日")
     private LocalDate birthday;
     @Column(unique = true, length = 100)
     @Comment("微信ID")
+    @Schema(description = "微信ID")
     private String wechatId;
     @Column(nullable = false)
     @Builder.Default
     @Comment("账号是否未过期")
+    @Schema(description = "账号是否未过期")
     private boolean accountNonExpired = true;
     @Column(nullable = false)
     @Builder.Default
     @Comment("账号是否未锁定")
+    @Schema(description = "账号是否未锁定")
     private boolean accountNonLocked = true;
     @Column(nullable = false)
     @Builder.Default
     @Comment("凭据是否未过期")
+    @Schema(description = "凭据是否未过期")
     private boolean credentialsNonExpired = true;
     @Column(nullable = false)
     @Builder.Default
     @Comment("是否启用")
+    @Schema(description = "是否启用")
     private boolean enabled = true;
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
     @JoinTable(

@@ -7,23 +7,9 @@ package org.funcode.portal.server.common.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
+import lombok.*;
 import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
@@ -46,6 +32,7 @@ import java.util.Set;
 @ToString(callSuper = true, exclude = {"users"})
 @Table(name = "tb_role")
 @Comment("角色表")
+@Schema(description = "角色")
 @DynamicUpdate
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Role extends BaseEntity implements GrantedAuthority {
@@ -54,18 +41,22 @@ public class Role extends BaseEntity implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     @Comment("角色ID")
+    @Schema(description = "角色ID")
     private Long id;
 
     @Column(nullable = false, length = 100)
     @Comment("角色名称")
+    @Schema(description = "角色名称")
     private String roleName;
 
     @Column(nullable = false, length = 100, unique = true)
     @Comment("角色标识")
+    @Schema(description = "角色标识")
     private String roleKey;
 
     @Column(length = 500)
     @Comment("角色描述")
+    @Schema(description = "角色描述")
     private String description;
 
     @ManyToMany(targetEntity = BasicAuthority.class, fetch = FetchType.EAGER)
