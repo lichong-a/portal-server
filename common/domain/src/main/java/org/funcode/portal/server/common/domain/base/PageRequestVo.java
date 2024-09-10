@@ -19,9 +19,9 @@ import org.springframework.data.domain.PageRequest;
 @Schema(description = "分页参数")
 public class PageRequestVo {
 
-    @Min(value = 1, message = "{base.domain.PageRequestVo.currentPage.Min}")
+    @Min(value = 1, message = "{base.domain.PageRequestVo.current.Min}")
     @Schema(description = "当前页码")
-    private Integer currentPage;
+    private Integer current;
 
     @Min(value = 1, message = "{base.domain.PageRequestVo.pageSize.Min}")
     @Schema(description = "每页数量")
@@ -29,6 +29,6 @@ public class PageRequestVo {
 
     @Schema(hidden = true)
     public PageRequest getPageRequest() {
-        return PageRequest.of(currentPage - 1, pageSize);
+        return PageRequest.of(current - 1, pageSize);
     }
 }

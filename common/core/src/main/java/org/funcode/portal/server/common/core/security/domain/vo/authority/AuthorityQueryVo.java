@@ -45,6 +45,6 @@ public class AuthorityQueryVo {
 
     @Schema(hidden = true)
     public PageRequest getPageRequest() {
-        return PageRequest.of(pageRequestVo.getCurrentPage() - 1, pageRequestVo.getPageSize());
+        return PageRequest.of(pageRequestVo.getCurrent() - 1, pageRequestVo.getPageSize());
     }
 }
