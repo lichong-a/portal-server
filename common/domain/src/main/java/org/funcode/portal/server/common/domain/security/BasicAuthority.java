@@ -13,8 +13,10 @@ import lombok.*;
 import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -28,8 +30,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = false, of = {"id", "authorityKey"})
-@ToString(callSuper = true, exclude = {"roles"})
+@ToString(callSuper = true)
 @Table(name = "tb_basic_authority")
 @Comment("权限表")
 @Schema(description = "权限")
@@ -61,6 +62,7 @@ public class BasicAuthority extends BaseEntity implements GrantedAuthority {
 
     @ManyToMany(mappedBy = "basicAuthorities")
     @JsonIgnore
+    @ToString.Exclude
     private Set<Role> roles;
 
     public void setAuthorityKey(String authorityKey) {
@@ -72,4 +74,19 @@ public class BasicAuthority extends BaseEntity implements GrantedAuthority {
         return this.authorityKey;
     }
 
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        BasicAuthority that = (BasicAuthority) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
 }

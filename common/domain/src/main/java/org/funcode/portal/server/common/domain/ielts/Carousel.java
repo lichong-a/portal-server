@@ -13,6 +13,9 @@ import lombok.*;
 import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.proxy.HibernateProxy;
+
+import java.util.Objects;
 
 /**
  * @author 李冲
@@ -25,7 +28,6 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = false, of = {"id", "title"})
 @ToString(callSuper = true)
 @Table(name = "tb_carousel")
 @Comment("轮播管理表")
@@ -52,10 +54,26 @@ public class Carousel extends BaseEntity {
     @Schema(description = "标题")
     private String title;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "storage_id", referencedColumnName = "id")
     @Comment("图片文件")
     @Schema(description = "图片文件")
     private Storage storage;
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        Course course = (Course) o;
+        return getId() != null && Objects.equals(getId(), course.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
 
 }

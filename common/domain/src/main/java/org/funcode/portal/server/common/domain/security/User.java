@@ -123,16 +123,19 @@ public class User extends BaseEntity implements UserDetails {
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "user")
+    @ToString.Exclude
     private Set<Order> orders;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
+    @ToString.Exclude
     private Set<RedeemCode> redeemCodes;
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
     private Set<CourseColumn> courseColumns;
 
     @ManyToMany(mappedBy = "users")
+    @ToString.Exclude
     private Set<Course> courses;
 
     @Override

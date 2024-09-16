@@ -14,6 +14,10 @@ import lombok.*;
 import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.proxy.HibernateProxy;
+
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author 李冲
@@ -26,7 +30,6 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = false, of = {"id", "title", "fileType", "bucketName", "key", "versionId"})
 @ToString(callSuper = true)
 @Table(name = "tb_storage")
 @Comment("存储管理表")
@@ -67,47 +70,68 @@ public class Storage extends BaseEntity {
     @Schema(description = "版本ID")
     private String versionId;
 
-    @OneToOne(mappedBy = "storage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "storage")
     @JsonIgnore
     @Comment("轮播")
     @Schema(description = "轮播")
-    private Carousel carousel;
+    @ToString.Exclude
+    private Set<Carousel> carousels;
 
-    @OneToOne(mappedBy = "courseDescriptionStorage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "courseDescriptionStorage", cascade = CascadeType.ALL)
     @JsonIgnore
     @Comment("课程简介")
     @Schema(description = "课程简介")
-    private Course descriptionCourse;
+    @ToString.Exclude
+    private Set<Course> descriptionCourses;
 
-    @OneToOne(mappedBy = "courseMediaStorage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "courseMediaStorage", cascade = CascadeType.ALL)
     @JsonIgnore
     @Comment("课程音视频")
     @Schema(description = "课程音视频")
-    private Course mediaCourse;
+    @ToString.Exclude
+    private Set<Course> mediaCourses;
 
-    @OneToOne(mappedBy = "courseCoverStorage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "courseCoverStorage", cascade = CascadeType.ALL)
     @JsonIgnore
     @Comment("课程封面")
     @Schema(description = "课程封面")
-    private Course coverCourse;
+    @ToString.Exclude
+    private Set<Course> coverCourses;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "attachment_course_id", referencedColumnName = "id")
+    @ManyToMany(mappedBy = "courseAttachmentStorages")
     @JsonIgnore
     @Comment("课程资料")
     @Schema(description = "课程资料")
-    private Course attachmentCourse;
+    @ToString.Exclude
+    private Set<Course> attachmentCourses;
 
-    @OneToOne(mappedBy = "courseColumnDescriptionStorage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "courseColumnDescriptionStorage", cascade = CascadeType.ALL)
     @JsonIgnore
     @Comment("课程专栏简介")
     @Schema(description = "课程专栏简介")
-    private CourseColumn descriptionCourseColumn;
+    @ToString.Exclude
+    private Set<CourseColumn> descriptionCourseColumns;
 
-    @OneToOne(mappedBy = "courseColumnCoverStorage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "courseColumnCoverStorage", cascade = CascadeType.ALL)
     @JsonIgnore
     @Comment("课程专栏封面")
     @Schema(description = "课程专栏封面")
-    private CourseColumn coverCourseColumn;
+    @ToString.Exclude
+    private Set<CourseColumn> coverCourseColumns;
 
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        Storage storage = (Storage) o;
+        return getId() != null && Objects.equals(getId(), storage.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
 }

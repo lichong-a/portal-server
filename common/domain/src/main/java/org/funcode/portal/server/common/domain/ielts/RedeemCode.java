@@ -19,8 +19,10 @@ import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.funcode.portal.server.common.domain.security.User;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -34,7 +36,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = false, of = {"id", "code"})
 @ToString(callSuper = true)
 @Table(name = "tb_redeem_code")
 @Comment("兑换码管理表")
@@ -78,10 +79,10 @@ public class RedeemCode extends BaseEntity {
     @Schema(description = "兑换时间")
     private LocalDateTime redeemTime;
 
-    @ManyToMany(mappedBy = "redeemCodes")
+    @ManyToMany(mappedBy = "redeemCodes", fetch = FetchType.EAGER)
     private Set<Course> courses;
 
-    @ManyToMany(mappedBy = "redeemCodes")
+    @ManyToMany(mappedBy = "redeemCodes", fetch = FetchType.EAGER)
     private Set<CourseColumn> courseColumns;
 
     @ManyToOne
@@ -90,4 +91,19 @@ public class RedeemCode extends BaseEntity {
     @Schema(description = "兑换人")
     private User user;
 
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        RedeemCode that = (RedeemCode) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
 }

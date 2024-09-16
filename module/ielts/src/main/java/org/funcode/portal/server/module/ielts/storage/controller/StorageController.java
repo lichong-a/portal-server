@@ -36,7 +36,7 @@ public class StorageController {
     @Operation(summary = "上传文件")
     @PostMapping(value = "upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize(value = "hasAuthority('ielts:storage:upload')")
-    public ResponseResult<Storage> upload(@Valid @RequestBody StorageAddOrEditVo storageAddOrEditVo) {
+    public ResponseResult<Storage> upload(@Valid @ModelAttribute StorageAddOrEditVo storageAddOrEditVo) {
         return ResponseResult.success(storageService.upload(storageAddOrEditVo));
     }
 

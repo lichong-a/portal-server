@@ -15,8 +15,10 @@ import org.funcode.portal.server.common.domain.base.BaseEntity;
 import org.funcode.portal.server.common.domain.security.User;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.proxy.HibernateProxy;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -30,7 +32,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = false, of = {"id", "title", "status", "price"})
 @ToString(callSuper = true)
 @Table(name = "tb_course")
 @Comment("课程管理表")
@@ -61,29 +62,35 @@ public class Course extends BaseEntity {
     @Schema(description = "课程价格")
     private BigDecimal price;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "course_description_storage_id", referencedColumnName = "id")
     @Comment("课程简介文件")
     @Schema(description = "课程简介文件")
     private Storage courseDescriptionStorage;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "course_media_storage_id", referencedColumnName = "id")
     @Comment("课程音视频文件")
     @Schema(description = "课程音视频文件")
     private Storage courseMediaStorage;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "course_cover_storage_id", referencedColumnName = "id")
     @Comment("课程封面文件")
     @Schema(description = "课程封面文件")
     private Storage courseCoverStorage;
 
-    @OneToMany(mappedBy = "attachmentCourse")
+    @ManyToMany
+    @JoinTable(
+            name = "tb_course_course_attachment_storages",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "storage_id"))
+    @ToString.Exclude
     private Set<Storage> courseAttachmentStorages;
 
     @ManyToMany(mappedBy = "courses")
     @JsonIgnore
+    @ToString.Exclude
     private Set<CourseColumn> courseColumns;
 
     @ManyToMany
@@ -92,6 +99,7 @@ public class Course extends BaseEntity {
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "order_id"))
     @JsonIgnore
+    @ToString.Exclude
     private Set<Order> orders;
 
     @ManyToMany
@@ -100,6 +108,7 @@ public class Course extends BaseEntity {
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "redeem_code_id"))
     @JsonIgnore
+    @ToString.Exclude
     private Set<RedeemCode> redeemCodes;
 
     @ManyToMany
@@ -108,6 +117,22 @@ public class Course extends BaseEntity {
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     @JsonIgnore
+    @ToString.Exclude
     private Set<User> users;
 
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        Course course = (Course) o;
+        return getId() != null && Objects.equals(getId(), course.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
 }
