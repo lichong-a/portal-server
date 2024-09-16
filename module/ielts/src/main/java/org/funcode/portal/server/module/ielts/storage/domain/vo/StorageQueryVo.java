@@ -26,7 +26,6 @@ public class StorageQueryVo {
     @Size(max = 100, message = "{ielts.domain.vo.StorageQueryVo.title.Size}")
     @Schema(description = "存储标题（模糊）")
     private String title;
-    @Size(max = 10, message = "{ielts.domain.vo.StorageQueryVo.fileType.Size}")
     @Schema(description = "文件类型（0:图片；1:音频；2:视频；3:markdown）（精确）")
     private Integer fileType;
     @Size(max = 200, message = "{ielts.domain.vo.StorageQueryVo.bucketName.Size}")
