@@ -7,15 +7,15 @@ package org.funcode.portal.server.common.core.security.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
 import org.funcode.portal.server.common.core.security.domain.vo.signup.SignUpRequest;
 import org.funcode.portal.server.common.core.security.service.IAuthenticationService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 李冲
@@ -29,9 +29,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final IAuthenticationService authenticationService;
 
-    @PostMapping("/signup")
+    @PostMapping("signup")
     @Operation(summary = "注册")
     public ResponseResult<String> signup(@RequestBody @Valid SignUpRequest request) {
         return authenticationService.signup(request);
+    }
+
+    @Operation(summary = "未认证返回")
+    @GetMapping("unauthorized")
+    public void unauthorized(HttpServletResponse response) {
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
     }
 }

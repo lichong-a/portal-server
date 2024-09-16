@@ -14,7 +14,7 @@ application:
     # 注销成功跳转地址，默认为"/login?logout"
     logout-success-url:
     # 登录页地址，默认：/login
-    login-page:
+    login-page: http://127.0.0.1:8080/api/v1/auth/unauthorized
     token:
       # 签名密钥
       signing-key: portalserver8fas8hage9SHVfsd847GD8475fd8880ejf
@@ -28,7 +28,7 @@ application:
       - '*'
     cors-allowed-methods:
       - '*'
-    cors-allow-credentials: true
+    cors-allow-credentials: false
   cos:
     secret-id: ${COS_SECRET_ID}
     secret-key: ${COS_SECRET_KEY}
