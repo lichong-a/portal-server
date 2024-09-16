@@ -7,6 +7,7 @@ package org.funcode.portal.server.module.ielts.carousel.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.funcode.portal.server.common.core.base.exception.BusinessException;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
 import org.funcode.portal.server.common.domain.ielts.Carousel;
 import org.funcode.portal.server.common.domain.ielts.Carousel_;
@@ -21,6 +22,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 /**
  * @author 李冲
@@ -69,10 +72,10 @@ public class CarouselServiceImpl extends BaseServiceImpl<Carousel, Long> impleme
         if (storageId == null) {
             return null;
         }
-        Storage storage = storageRepository.getReferenceById(storageId);
+        Optional<Storage> storage = storageRepository.findById(storageId);
         Carousel carousel = new Carousel();
         BeanUtils.copyProperties(carouselAddOrEditVo, carousel);
-        carousel.setStorage(storage);
+        carousel.setStorage(storage.orElseThrow(() -> new BusinessException("文件不存在")));
         return carousel;
     }
 }
