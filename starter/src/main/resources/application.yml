@@ -32,6 +32,13 @@ application:
       - 'Access-Control-Request-Headers'
       - 'Fa'
     cors-allow-credentials: true
+    cors-expose-headers:
+      - 'Access-Control-Allow-Origin'
+      - 'Access-Control-Allow-Methods'
+      - 'Access-Control-Allow-Credentials'
+      - 'Access-Control-Allow-Headers'
+      - 'Access-Control-Max-Age'
+      - 'Fa'
   cos:
     secret-id: ${COS_SECRET_ID}
     secret-key: ${COS_SECRET_KEY}

@@ -38,8 +38,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import java.util.List;
-
 import static org.funcode.portal.server.common.core.security.filter.WechatAuthenticationFilter.WECHAT_LOGIN_PATH;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
@@ -153,10 +151,7 @@ public class DefaultSecurityConfig {
         configuration.setAllowCredentials(applicationConfig.getSecurity().corsAllowCredentials());
         configuration.setAllowedHeaders(applicationConfig.getSecurity().corsAllowedHeaders());
         configuration.setMaxAge(3600L);
-        configuration.setExposedHeaders(List.of(
-                "Access-Control-Allow-Origin",
-                "Access-Control-Allow-Methods",
-                "Access-Control-Allow-Credentials"));
+        configuration.setExposedHeaders(applicationConfig.getSecurity().corsExposeHeaders());
         return configuration;
     }
 

@@ -35,6 +35,7 @@ public class ApplicationConfig {
      * @param corsAllowedHeaders         允许跨域的请求头
      * @param corsAllowedOriginPatterns  允许跨域的域名Pattern
      * @param corsAllowedMethods         允许跨域的请求方法
+     * @param corsExposeHeaders          暴露给前端的请求头
      * @param corsAllowCredentials       是否允许跨域携带cookie
      */
     public record Security(String adminUsername,
@@ -46,6 +47,7 @@ public class ApplicationConfig {
                            List<String> corsAllowedHeaders,
                            List<String> corsAllowedOriginPatterns,
                            List<String> corsAllowedMethods,
+                           List<String> corsExposeHeaders,
                            boolean corsAllowCredentials) {
         /**
          * @param signingKey        签名密钥

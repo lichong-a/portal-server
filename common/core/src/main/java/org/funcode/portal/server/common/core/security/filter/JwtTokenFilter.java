@@ -43,6 +43,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         response.setHeader("Access-Control-Allow-Methods", String.join(",", applicationConfig.getSecurity().corsAllowedMethods()));
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", String.join(",", applicationConfig.getSecurity().corsAllowedHeaders()));
+        response.setHeader("Access-Control-Expose-Headers", String.join(",", applicationConfig.getSecurity().corsExposeHeaders()));
         // 获取 token，优先从 cookie 获取，其次从 header 获取
         String accessTokenCookie = CookieUtils.getCookieValue(request, SecurityConstant.TOKEN_COOKIE_KEY);
         final String accessToken = StringUtils.isBlank(accessTokenCookie) ? request.getHeader(SecurityConstant.TOKEN_HEADER_KEY) : accessTokenCookie;
