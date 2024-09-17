@@ -99,7 +99,7 @@ public class JwtServiceImpl implements IJwtService {
             String username = e.getClaims().getSubject();
             // refresh-token的过期时间
             var refreshTokenExpired = applicationConfig.getSecurity().token().refreshExpiration();
-            String refreshToken = redisTemplate.opsForValue().getAndExpire(RedisKeyConstant.TOKEN_KEY + username, refreshTokenExpired, TimeUnit.MINUTES);
+            String refreshToken = redisTemplate.opsForValue().getAndExpire(RedisKeyConstant.TOKEN_KEY + username + ":" + accessToken, refreshTokenExpired, TimeUnit.MINUTES);
             if (StringUtils.isBlank(refreshToken)) {
                 // Redis中不存在说明过期，需要重新登录
                 SecurityContextHolder.clearContext();
@@ -113,8 +113,8 @@ public class JwtServiceImpl implements IJwtService {
                 cookie.setHttpOnly(true);
                 response.addHeader(SecurityConstant.TOKEN_HEADER_KEY, newAccessToken);
                 response.addCookie(cookie);
-                redisTemplate.opsForValue().set(RedisKeyConstant.TOKEN_KEY + username, newAccessToken, refreshTokenExpired, TimeUnit.MINUTES);
-                redisTemplate.opsForValue().set(RedisKeyConstant.TOKEN_TRANSITION_KEY + username, accessToken, 2, TimeUnit.MINUTES);
+                redisTemplate.opsForValue().set(RedisKeyConstant.TOKEN_KEY + username + ":" + newAccessToken, newAccessToken, refreshTokenExpired, TimeUnit.MINUTES);
+                redisTemplate.opsForValue().set(RedisKeyConstant.TOKEN_TRANSITION_KEY + username + ":" + accessToken, newAccessToken, 2, TimeUnit.MINUTES);
                 // 保存登录状态到当前上下文
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
@@ -123,11 +123,15 @@ public class JwtServiceImpl implements IJwtService {
                 SecurityContextHolder.setContext(context);
             } else {
                 // refresh-token 不一致时，说明 token 已经被刷新了，当前为并发场景
-                String refreshTransitionToken = redisTemplate.opsForValue().get(RedisKeyConstant.TOKEN_TRANSITION_KEY + username);
+                String refreshTransitionToken = redisTemplate.opsForValue().get(RedisKeyConstant.TOKEN_TRANSITION_KEY + username + ":" + accessToken);
                 // 如果在过渡时间内，允许通过认证
-                if (StringUtils.isNotBlank(refreshTransitionToken) && Objects.equals(accessToken, refreshTransitionToken)) {
+                if (StringUtils.isNotBlank(refreshTransitionToken)) {
                     User userDetails = (User) userDetailsService
                             .loadUserByUsername(username);
+                    Cookie cookie = new Cookie(SecurityConstant.TOKEN_COOKIE_KEY, refreshTransitionToken);
+                    cookie.setHttpOnly(true);
+                    response.addHeader(SecurityConstant.TOKEN_HEADER_KEY, refreshTransitionToken);
+                    response.addCookie(cookie);
                     // 保存登录状态到当前上下文
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities());

@@ -6,7 +6,6 @@
 package org.funcode.portal.server.common.core.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -43,7 +42,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     private final ApplicationConfig applicationConfig;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         // 获取返回的用户
         User currentUser = (User) authentication.getPrincipal();
         var accessToken = jwtService.generateToken(currentUser);
@@ -55,7 +54,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         response.setStatus(HttpStatus.OK.value());
         // 保存至Redis缓存起来
         redisTemplate.opsForValue().set(
-                RedisKeyConstant.TOKEN_KEY + currentUser.getUsername(),
+                RedisKeyConstant.TOKEN_KEY + currentUser.getUsername() + ":" + accessToken,
                 accessToken,
                 applicationConfig.getSecurity().token().refreshExpiration(),
                 TimeUnit.MINUTES);

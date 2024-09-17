@@ -54,7 +54,7 @@ public class WechatAuthenticationSuccessHandler implements AuthenticationSuccess
         response.setStatus(HttpStatus.OK.value());
         // 保存至Redis缓存起来
         redisTemplate.opsForValue().set(
-                RedisKeyConstant.TOKEN_KEY + currentUser.getUsername(),
+                RedisKeyConstant.TOKEN_KEY + currentUser.getUsername() + ":" + accessToken,
                 accessToken,
                 applicationConfig.getSecurity().token().refreshExpiration(),
                 TimeUnit.MINUTES);
