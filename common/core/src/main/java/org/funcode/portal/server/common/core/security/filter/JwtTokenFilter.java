@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.funcode.portal.server.common.core.config.ApplicationConfig;
 import org.funcode.portal.server.common.core.constant.SecurityConstant;
 import org.funcode.portal.server.common.core.security.service.IJwtService;
 import org.funcode.portal.server.common.core.util.CookieUtils;
@@ -29,12 +30,19 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {
     private final IJwtService jwtService;
+    private final ApplicationConfig applicationConfig;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain)
             throws ServletException, IOException {
+        // 跨域支持
+        response.setHeader("Access-Control-Allow-Origin", String.join(",", applicationConfig.getSecurity().corsAllowedOriginPatterns()));
+        response.setHeader("Access-Control-Allow-Credentials", String.valueOf(applicationConfig.getSecurity().corsAllowCredentials()));
+        response.setHeader("Access-Control-Allow-Methods", String.join(",", applicationConfig.getSecurity().corsAllowedMethods()));
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", String.join(",", applicationConfig.getSecurity().corsAllowedHeaders()));
         // 获取 token，优先从 cookie 获取，其次从 header 获取
         String accessTokenCookie = CookieUtils.getCookieValue(request, SecurityConstant.TOKEN_COOKIE_KEY);
         final String accessToken = StringUtils.isBlank(accessTokenCookie) ? request.getHeader(SecurityConstant.TOKEN_HEADER_KEY) : accessTokenCookie;

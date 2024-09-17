@@ -36,8 +36,10 @@ import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
-import static org.funcode.portal.server.common.core.constant.SecurityConstant.TOKEN_HEADER_KEY;
+import java.util.List;
+
 import static org.funcode.portal.server.common.core.security.filter.WechatAuthenticationFilter.WECHAT_LOGIN_PATH;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
@@ -138,15 +140,31 @@ public class DefaultSecurityConfig {
     }
 
     private CorsConfigurationSource corsWebsiteConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration());
+        return source;
+    }
+
+    @Bean
+    public CorsConfiguration corsConfiguration() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(applicationConfig.getSecurity().corsAllowedOrigins());
         configuration.setAllowedOriginPatterns(applicationConfig.getSecurity().corsAllowedOriginPatterns());
         configuration.setAllowedMethods(applicationConfig.getSecurity().corsAllowedMethods());
         configuration.setAllowCredentials(applicationConfig.getSecurity().corsAllowCredentials());
-        configuration.addAllowedHeader(TOKEN_HEADER_KEY);
+        configuration.setAllowedHeaders(applicationConfig.getSecurity().corsAllowedHeaders());
+        configuration.setMaxAge(3600L);
+        configuration.setExposedHeaders(List.of(
+                "Access-Control-Allow-Origin",
+                "Access-Control-Allow-Methods",
+                "Access-Control-Allow-Credentials"));
+        return configuration;
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+        source.registerCorsConfiguration("/**", corsConfiguration());
+        return new CorsFilter(source);
     }
 
 }

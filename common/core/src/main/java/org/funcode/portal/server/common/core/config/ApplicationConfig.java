@@ -32,7 +32,7 @@ public class ApplicationConfig {
      * @param weChat                     微信小程序
      * @param logoutSuccessUrl           注销成功跳转地址
      * @param loginPage                  登录页地址，默认：/login
-     * @param corsAllowedOrigins         允许跨域的域名
+     * @param corsAllowedHeaders         允许跨域的请求头
      * @param corsAllowedOriginPatterns  允许跨域的域名Pattern
      * @param corsAllowedMethods         允许跨域的请求方法
      * @param corsAllowCredentials       是否允许跨域携带cookie
@@ -43,7 +43,7 @@ public class ApplicationConfig {
                            @NestedConfigurationProperty WeChat weChat,
                            String logoutSuccessUrl,
                            String loginPage,
-                           List<String> corsAllowedOrigins,
+                           List<String> corsAllowedHeaders,
                            List<String> corsAllowedOriginPatterns,
                            List<String> corsAllowedMethods,
                            boolean corsAllowCredentials) {

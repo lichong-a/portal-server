@@ -24,11 +24,14 @@ application:
       refresh-expiration: 10080
     cors-allowed-origin-patterns:
       - '*'
-    cors-allowed-origins:
-      - '*'
     cors-allowed-methods:
       - '*'
-    cors-allow-credentials: false
+    cors-allowed-headers:
+      - 'Content-Type'
+      - 'Access-Control-Request-Method'
+      - 'Access-Control-Request-Headers'
+      - 'Fa'
+    cors-allow-credentials: true
   cos:
     secret-id: ${COS_SECRET_ID}
     secret-key: ${COS_SECRET_KEY}
