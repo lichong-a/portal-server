@@ -8,6 +8,7 @@ package org.funcode.portal.server.common.core.security.service;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.lang.NonNull;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.IOException;
@@ -52,7 +53,7 @@ public interface IJwtService {
     boolean isTokenExpired(String token);
 
     /**
-     * 验证 access-token
+     * 验证 access-token 并刷新
      *
      * @param token    access-token
      * @param request  请求体
@@ -61,5 +62,15 @@ public interface IJwtService {
      */
     void filterVerifyAccessToken(@NonNull String token, @NonNull HttpServletRequest request,
                                  @NonNull HttpServletResponse response) throws IOException;
+
+    /**
+     * 登录成功后拦截token
+     *
+     * @param request  请求体
+     * @param response 响应体
+     */
+    void successLoginHandler(@NonNull HttpServletRequest request,
+                             @NonNull HttpServletResponse response,
+                             @NonNull Authentication authentication) throws IOException;
 
 }

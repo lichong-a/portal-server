@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.security.repository.IUserRepository;
 import org.funcode.portal.server.common.domain.security.User;
+import org.funcode.portal.server.common.domain.security.User_;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,12 +36,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (StringUtils.isBlank(username)) {
             throw new UsernameNotFoundException("用户唯一标识不能为空");
         }
-        // 指定唯一的后台管理员
         Optional<User> user = userRepository.findOne(
                 (Specification<User>) (root, query, cb) -> query.where(cb.or(
-                        cb.equal(root.get("username"), username),
-                        cb.equal(root.get("phone"), username),
-                        cb.equal(root.get("email"), username)
+                        cb.equal(root.get(User_.USERNAME), username),
+                        cb.equal(root.get(User_.PHONE), username),
+                        cb.equal(root.get(User_.EMAIL), username),
+                        cb.equal(root.get(User_.WECHAT_ID), username)
                 )).getRestriction());
         if (user.isEmpty()) {
             throw new UsernameNotFoundException("用户不存在");

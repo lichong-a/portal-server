@@ -5,6 +5,7 @@
 
 package org.funcode.portal.server.common.core.security.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -15,14 +16,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
 import org.funcode.portal.server.common.core.config.ApplicationConfig;
 import org.funcode.portal.server.common.core.constant.RedisKeyConstant;
 import org.funcode.portal.server.common.core.constant.SecurityConstant;
 import org.funcode.portal.server.common.core.security.service.IJwtService;
 import org.funcode.portal.server.common.domain.security.User;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -141,6 +146,29 @@ public class JwtServiceImpl implements IJwtService {
                 }
             }
         }
+    }
+
+    @Override
+    public void successLoginHandler(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull Authentication authentication) throws IOException {
+        // 获取返回的用户
+        User currentUser = (User) authentication.getPrincipal();
+        String accessToken = this.generateToken(currentUser);
+        response.addHeader(SecurityConstant.TOKEN_HEADER_KEY, accessToken);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        Cookie cookie = new Cookie(SecurityConstant.TOKEN_COOKIE_KEY, accessToken);
+        cookie.setHttpOnly(true);
+        response.addCookie(cookie);
+        response.setStatus(HttpStatus.OK.value());
+        // 保存至Redis缓存起来
+        redisTemplate.opsForValue().set(
+                RedisKeyConstant.TOKEN_KEY + currentUser.getUsername() + ":" + accessToken,
+                accessToken,
+                applicationConfig.getSecurity().token().refreshExpiration(),
+                TimeUnit.MINUTES);
+        ObjectMapper mapper = new ObjectMapper();
+        response.getWriter().write(mapper.writeValueAsString(ResponseResult.success()));
     }
 
     /**
