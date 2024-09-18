@@ -62,19 +62,19 @@ public class Course extends BaseEntity {
     @Schema(description = "课程价格")
     private BigDecimal price;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "course_description_storage_id", referencedColumnName = "id")
     @Comment("课程简介文件")
     @Schema(description = "课程简介文件")
     private Storage courseDescriptionStorage;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "course_media_storage_id", referencedColumnName = "id")
     @Comment("课程音视频文件")
     @Schema(description = "课程音视频文件")
     private Storage courseMediaStorage;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "course_cover_storage_id", referencedColumnName = "id")
     @Comment("课程封面文件")
     @Schema(description = "课程封面文件")
