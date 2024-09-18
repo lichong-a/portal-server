@@ -77,21 +77,21 @@ public class Storage extends BaseEntity {
     @ToString.Exclude
     private Set<Carousel> carousels;
 
-    @OneToMany(mappedBy = "courseDescriptionStorage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "courseDescriptionStorage")
     @JsonIgnore
     @Comment("课程简介")
     @Schema(description = "课程简介")
     @ToString.Exclude
     private Set<Course> descriptionCourses;
 
-    @OneToMany(mappedBy = "courseMediaStorage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "courseMediaStorage")
     @JsonIgnore
     @Comment("课程音视频")
     @Schema(description = "课程音视频")
     @ToString.Exclude
     private Set<Course> mediaCourses;
 
-    @OneToMany(mappedBy = "courseCoverStorage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "courseCoverStorage")
     @JsonIgnore
     @Comment("课程封面")
     @Schema(description = "课程封面")
@@ -105,14 +105,14 @@ public class Storage extends BaseEntity {
     @ToString.Exclude
     private Set<Course> attachmentCourses;
 
-    @OneToMany(mappedBy = "courseColumnDescriptionStorage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "courseColumnDescriptionStorage")
     @JsonIgnore
     @Comment("课程专栏简介")
     @Schema(description = "课程专栏简介")
     @ToString.Exclude
     private Set<CourseColumn> descriptionCourseColumns;
 
-    @OneToMany(mappedBy = "courseColumnCoverStorage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "courseColumnCoverStorage")
     @JsonIgnore
     @Comment("课程专栏封面")
     @Schema(description = "课程专栏封面")

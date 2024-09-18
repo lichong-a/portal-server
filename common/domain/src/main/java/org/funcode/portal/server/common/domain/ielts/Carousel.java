@@ -54,7 +54,7 @@ public class Carousel extends BaseEntity {
     @Schema(description = "标题")
     private String title;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "storage_id", referencedColumnName = "id")
     @Comment("图片文件")
     @Schema(description = "图片文件")
