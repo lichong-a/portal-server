@@ -12,7 +12,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,7 +55,7 @@ public class BaseEntity {
     @Comment("修改时间")
     @Schema(description = "修改时间")
     public LocalDateTime updatedAt;
-    @Version
+//    @Version
     @Column(nullable = false)
     @Comment("乐观锁版本号")
     @Schema(description = "乐观锁版本号")
