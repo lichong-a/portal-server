@@ -28,10 +28,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author 李冲
@@ -101,9 +98,9 @@ public class RedeemCodeServiceImpl extends BaseServiceImpl<RedeemCode, Long> imp
             throw new BusinessException("过期时间不能小于当前时间");
         }
         // 查找课程
-        List<Course> courses = courseRepository.findAllById(courseIds);
+        List<Course> courses = CollectionUtils.isEmpty(courseIds) ? new ArrayList<>() : courseRepository.findAllById(courseIds);
         // 查找专栏
-        List<CourseColumn> courseColumns = courseColumnRepository.findAllById(courseColumnIds);
+        List<CourseColumn> courseColumns = CollectionUtils.isEmpty(courseColumnIds) ? new ArrayList<>() : courseColumnRepository.findAllById(courseColumnIds);
         // 生成随机兑换码
         String code = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
         RedeemCode redeemCode = RedeemCode.builder()

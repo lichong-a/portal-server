@@ -79,10 +79,10 @@ public class RedeemCode extends BaseEntity {
     @Schema(description = "兑换时间")
     private LocalDateTime redeemTime;
 
-    @ManyToMany(mappedBy = "redeemCodes", fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "redeemCodes", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<Course> courses;
 
-    @ManyToMany(mappedBy = "redeemCodes", fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "redeemCodes", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<CourseColumn> courseColumns;
 
     @ManyToOne
