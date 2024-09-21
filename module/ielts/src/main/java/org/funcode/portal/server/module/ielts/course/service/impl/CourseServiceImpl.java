@@ -21,6 +21,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * @author 李冲
@@ -84,6 +88,7 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long> implements 
         Storage mediaStorage = storageRepository.getReferenceById(mediaStorageId);
         Storage coverStorage = storageRepository.getReferenceById(courseAddOrEditVo.getCourseCoverStorageId());
         Storage descriptionStorage = storageRepository.getReferenceById(courseAddOrEditVo.getCourseDescriptionStorageId());
+        List<Storage> courseAttachmentStorages = storageRepository.findAllById(courseAddOrEditVo.getCourseAttachmentStorageIds());
         return Course.builder()
                 .id(courseAddOrEditVo.getId())
                 .title(courseAddOrEditVo.getTitle())
@@ -92,6 +97,7 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long> implements 
                 .courseMediaStorage(mediaStorage)
                 .courseCoverStorage(coverStorage)
                 .courseDescriptionStorage(descriptionStorage)
+                .courseAttachmentStorages(CollectionUtils.isEmpty(courseAttachmentStorages) ? new HashSet<>() : new HashSet<>(courseAttachmentStorages))
                 .build();
     }
 }

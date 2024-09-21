@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @author 李冲
@@ -46,5 +47,7 @@ public class CourseAddOrEditVo {
     private Long courseMediaStorageId;
     @Schema(description = "课程简介文件ID")
     private Long courseDescriptionStorageId;
+    @Schema(description = "课程附件ID列表")
+    private List<Long> courseAttachmentStorageIds;
 
 }
