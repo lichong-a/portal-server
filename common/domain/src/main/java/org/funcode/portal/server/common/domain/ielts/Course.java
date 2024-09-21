@@ -57,7 +57,7 @@ public class Course extends BaseEntity {
     @Schema(description = "课程状态（0：已下架;1：已上架;2：下架并静止播放）")
     private int status;
 
-    @Column(nullable = false)
+    @Column
     @Comment("课程价格")
     @Schema(description = "课程价格")
     private BigDecimal price;
