@@ -80,7 +80,7 @@ public class Course extends BaseEntity {
     @Schema(description = "课程封面文件")
     private Storage courseCoverStorage;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tb_course_course_attachment_storages",
             joinColumns = @JoinColumn(name = "course_id"),

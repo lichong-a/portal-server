@@ -53,6 +53,10 @@ spring:
     name: portal-server
   config:
     import: optional:classpath:docker/.env[.properties]
+  servlet:
+    multipart:
+      max-file-size: 1GB
+      max-request-size: 1GB
   cloud:
     nacos:
       discovery: #启用 spring cloud nacos discovery
