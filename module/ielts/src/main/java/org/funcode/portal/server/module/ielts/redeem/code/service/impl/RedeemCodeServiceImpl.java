@@ -98,9 +98,9 @@ public class RedeemCodeServiceImpl extends BaseServiceImpl<RedeemCode, Long> imp
             throw new BusinessException("过期时间不能小于当前时间");
         }
         // 查找课程
-        List<Course> courses = CollectionUtils.isEmpty(courseIds) ? new ArrayList<>() : courseRepository.findAllById(courseIds);
+        List<Course> courses = CollectionUtils.isEmpty(courseIds) ? Collections.emptyList() : courseRepository.findAllById(courseIds);
         // 查找专栏
-        List<CourseColumn> courseColumns = CollectionUtils.isEmpty(courseColumnIds) ? new ArrayList<>() : courseColumnRepository.findAllById(courseColumnIds);
+        List<CourseColumn> courseColumns = CollectionUtils.isEmpty(courseColumnIds) ? Collections.emptyList() : courseColumnRepository.findAllById(courseColumnIds);
         // 生成随机兑换码
         String code = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
         RedeemCode redeemCode = RedeemCode.builder()

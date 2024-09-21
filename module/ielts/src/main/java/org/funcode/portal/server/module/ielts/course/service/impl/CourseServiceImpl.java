@@ -7,6 +7,7 @@ package org.funcode.portal.server.module.ielts.course.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.funcode.portal.server.common.core.base.exception.BusinessException;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
 import org.funcode.portal.server.common.domain.base.PageRequestVo;
 import org.funcode.portal.server.common.domain.ielts.Course;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -83,12 +85,17 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long> implements 
     private Course transAddOrEditVoToCourse(CourseAddOrEditVo courseAddOrEditVo) {
         Long mediaStorageId = courseAddOrEditVo.getCourseMediaStorageId();
         if (mediaStorageId == null) {
-            return null;
+            throw new BusinessException("media storage id is null");
         }
         Storage mediaStorage = storageRepository.getReferenceById(mediaStorageId);
-        Storage coverStorage = storageRepository.getReferenceById(courseAddOrEditVo.getCourseCoverStorageId());
-        Storage descriptionStorage = storageRepository.getReferenceById(courseAddOrEditVo.getCourseDescriptionStorageId());
-        List<Storage> courseAttachmentStorages = storageRepository.findAllById(courseAddOrEditVo.getCourseAttachmentStorageIds());
+        Storage coverStorage = courseAddOrEditVo.getCourseCoverStorageId() != null ?
+                storageRepository.getReferenceById(courseAddOrEditVo.getCourseCoverStorageId())
+                : null;
+        Storage descriptionStorage = courseAddOrEditVo.getCourseDescriptionStorageId() != null ?
+                storageRepository.getReferenceById(courseAddOrEditVo.getCourseDescriptionStorageId())
+                : null;
+        List<Long> courseAttachmentStorageIds = courseAddOrEditVo.getCourseAttachmentStorageIds();
+        List<Storage> courseAttachmentStorages = CollectionUtils.isEmpty(courseAttachmentStorageIds) ? Collections.emptyList() : storageRepository.findAllById(courseAttachmentStorageIds);
         return Course.builder()
                 .id(courseAddOrEditVo.getId())
                 .title(courseAddOrEditVo.getTitle())
@@ -97,7 +104,7 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long> implements 
                 .courseMediaStorage(mediaStorage)
                 .courseCoverStorage(coverStorage)
                 .courseDescriptionStorage(descriptionStorage)
-                .courseAttachmentStorages(CollectionUtils.isEmpty(courseAttachmentStorages) ? new HashSet<>() : new HashSet<>(courseAttachmentStorages))
+                .courseAttachmentStorages(CollectionUtils.isEmpty(courseAttachmentStorages) ? Collections.emptySet() : new HashSet<>(courseAttachmentStorages))
                 .build();
     }
 }

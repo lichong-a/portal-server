@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
 import org.funcode.portal.server.common.domain.base.PageRequestVo;
+import org.funcode.portal.server.common.domain.ielts.Course;
 import org.funcode.portal.server.common.domain.ielts.CourseColumn;
 import org.funcode.portal.server.common.domain.ielts.CourseColumn_;
 import org.funcode.portal.server.common.domain.ielts.Storage;
@@ -16,11 +17,17 @@ import org.funcode.portal.server.module.ielts.column.domain.vo.CourseColumnAddOr
 import org.funcode.portal.server.module.ielts.column.domain.vo.CourseColumnQueryVo;
 import org.funcode.portal.server.module.ielts.column.repository.ICourseColumnRepository;
 import org.funcode.portal.server.module.ielts.column.service.ICourseColumnService;
+import org.funcode.portal.server.module.ielts.course.repository.ICourseRepository;
 import org.funcode.portal.server.module.ielts.storage.repository.IStorageRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * @author 李冲
@@ -32,6 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CourseColumnServiceImpl extends BaseServiceImpl<CourseColumn, Long> implements ICourseColumnService {
 
     private final ICourseColumnRepository courseColumnRepository;
+    private final ICourseRepository courseRepository;
     private final IStorageRepository storageRepository;
 
     @Override
@@ -76,8 +84,14 @@ public class CourseColumnServiceImpl extends BaseServiceImpl<CourseColumn, Long>
     }
 
     private CourseColumn transAddOrEditVoToCourseColumn(CourseColumnAddOrEditVo courseColumnAddOrEditVo) {
-        Storage coverStorage = storageRepository.getReferenceById(courseColumnAddOrEditVo.getCourseColumnCoverStorageId());
-        Storage descriptionStorage = storageRepository.getReferenceById(courseColumnAddOrEditVo.getCourseColumnDescriptionStorageId());
+        Storage coverStorage = courseColumnAddOrEditVo.getCourseColumnCoverStorageId() != null ?
+                storageRepository.getReferenceById(courseColumnAddOrEditVo.getCourseColumnCoverStorageId())
+                : null;
+        Storage descriptionStorage = courseColumnAddOrEditVo.getCourseColumnDescriptionStorageId() != null ?
+                storageRepository.getReferenceById(courseColumnAddOrEditVo.getCourseColumnDescriptionStorageId())
+                : null;
+        List<Long> courseIds = courseColumnAddOrEditVo.getCourseIds();
+        List<Course> courses = CollectionUtils.isEmpty(courseIds) ? Collections.emptyList() : courseRepository.findAllById(courseIds);
         return CourseColumn.builder()
                 .id(courseColumnAddOrEditVo.getId())
                 .courseColumnCoverStorage(coverStorage)
@@ -85,6 +99,7 @@ public class CourseColumnServiceImpl extends BaseServiceImpl<CourseColumn, Long>
                 .price(courseColumnAddOrEditVo.getPrice())
                 .status(courseColumnAddOrEditVo.getStatus())
                 .title(courseColumnAddOrEditVo.getTitle())
+                .courses(CollectionUtils.isEmpty(courses) ? Collections.emptySet() : new HashSet<>(courses))
                 .build();
     }
 }

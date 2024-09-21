@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @author 李冲
@@ -31,7 +32,7 @@ public class CourseColumnAddOrEditVo {
     @Schema(description = "专栏标题")
     private String title;
     @Schema(description = "专栏状态（0：已下架;1：已上架;2：下架并静止播放）")
-    private int status;
+    private Integer status;
     @DecimalMin(value = "0.00", message = "{ielts.domain.vo.CourseColumnAddOrEditVo.price.DecimalMin}")
     @Schema(description = "价格")
     private BigDecimal price;
@@ -39,5 +40,7 @@ public class CourseColumnAddOrEditVo {
     private Long courseColumnCoverStorageId;
     @Schema(description = "专栏简介文件ID")
     private Long courseColumnDescriptionStorageId;
+    @Schema(description = "课程ID列表")
+    private List<Long> courseIds;
 
 }

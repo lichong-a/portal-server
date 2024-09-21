@@ -33,7 +33,7 @@ public class StorageAddOrEditVo {
     private String title;
 
     @Schema(description = "文件类型（0:图片；1:音频；2:视频；3:markdown）")
-    private int fileType;
+    private Integer fileType;
 
     @NotNull(message = "{ielts.domain.vo.StorageAddOrEditVo.file.NotNull}")
     @Schema(description = "文件")

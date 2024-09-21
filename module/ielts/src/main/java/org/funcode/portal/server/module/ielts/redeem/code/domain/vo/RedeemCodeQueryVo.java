@@ -5,7 +5,14 @@
 
 package org.funcode.portal.server.module.ielts.redeem.code.domain.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.funcode.portal.server.common.domain.base.PageRequestVo;
@@ -29,21 +36,53 @@ public class RedeemCodeQueryVo {
     @Size(max = 200, message = "{ielts.domain.vo.RedeemCodeQueryVo.code.Size}")
     @Schema(description = "兑换码code（模糊）")
     private String code;
-    @Schema(description = "过期时间的开始时间")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
+    @Schema(description = "过期时间的开始时间", type = "string", format = "date", example = "2024-01-01 01:01:00")
     private LocalDateTime expireTimeBegin;
-    @Schema(description = "过期时间的结束时间")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
+    @Schema(description = "过期时间的结束时间", type = "string", format = "date", example = "2024-01-01 01:01:00")
     private LocalDateTime expireTimeEnd;
-    @Schema(description = "兑换时间的开始时间")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
+    @Schema(description = "兑换时间的开始时间", type = "string", format = "date", example = "2024-01-01 01:01:00")
     private LocalDateTime redeemTimeBegin;
-    @Schema(description = "兑换时间的结束时间")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
+    @Schema(description = "兑换时间的结束时间", type = "string", format = "date", example = "2024-01-01 01:01:00")
     private LocalDateTime redeemTimeEnd;
-    @Schema(description = "创建时间的开始时间")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
+    @Schema(description = "创建时间的开始时间", type = "string", format = "date", example = "2024-01-01 01:01:00")
     private LocalDateTime createdAtBegin;
-    @Schema(description = "创建时间的结束时间")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
+    @Schema(description = "创建时间的结束时间", type = "string", format = "date", example = "2024-01-01 01:01:00")
     private LocalDateTime createdAtEnd;
-    @Schema(description = "更新时间的开始时间")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
+    @Schema(description = "更新时间的开始时间", type = "string", format = "date", example = "2024-01-01 01:01:00")
     private LocalDateTime updatedAtBegin;
-    @Schema(description = "更新时间的结束时间")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
+    @Schema(description = "更新时间的结束时间", type = "string", format = "date", example = "2024-01-01 01:01:00")
     private LocalDateTime updatedAtEnd;
     @Schema(description = "分页参数")
     private PageRequestVo pageRequestVo;
