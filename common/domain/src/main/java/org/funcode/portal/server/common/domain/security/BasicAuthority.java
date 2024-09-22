@@ -31,7 +31,8 @@ import java.util.Set;
 @Builder
 @Entity
 @ToString(callSuper = true)
-@Table(name = "tb_basic_authority")
+@Table(name = "tb_basic_authority",
+        indexes = @Index(name = "index_tb_basic_authority_authority_key", columnList = BasicAuthority_.AUTHORITY_KEY))
 @Comment("权限表")
 @Schema(description = "权限")
 @DynamicUpdate

@@ -8,6 +8,7 @@ package org.funcode.portal.server.common.domain.ielts;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -38,7 +39,8 @@ import java.util.Set;
 @Builder
 @Entity
 @ToString(callSuper = true)
-@Table(name = "tb_order")
+@Table(name = "tb_order",
+        indexes = @Index(name = "index_tb_order_user", columnList = "order_user_id"))
 @Comment("订单管理表")
 @Schema(description = "订单")
 @DynamicUpdate
@@ -55,7 +57,7 @@ public class Order extends BaseEntity {
     @Column(nullable = false)
     @Comment("交易方式（0：兑换码;1：微信支付）")
     @Schema(description = "交易方式（0：兑换码;1：微信支付）")
-    private int tradeType;
+    private Integer tradeType;
 
     @Column
     @Temporal(TemporalType.TIMESTAMP)
@@ -75,12 +77,23 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "order_user_id", referencedColumnName = "id")
     @Comment("人员")
     @Schema(description = "人员")
+    @JsonManagedReference
     private User user;
 
-    @ManyToMany(mappedBy = "orders", fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tb_order_tb_course",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    @JsonManagedReference
     private Set<Course> courses;
 
-    @ManyToMany(mappedBy = "orders", fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tb_order_tb_course_column",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_column_id"))
+    @JsonManagedReference
     private Set<CourseColumn> courseColumns;
 
     @Override

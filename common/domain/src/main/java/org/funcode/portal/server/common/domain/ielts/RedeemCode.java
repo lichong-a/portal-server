@@ -37,7 +37,8 @@ import java.util.Set;
 @Builder
 @Entity
 @ToString(callSuper = true)
-@Table(name = "tb_redeem_code")
+@Table(name = "tb_redeem_code",
+        indexes = @Index(name = "index_tb_redeem_code_code", columnList = RedeemCode_.CODE))
 @Comment("兑换码管理表")
 @Schema(description = "兑换码")
 @DynamicUpdate
@@ -79,10 +80,18 @@ public class RedeemCode extends BaseEntity {
     @Schema(description = "兑换时间")
     private LocalDateTime redeemTime;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "redeemCodes")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tb_redeem_code_course",
+            joinColumns = @JoinColumn(name = "redeem_code_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
     private Set<Course> courses;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "redeemCodes")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tb_redeem_code_course_column",
+            joinColumns = @JoinColumn(name = "redeem_code_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_column_id"))
     private Set<CourseColumn> courseColumns;
 
     @ManyToOne

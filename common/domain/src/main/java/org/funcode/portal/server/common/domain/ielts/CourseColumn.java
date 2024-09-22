@@ -6,8 +6,10 @@
 package org.funcode.portal.server.common.domain.ielts;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,7 +35,8 @@ import java.util.Set;
 @Builder
 @Entity
 @ToString(callSuper = true)
-@Table(name = "tb_course_column")
+@Table(name = "tb_course_column",
+        indexes = @Index(name = "index_tb_course_column_status", columnList = CourseColumn_.STATUS))
 @Comment("课程专栏管理表")
 @Schema(description = "课程专栏")
 @DynamicUpdate
@@ -55,7 +58,7 @@ public class CourseColumn extends BaseEntity {
     @Column(nullable = false)
     @Comment("专栏状态（0：已下架;1：已上架;2：下架并静止播放）")
     @Schema(description = "专栏状态（0：已下架;1：已上架;2：下架并静止播放）")
-    private int status;
+    private Integer status;
 
     @Column(nullable = false)
     @Comment("课程专栏价格")
@@ -79,31 +82,25 @@ public class CourseColumn extends BaseEntity {
             name = "tb_course_course_column",
             joinColumns = @JoinColumn(name = "course_column_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
+    @ToString.Exclude
+    @JsonManagedReference
     private Set<Course> courses;
 
     @ManyToMany
     @JoinTable(
-            name = "tb_order_course_column",
+            name = "tb_order_tb_course_column",
             joinColumns = @JoinColumn(name = "course_column_id"),
             inverseJoinColumns = @JoinColumn(name = "order_id"))
-    @JsonIgnore
     @ToString.Exclude
+    @JsonBackReference
     private Set<Order> orders;
 
-    @ManyToMany
-    @JoinTable(
-            name = "tb_redeem_code_course_column",
-            joinColumns = @JoinColumn(name = "course_column_id"),
-            inverseJoinColumns = @JoinColumn(name = "redeem_code_id"))
+    @ManyToMany(mappedBy = "courseColumns")
     @JsonIgnore
     @ToString.Exclude
     private Set<RedeemCode> redeemCodes;
 
-    @ManyToMany
-    @JoinTable(
-            name = "tb_user_course_column",
-            joinColumns = @JoinColumn(name = "course_column_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ManyToMany(mappedBy = "courseColumns")
     @JsonIgnore
     @ToString.Exclude
     private Set<User> users;

@@ -6,6 +6,7 @@
 package org.funcode.portal.server.common.domain.ielts;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,7 +34,8 @@ import java.util.Set;
 @Builder
 @Entity
 @ToString(callSuper = true)
-@Table(name = "tb_course")
+@Table(name = "tb_course",
+        indexes = @Index(name = "index_tb_course_status", columnList = Course_.STATUS))
 @Comment("课程管理表")
 @Schema(description = "课程")
 @DynamicUpdate
@@ -55,7 +57,7 @@ public class Course extends BaseEntity {
     @Column(nullable = false)
     @Comment("课程状态（0：已下架;1：已上架;2：下架并静止播放）")
     @Schema(description = "课程状态（0：已下架;1：已上架;2：下架并静止播放）")
-    private int status;
+    private Integer status;
 
     @Column
     @Comment("课程价格")
@@ -89,33 +91,25 @@ public class Course extends BaseEntity {
     private Set<Storage> courseAttachmentStorages;
 
     @ManyToMany(mappedBy = "courses")
-    @JsonIgnore
     @ToString.Exclude
+    @JsonBackReference
     private Set<CourseColumn> courseColumns;
 
     @ManyToMany
     @JoinTable(
-            name = "tb_order_course",
+            name = "tb_order_tb_course",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "order_id"))
-    @JsonIgnore
     @ToString.Exclude
+    @JsonBackReference
     private Set<Order> orders;
 
-    @ManyToMany
-    @JoinTable(
-            name = "tb_redeem_code_course",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "redeem_code_id"))
+    @ManyToMany(mappedBy = "courses")
     @JsonIgnore
     @ToString.Exclude
     private Set<RedeemCode> redeemCodes;
 
-    @ManyToMany
-    @JoinTable(
-            name = "tb_user_course",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ManyToMany(mappedBy = "courses")
     @JsonIgnore
     @ToString.Exclude
     private Set<User> users;

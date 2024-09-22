@@ -73,9 +73,13 @@ public class RedeemCodeServiceImpl extends BaseServiceImpl<RedeemCode, Long> imp
         currentUser.setCourseColumns(courseColumns);
         userRepository.save(currentUser);
         // 保存订单
+        Set<Course> orderCourses = new HashSet<>(courses.size());
+        orderCourses.addAll(courses);
+        Set<CourseColumn> orderCourseColumns = new HashSet<>(courseColumns.size());
+        orderCourseColumns.addAll(courseColumns);
         Order order = Order.builder()
-                .courses(courses)
-                .courseColumns(courseColumns)
+                .courses(orderCourses)
+                .courseColumns(orderCourseColumns)
                 .paymentTime(now)
                 .price(BigDecimal.valueOf(0))
                 .tradeType(0)

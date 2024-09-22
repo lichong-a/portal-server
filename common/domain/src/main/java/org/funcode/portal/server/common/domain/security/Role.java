@@ -31,7 +31,8 @@ import java.util.Set;
 @Builder
 @Entity
 @ToString(callSuper = true)
-@Table(name = "tb_role")
+@Table(name = "tb_role",
+        indexes = @Index(name = "index_tb_role_role_key", columnList = Role_.ROLE_KEY))
 @Comment("角色表")
 @Schema(description = "角色")
 @DynamicUpdate
@@ -65,7 +66,7 @@ public class Role extends BaseEntity implements GrantedAuthority {
             name = "tb_role_basic_authority",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "basic_authority_id"))
-    @JsonIgnore
+    @ToString.Exclude
     private Set<BasicAuthority> basicAuthorities;
 
     @ManyToMany(mappedBy = "roles")
