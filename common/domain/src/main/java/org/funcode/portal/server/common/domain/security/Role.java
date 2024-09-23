@@ -66,6 +66,7 @@ public class Role extends BaseEntity implements GrantedAuthority {
             name = "tb_role_basic_authority",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "basic_authority_id"))
+    @JsonIgnore
     @ToString.Exclude
     private Set<BasicAuthority> basicAuthorities;
 

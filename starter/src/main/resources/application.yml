@@ -131,7 +131,7 @@ spring:
           max-wait: 2000
   jpa:
     generate-ddl: true
-    open-in-view: true
+    open-in-view: false
     hibernate:
       ddl-auto: update
     show-sql: true

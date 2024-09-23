@@ -113,7 +113,7 @@ public class User extends BaseEntity implements UserDetails {
     @Comment("是否启用")
     @Schema(description = "是否启用")
     private boolean enabled = true;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tb_user_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -121,7 +121,7 @@ public class User extends BaseEntity implements UserDetails {
     @ToString.Exclude
     private Set<Role> roles;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     @ToString.Exclude
     @JsonBackReference
     private Set<Order> orders;
