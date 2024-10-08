@@ -47,8 +47,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         // 获取 token，优先从 cookie 获取，其次从 header 获取
         String accessTokenCookie = CookieUtils.getCookieValue(request, SecurityConstant.TOKEN_COOKIE_KEY);
         final String accessToken = StringUtils.isBlank(accessTokenCookie) ? request.getHeader(SecurityConstant.TOKEN_HEADER_KEY) : accessTokenCookie;
-        // 没 token 场景为 登录 等，直接放行，因为后边有其他的过滤器
-        if (StringUtils.isBlank(accessToken)) {
+        // 没 token 场景为 登录 或 匿名 等，直接放行，因为后边有其他的过滤器
+        if (StringUtils.isBlank(accessToken) ) {
             filterChain.doFilter(request, response);
             return;
         }

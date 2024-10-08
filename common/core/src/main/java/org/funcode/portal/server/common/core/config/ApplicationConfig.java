@@ -23,7 +23,7 @@ public class ApplicationConfig {
     @NestedConfigurationProperty
     private final Security security;
 
-    public static final String WECHAT_LOGIN_URL_TEMPLATE = "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code";
+    public static final String WECHAT_LOGIN_URL_TEMPLATE = "https://api.weixin.qq.com/sns/jscode2session?appid={appid}&secret={secret}&js_code={js_code}&grant_type={grant_type}";
 
     /**
      * @param adminUsername              管理员用户名
@@ -67,16 +67,5 @@ public class ApplicationConfig {
                              String appSecret) {
         }
     }
-
-    /**
-     * 生成微信登录请求地址
-     *
-     * @param code code
-     * @return 请求地址
-     */
-    public String wechatLoginUrl(String code) {
-        return String.format(WECHAT_LOGIN_URL_TEMPLATE, security.weChat.appId, security.weChat.appSecret, code);
-    }
-
 
 }

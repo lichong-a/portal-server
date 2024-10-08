@@ -7,12 +7,14 @@ package org.funcode.portal.server.module.ielts.column.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.funcode.portal.server.common.core.base.exception.BusinessException;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
 import org.funcode.portal.server.common.domain.base.PageRequestVo;
 import org.funcode.portal.server.common.domain.ielts.Course;
 import org.funcode.portal.server.common.domain.ielts.CourseColumn;
 import org.funcode.portal.server.common.domain.ielts.CourseColumn_;
 import org.funcode.portal.server.common.domain.ielts.Storage;
+import org.funcode.portal.server.common.domain.security.User;
 import org.funcode.portal.server.module.ielts.column.domain.vo.CourseColumnAddOrEditVo;
 import org.funcode.portal.server.module.ielts.column.domain.vo.CourseColumnQueryVo;
 import org.funcode.portal.server.module.ielts.column.repository.ICourseColumnRepository;
@@ -21,6 +23,7 @@ import org.funcode.portal.server.module.ielts.course.repository.ICourseRepositor
 import org.funcode.portal.server.module.ielts.storage.repository.IStorageRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -81,6 +84,15 @@ public class CourseColumnServiceImpl extends BaseServiceImpl<CourseColumn, Long>
                 ).getRestriction(),
                 pageRequestVo.getPageRequest()
         );
+    }
+
+    @Override
+    public List<CourseColumn> listPurchased() {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (currentUser == null) {
+            throw new BusinessException("当前用户未登录");
+        }
+        return currentUser.getCourseColumns().stream().sorted((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt())).toList();
     }
 
     private CourseColumn transAddOrEditVoToCourseColumn(CourseColumnAddOrEditVo courseColumnAddOrEditVo) {

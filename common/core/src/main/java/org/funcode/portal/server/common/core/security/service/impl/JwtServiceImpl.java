@@ -11,7 +11,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -84,7 +83,7 @@ public class JwtServiceImpl implements IJwtService {
     @Transactional
     public void filterVerifyAccessToken(@NonNull String accessToken,
                                         @NonNull HttpServletRequest request,
-                                        @NonNull HttpServletResponse response) throws IOException, ServletException {
+                                        @NonNull HttpServletResponse response) throws IOException {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         try {
             String username = this.extractUserName(accessToken);
@@ -100,6 +99,7 @@ public class JwtServiceImpl implements IJwtService {
                 if (this.isTokenValid(accessToken, userDetails)) {
                     // 保存登录状态到当前上下文
                     SecurityContextHolder.setContext(context);
+                    response.setHeader(SecurityConstant.TOKEN_HEADER_KEY, accessToken);
                 }
             }
         } catch (ExpiredJwtException e) {

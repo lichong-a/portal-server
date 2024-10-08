@@ -12,6 +12,8 @@ import org.funcode.portal.server.module.ielts.column.domain.vo.CourseColumnAddOr
 import org.funcode.portal.server.module.ielts.column.domain.vo.CourseColumnQueryVo;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
  * @author 李冲
  * @see <a href="https://lichong.work">李冲博客</a>
@@ -43,4 +45,10 @@ public interface ICourseColumnService extends IBaseService<CourseColumn, Long> {
      */
     Page<CourseColumn> findPage(PageRequestVo pageRequestVo);
 
+    /**
+     * 查询当前登录人已购买的专栏
+     *
+     * @return 专栏列表
+     */
+    List<CourseColumn> listPurchased();
 }

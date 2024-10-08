@@ -19,6 +19,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author 李冲
  * @see <a href="https://lichong.work">李冲博客</a>
@@ -65,5 +67,11 @@ public class CourseColumnController {
     @GetMapping("pageList/anonymous")
     public ResponseResult<Page<CourseColumn>> pageListAnonymous(@Valid PageRequestVo pageRequestVo) {
         return ResponseResult.success(courseColumnService.findPage(pageRequestVo));
+    }
+
+    @Operation(summary = "查询当前登录人已购买的专栏")
+    @GetMapping("list/purchased")
+    public ResponseResult<List<CourseColumn>> pageListPurchased() {
+        return ResponseResult.success(courseColumnService.listPurchased());
     }
 }
