@@ -5,6 +5,7 @@
 
 package org.funcode.portal.server.common.core.security.service;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.lang.NonNull;
@@ -61,7 +62,7 @@ public interface IJwtService {
      * @throws IOException 异常
      */
     void filterVerifyAccessToken(@NonNull String token, @NonNull HttpServletRequest request,
-                                 @NonNull HttpServletResponse response) throws IOException;
+                                 @NonNull HttpServletResponse response) throws IOException, ServletException;
 
     /**
      * 登录成功后拦截token

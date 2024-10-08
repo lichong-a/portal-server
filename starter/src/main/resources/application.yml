@@ -14,7 +14,7 @@ application:
     # 注销成功跳转地址，默认为"/login?logout"
     logout-success-url:
     # 登录页地址，默认：/login
-    login-page: http://127.0.0.1:8080/api/v1/auth/unauthorized
+    login-page: /pages/login/wechat/index
     token:
       # 签名密钥
       signing-key: portalserver8fas8hage9SHVfsd847GD8475fd8880ejf

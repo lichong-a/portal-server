@@ -5,7 +5,9 @@
 
 package org.funcode.portal.server.module.ielts.order.service;
 
+import jakarta.validation.Valid;
 import org.funcode.portal.server.common.core.base.service.IBaseService;
+import org.funcode.portal.server.common.domain.base.PageRequestVo;
 import org.funcode.portal.server.common.domain.ielts.Order;
 import org.funcode.portal.server.module.ielts.order.domain.vo.OrderQueryVo;
 import org.springframework.data.domain.Page;
@@ -25,4 +27,11 @@ public interface IOrderService extends IBaseService<Order, Long> {
      */
     Page<Order> pageList(OrderQueryVo orderQueryVo);
 
+    /**
+     * 分页查询当前用户的订单信息
+     *
+     * @param pageRequestVo 分页参数
+     * @return 分页结果
+     */
+    Page<Order> pageListCurrentUser(@Valid PageRequestVo pageRequestVo);
 }

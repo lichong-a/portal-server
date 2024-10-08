@@ -11,12 +11,14 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
+import org.funcode.portal.server.common.core.base.http.response.ResponseStatusEnum;
 import org.funcode.portal.server.common.core.config.ApplicationConfig;
 import org.funcode.portal.server.common.core.constant.RedisKeyConstant;
 import org.funcode.portal.server.common.core.constant.SecurityConstant;
@@ -82,7 +84,7 @@ public class JwtServiceImpl implements IJwtService {
     @Transactional
     public void filterVerifyAccessToken(@NonNull String accessToken,
                                         @NonNull HttpServletRequest request,
-                                        @NonNull HttpServletResponse response) throws IOException {
+                                        @NonNull HttpServletResponse response) throws IOException, ServletException {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         try {
             String username = this.extractUserName(accessToken);
@@ -108,7 +110,10 @@ public class JwtServiceImpl implements IJwtService {
             if (StringUtils.isBlank(refreshToken)) {
                 // Redis中不存在说明过期，需要重新登录
                 SecurityContextHolder.clearContext();
-                response.sendRedirect(StringUtils.isBlank(applicationConfig.getSecurity().loginPage()) ? "/login" : applicationConfig.getSecurity().loginPage());
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                ObjectMapper mapper = new ObjectMapper();
+                response.getWriter().write(mapper.writeValueAsString(ResponseResult.fail("请重新登录", ResponseStatusEnum.HTTP_STATUS_401)));
             } else if (Objects.equals(accessToken, refreshToken)) {
                 // 相等情况重新签发token
                 User userDetails = (User) userDetailsService

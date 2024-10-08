@@ -10,15 +10,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.funcode.portal.server.common.core.base.http.response.ResponseResult;
+import org.funcode.portal.server.common.domain.base.PageRequestVo;
 import org.funcode.portal.server.common.domain.ielts.Order;
 import org.funcode.portal.server.module.ielts.order.domain.vo.OrderQueryVo;
 import org.funcode.portal.server.module.ielts.order.service.IOrderService;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 李冲
@@ -38,5 +36,11 @@ public class OrderController {
     @PreAuthorize("hasAuthority('ielts:order:pageList')")
     public ResponseResult<Page<Order>> pageList(@Valid @RequestBody OrderQueryVo orderQueryVo) {
         return ResponseResult.success(orderService.pageList(orderQueryVo));
+    }
+
+    @Operation(summary = "分页查询当前登录人的订单列表")
+    @GetMapping("/pageList/currentUser")
+    public ResponseResult<Page<Order>> pageList(@Valid PageRequestVo pageRequestVo) {
+        return ResponseResult.success(orderService.pageListCurrentUser(pageRequestVo));
     }
 }

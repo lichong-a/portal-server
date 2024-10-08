@@ -6,14 +6,18 @@
 package org.funcode.portal.server.module.ielts.order.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.funcode.portal.server.common.core.base.exception.BusinessException;
 import org.funcode.portal.server.common.core.base.service.impl.BaseServiceImpl;
+import org.funcode.portal.server.common.domain.base.PageRequestVo;
 import org.funcode.portal.server.common.domain.ielts.Order;
 import org.funcode.portal.server.common.domain.ielts.Order_;
+import org.funcode.portal.server.common.domain.security.User;
 import org.funcode.portal.server.module.ielts.order.domain.vo.OrderQueryVo;
 import org.funcode.portal.server.module.ielts.order.repository.IOrderRepository;
 import org.funcode.portal.server.module.ielts.order.service.IOrderService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +55,21 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements IO
                         )
                 ).getRestriction(),
                 orderQueryVo.getPageRequest()
+        );
+    }
+
+    @Override
+    public Page<Order> pageListCurrentUser(PageRequestVo pageRequestVo) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (currentUser == null) {
+            throw new BusinessException("当前用户未登录");
+        }
+        return getBaseRepository().findAll(
+                (Specification<Order>) (root, query, criteriaBuilder) -> query.where(criteriaBuilder.and(
+                                criteriaBuilder.equal(root.get(Order_.user), currentUser)
+                        )
+                ).getRestriction(),
+                pageRequestVo.getPageRequest()
         );
     }
 }
