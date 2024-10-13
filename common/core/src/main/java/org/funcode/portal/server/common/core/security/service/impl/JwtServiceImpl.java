@@ -173,7 +173,7 @@ public class JwtServiceImpl implements IJwtService {
                 applicationConfig.getSecurity().token().refreshExpiration(),
                 TimeUnit.MINUTES);
         ObjectMapper mapper = new ObjectMapper();
-        response.getWriter().write(mapper.writeValueAsString(ResponseResult.success()));
+        response.getWriter().write(mapper.writeValueAsString(ResponseResult.success(currentUser)));
     }
 
     /**
