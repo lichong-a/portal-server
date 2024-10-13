@@ -97,7 +97,8 @@ public class DefaultSecurityConfig {
                         .loginPage(defaultLoginPage)
                         .loginProcessingUrl("/api/v1/auth/login")
                         .successHandler(customAuthenticationSuccessHandler)
-                        .failureHandler(customAuthenticationFailureHandler))
+                        .failureHandler(customAuthenticationFailureHandler)
+                        .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/api/v1/auth/logout")
                         .addLogoutHandler(clearSiteData)

@@ -29,7 +29,7 @@ public class WechatAuthenticationFilter extends AbstractAuthenticationProcessing
     /**
      * 微信登录路径
      */
-    public static final String WECHAT_LOGIN_PATH = "/wechat/login";
+    public static final String WECHAT_LOGIN_PATH = "/api/v1/auth/wechat/login";
     /**
      * 允许的请求方法
      */
