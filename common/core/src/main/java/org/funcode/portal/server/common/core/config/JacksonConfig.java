@@ -13,9 +13,11 @@ import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,6 +32,13 @@ import java.util.Date;
  */
 @Configuration
 public class JacksonConfig {
+
+    @Bean
+    public StringHttpMessageConverter stringHttpMessageConverter() {
+        StringHttpMessageConverter converter = new StringHttpMessageConverter();
+        converter.setDefaultCharset(StandardCharsets.UTF_8);
+        return converter;
+    }
 
     @Bean
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {

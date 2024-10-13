@@ -161,7 +161,7 @@ public class JwtServiceImpl implements IJwtService {
         User currentUser = (User) authentication.getPrincipal();
         String accessToken = this.generateToken(currentUser);
         response.addHeader(SecurityConstant.TOKEN_HEADER_KEY, accessToken);
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         Cookie cookie = new Cookie(SecurityConstant.TOKEN_COOKIE_KEY, accessToken);
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
