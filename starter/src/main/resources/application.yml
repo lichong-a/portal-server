@@ -19,7 +19,7 @@ application:
       # 签名密钥
       signing-key: portalserver8fas8hage9SHVfsd847GD8475fd8880ejf
       # access-token过期时间，单位：分钟
-      expiration: 30
+      expiration: 10080
       # refresh-token的过期时间，单位：分钟
       refresh-expiration: 10080
     cors-allowed-origin-patterns:

@@ -20,6 +20,7 @@ import org.funcode.portal.server.common.core.security.service.impl.UserDetailsSe
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -30,7 +31,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
 import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
@@ -82,9 +85,17 @@ public class DefaultSecurityConfig {
                                 "/v3/api-docs",
                                 "/v3/api-docs/**",
                                 "/webjars/**",
-                                "favicon.ico",
                                 "/doc.html",
                                 defaultLoginPage
+                        ).permitAll()
+                        .requestMatchers(
+                                "/**.js",
+                                "/**.css",
+                                "/**.html",
+                                "/**.png",
+                                "/**.txt",
+                                "/**.ico",
+                                "/_next/**"
                         ).permitAll()
                         .requestMatchers(HttpMethod.POST, WECHAT_LOGIN_PATH).permitAll()
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
@@ -94,7 +105,6 @@ public class DefaultSecurityConfig {
                 .formLogin(login -> login
                         .usernameParameter("username")
                         .passwordParameter("password")
-                        .loginPage(defaultLoginPage)
                         .loginProcessingUrl("/api/v1/auth/login")
                         .successHandler(customAuthenticationSuccessHandler)
                         .failureHandler(customAuthenticationFailureHandler)
@@ -105,6 +115,9 @@ public class DefaultSecurityConfig {
                         .logoutSuccessUrl(
                                 StringUtils.isBlank(applicationConfig.getSecurity().logoutSuccessUrl()) ? "/login?logout" : applicationConfig.getSecurity().logoutSuccessUrl())
                 )
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(unauthorizedEntryPoint())  // 未登录处理
+                )
                 .authenticationProvider(weChatAuthenticationProvider)
                 .authenticationProvider(daoAuthenticationProvider())
                 .addFilterBefore(
@@ -112,6 +125,12 @@ public class DefaultSecurityConfig {
                 .addFilterBefore(
                         weChatAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationEntryPoint unauthorizedEntryPoint() {
+        // 返回401 Unauthorized，而不是重定向
+        return new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED);
     }
 
     @Bean

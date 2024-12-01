@@ -85,9 +85,9 @@ public class JwtServiceImpl implements IJwtService {
                                         @NonNull HttpServletRequest request,
                                         @NonNull HttpServletResponse response) throws IOException {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
-        try {
-            String username = this.extractUserName(accessToken);
-            if (StringUtils.isNotEmpty(username)
+            try {
+                String username = this.extractUserName(accessToken);
+                if (StringUtils.isNotEmpty(username)
                     && SecurityContextHolder.getContext().getAuthentication() == null) {
                 User userDetails = (User) userDetailsService
                         .loadUserByUsername(username);
